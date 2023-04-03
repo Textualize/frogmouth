@@ -8,6 +8,14 @@ lint    := $(run) pylint
 mypy    := $(run) mypy
 
 ##############################################################################
+# Methods of running the application.
+run:				# Run the application.
+	$(python) -m $(package)
+
+debug:				# Run the application in debug mode.
+	TEXTUAL=devtools make run
+
+##############################################################################
 # Setup/update packages the system requires.
 .PHONY: setup
 setup:				# Set up the development environment
