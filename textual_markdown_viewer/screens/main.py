@@ -8,6 +8,12 @@ from textual.widgets import Footer, Header, MarkdownViewer
 
 from ..widgets import Navigation, Omnibox
 
+PLACEHOLDER = """\
+# Textual Markdown Viewer
+
+Welcome to the Textual Markdown viewer!
+"""
+
 
 class Main(Screen):
     """The main screen for the application."""
@@ -24,9 +30,7 @@ class Main(Screen):
         yield Omnibox(placeholder="Enter a location or command")
         with Horizontal():
             yield Navigation()
-            yield MarkdownViewer(
-                "# TODO\n\n- [ ] Pretty much everything.\n- [ ] And then some."
-            )
+            yield MarkdownViewer(PLACEHOLDER)
         yield Footer()
 
     def on_mount(self) -> None:
@@ -36,3 +40,13 @@ class Main(Screen):
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
         self.app.exit()
+
+    async def on_navigation_visit_local_file(
+        self, event: Navigation.VisitLocalFile
+    ) -> None:
+        """Visit a local file in the viewer.
+
+        Args:
+            event: The event to handle.
+        """
+        await self.query_one(MarkdownViewer).go(event.visit)
