@@ -1,9 +1,9 @@
 """The main application class for the Markdown viewer."""
 
-from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer
+from textual.app import App
 
 from .. import __version__
+from ..screens import Main
 
 
 class MarkdownViewer(App[None]):
@@ -15,11 +15,6 @@ class MarkdownViewer(App[None]):
     SUB_TITLE = f"{__version__}"
     """The sub-title for the application."""
 
-    def compose(self) -> ComposeResult:
-        """Compose the child widgets.
-
-        Returns:
-            The widgets that compose the main application display.
-        """
-        yield Header()
-        yield Footer()
+    def on_mount(self) -> None:
+        """Set up the application after the DOM is ready."""
+        self.push_screen(Main())
