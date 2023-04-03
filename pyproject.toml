@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "textual-markdown-viewer"
+version = "0.1.0"
+description = "A Markdown document viewer for the terminal"
+authors = ["Dave Pearson <dave@textualize.io>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "textual_markdown_viewer"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+textual = {version = "^0.17.3"}
+
+
+[tool.poetry.group.dev.dependencies]
+textual = {extras = ["dev"], version = "^0.17.3"}
+mypy = "^1.1.1"
+pylint = "^2.17.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
