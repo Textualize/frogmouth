@@ -12,6 +12,7 @@ mypy    := $(run) mypy
 .PHONY: setup
 setup:				# Set up the development environment
 	poetry install
+	$(run) pre-commit install
 
 .PHONY: update
 update:			# Update the development environment.
