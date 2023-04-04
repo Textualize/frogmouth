@@ -1,8 +1,12 @@
 """The main screen for the application."""
 
+from pathlib import Path
+
+
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
+from textual.events import Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Header, MarkdownViewer
 
@@ -56,6 +60,18 @@ class Main(Screen):
             event: The event to handle.
         """
         await self.query_one(MarkdownViewer).go(event.visit)
+
+    async def on_paste(self, event: Paste) -> None:
+        """Handle a paste event.
+
+        Args:
+            event: The paste event.
+
+        This method is here to capture paste events that look like the name
+        of a local file (later I may add URL support too).
+        """
+        if (candidate_file := Path(event.text)).exists():
+            await self.query_one(MarkdownViewer).go(candidate_file)
 
     def action_omnibox(self) -> None:
         """Jump to the omnibox."""
