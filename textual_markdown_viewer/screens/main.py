@@ -52,6 +52,7 @@ class Main(Screen):
         """
         # TODO: Also accept a URL.
         self.query_one(Omnibox).visiting = str(location)
+        self.query_one(MarkdownViewer).focus()
         await self.query_one(MarkdownViewer).go(location)
 
     def on_mount(self) -> None:
