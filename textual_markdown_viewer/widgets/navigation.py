@@ -48,6 +48,11 @@ class Navigation(Vertical):
     Navigation {
         width: 1fr;
         background: $primary;
+        display: none;
+    }
+
+    Navigation:focus-within {
+        display: block;
     }
 
     TabbedContent {

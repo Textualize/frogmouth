@@ -20,7 +20,7 @@ class Main(Screen):
 
     DEFAULT_CSS = """
     MarkdownViewer {
-        width: 4fr;
+        width: 3fr;
     }
     """
 
