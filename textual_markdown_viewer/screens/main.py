@@ -5,7 +5,6 @@ from textual.containers import Horizontal
 from textual.screen import Screen
 from textual.widgets import Footer, Header, MarkdownViewer
 
-
 from ..widgets import Navigation, Omnibox
 
 PLACEHOLDER = """\
