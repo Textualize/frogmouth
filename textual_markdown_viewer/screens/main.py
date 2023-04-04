@@ -1,6 +1,7 @@
 """The main screen for the application."""
 
 from textual.app import ComposeResult
+from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.screen import Screen
 from textual.widgets import Footer, Header, MarkdownViewer
@@ -22,6 +23,11 @@ class Main(Screen):
         width: 4fr;
     }
     """
+
+    BINDINGS = [
+        Binding("ctrl+b", "bookmarks", "Bookmarks", show=False),
+        Binding("ctrl+l", "local_files", "Local Files", show=False),
+    ]
 
     def compose(self) -> ComposeResult:
         """Compose the main screen.."""
@@ -49,3 +55,9 @@ class Main(Screen):
             event: The event to handle.
         """
         await self.query_one(MarkdownViewer).go(event.visit)
+
+    def action_local_files(self) -> None:
+        self.query_one(Navigation).jump_to_local_files()
+
+    def action_bookmarks(self) -> None:
+        self.query_one(Navigation).jump_to_bookmarks()

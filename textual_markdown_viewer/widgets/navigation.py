@@ -2,6 +2,7 @@
 
 from os import getenv
 from pathlib import Path
+from typing_extensions import Self
 
 from textual.app import ComposeResult
 from textual.containers import Vertical
@@ -60,9 +61,13 @@ class Navigation(Vertical):
 
     def compose(self) -> ComposeResult:
         """Compose the content of the navigation pane."""
-        with TabbedContent():
-            yield LocalFiles()
-            yield Bookmarks()
+        # pylint:disable=attribute-defined-outside-init
+        with TabbedContent() as tabs:
+            self._tabs = tabs
+            self._local_files = LocalFiles()
+            self._bookmarks = Bookmarks()
+            yield self._local_files
+            yield self._bookmarks
 
     class VisitLocalFile(Message):
         """Message sent when the user wants to visit a local file."""
@@ -86,3 +91,25 @@ class Navigation(Vertical):
         """
         event.stop()
         self.post_message(self.VisitLocalFile(Path(event.path)))
+
+    def jump_to_local_files(self) -> Self:
+        """Switch to and focus the local files pane.
+
+        Returns:
+            Self.
+        """
+        if self._local_files.id is not None:
+            self._tabs.active = self._local_files.id
+            self._local_files.children[0].focus()
+        return self
+
+    def jump_to_bookmarks(self) -> Self:
+        """Switch to and focus the bookmarks pane.
+
+        Returns:
+            Self.
+        """
+        if self._bookmarks.id is not None:
+            self._tabs.active = self._bookmarks.id
+            # TODO: Focus the content when I add it.
+        return self
