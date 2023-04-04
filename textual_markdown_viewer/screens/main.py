@@ -25,6 +25,7 @@ class Main(Screen):
     """
 
     BINDINGS = [
+        Binding("/", "omnibox", "Omnibox", show=False),
         Binding("ctrl+b", "bookmarks", "Bookmarks", show=False),
         Binding("ctrl+l", "local_files", "Local Files", show=False),
     ]
@@ -55,6 +56,10 @@ class Main(Screen):
             event: The event to handle.
         """
         await self.query_one(MarkdownViewer).go(event.visit)
+
+    def action_omnibox(self) -> None:
+        """Jump to the omnibox."""
+        self.query_one(Omnibox).focus()
 
     def action_local_files(self) -> None:
         """Display and focus the local files selection pane."""
