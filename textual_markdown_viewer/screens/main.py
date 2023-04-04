@@ -29,9 +29,10 @@ class Main(Screen):
     """
 
     BINDINGS = [
+        Binding("escape", "escape", "Escpae", show=False),
         Binding("/", "omnibox", "Omnibox", show=False),
-        Binding("ctrl+b", "bookmarks", "Bookmarks", show=False),
-        Binding("ctrl+l", "local_files", "Local Files", show=False),
+        Binding("ctrl+b", "bookmarks", "Bookmarks"),
+        Binding("ctrl+l", "local_files", "Local Files"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -88,6 +89,13 @@ class Main(Screen):
         """
         if (candidate_file := Path(event.text)).exists():
             await self.visit(candidate_file)
+
+    def action_escape(self) -> None:
+        """Process the escape key."""
+        if self.query_one(Omnibox).has_focus:
+            self.app.exit()
+        else:
+            self.query_one(Omnibox).focus()
 
     def action_omnibox(self) -> None:
         """Jump to the omnibox."""
