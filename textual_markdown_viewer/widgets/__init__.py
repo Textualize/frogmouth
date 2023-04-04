@@ -2,5 +2,6 @@
 
 from .navigation import Navigation
 from .omnibox import Omnibox
+from .viewer import Viewer
 
-__all__ = ["Navigation", "Omnibox"]
+__all__ = ["Navigation", "Omnibox", "Viewer"]

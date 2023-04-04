@@ -11,10 +11,10 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.events import Paste
 from textual.screen import Screen
-from textual.widgets import Footer, Header, MarkdownViewer
+from textual.widgets import Footer, Header
 
 from .. import __version__
-from ..widgets import Navigation, Omnibox
+from ..widgets import Navigation, Omnibox, Viewer
 
 PLACEHOLDER = """\
 # Textual Markdown Viewer
@@ -27,7 +27,7 @@ class Main(Screen):
     """The main screen for the application."""
 
     DEFAULT_CSS = """
-    MarkdownViewer {
+    Viewer {
         width: 3fr;
     }
 
@@ -49,7 +49,7 @@ class Main(Screen):
         yield Omnibox()
         with Horizontal():
             yield Navigation()
-            yield MarkdownViewer(PLACEHOLDER, show_table_of_contents=False)
+            yield Viewer(PLACEHOLDER, show_table_of_contents=False)
         yield Footer()
 
     async def visit(self, location: Path | Response) -> None:
@@ -58,16 +58,16 @@ class Main(Screen):
         Args:
             location: The location to visit.
         """
-        self.query_one(MarkdownViewer).focus()
+        self.query_one(Viewer).focus()
         if isinstance(location, Path):
             self.query_one(Omnibox).visiting = str(location)
-            await self.query_one(MarkdownViewer).go(location)
+            await self.query_one(Viewer).go(location)
         else:
             # TODO: This is a bit of a hack right at the moment; really I
             # want the URL to be coming in here and things flowing from
             # there. But right now I just want to get the text showing.
             self.query_one(Omnibox).visiting = str(location.url)
-            self.query_one(MarkdownViewer).document.update(location.text)
+            self.query_one(Viewer).document.update(location.text)
 
     def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
