@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from httpx import URL
+
 from textual.message import Message
 from textual.reactive import var
 from textual.widgets import Input
@@ -36,6 +38,19 @@ class Omnibox(Input):
             super().__init__()
             self.path = path
             """The path of the file to view."""
+
+    class RemoteViewCommand(Message):
+        """The remote file view command."""
+
+        def __init__(self, url: URL) -> None:
+            """Initialise the remove view command.
+
+            Args:
+                url: The URL of the remote file to view.
+            """
+            super().__init__()
+            self.url = url
+            """The URL of the file to view."""
 
     class QuitCommand(Message):
         """The quit command."""
@@ -76,6 +91,13 @@ class Omnibox(Input):
             self._command_like(value)
             and getattr(self, f"command_{value}", None) is not None
         )
+
+    @staticmethod
+    def _is_likely_url(candidate: str) -> bool:
+        """Does the given value look something like a URL?"""
+        # Quick and dirty for now.
+        url = URL(candidate)
+        return url.is_absolute_url and url.scheme in ("http", "https")
 
     def _execute_command(self, command: str) -> None:
         """Execute the given command.
