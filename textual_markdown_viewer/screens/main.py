@@ -47,6 +47,12 @@ class Main(Screen):
         """Set up the main screen once the DOM is ready."""
         self.query_one(Omnibox).focus()
 
+    async def on_omnibox_local_view_command(
+        self, event: Omnibox.LocalViewCommand
+    ) -> None:
+        """Handle the omnibox asking us to view a particular file."""
+        await self.query_one(MarkdownViewer).go(event.path)
+
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
         self.app.exit()

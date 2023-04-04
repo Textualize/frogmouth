@@ -1,5 +1,7 @@
 """Provides the Markdown viewer's omnibox widget."""
 
+from pathlib import Path
+
 from textual.message import Message
 from textual.widgets import Input
 
@@ -18,6 +20,18 @@ class Omnibox(Input):
         border-right: none;
     }
     """
+
+    class LocalViewCommand(Message):
+        """The local file view command."""
+
+        def __init__(self, path: Path) -> None:
+            """Initialise the local view command.
+
+            Args:
+                path: The path to view.
+            """
+            super().__init__()
+            self.path = path
 
     class QuitCommand(Message):
         """The quit command."""
@@ -66,6 +80,8 @@ class Omnibox(Input):
         if self._is_command(cleaned):
             event.stop()
             self._execute_command(cleaned)
+        elif Path(cleaned).exists():
+            self.post_message(self.LocalViewCommand(Path(cleaned)))
 
     def command_quit(self) -> None:
         """The quit command."""
