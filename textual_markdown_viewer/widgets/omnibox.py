@@ -35,6 +35,7 @@ class Omnibox(Input):
             """
             super().__init__()
             self.path = path
+            """The path of the file to view."""
 
     class QuitCommand(Message):
         """The quit command."""
