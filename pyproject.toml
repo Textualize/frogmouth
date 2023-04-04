@@ -11,6 +11,7 @@ packages = [{include = "textual_markdown_viewer"}]
 python = "^3.8"
 textual = {version = "^0.17.3"}
 typing-extensions = "^4.5.0"
+httpx = "^0.23.3"
 
 
 [tool.poetry.group.dev.dependencies]
