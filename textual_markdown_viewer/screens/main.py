@@ -37,11 +37,21 @@ class Main(Screen):
     def compose(self) -> ComposeResult:
         """Compose the main screen.."""
         yield Header()
-        yield Omnibox(placeholder="Enter a location or command")
+        yield Omnibox()
         with Horizontal():
             yield Navigation()
             yield MarkdownViewer(PLACEHOLDER)
         yield Footer()
+
+    async def visit(self, location: Path) -> None:
+        """Visit the given location.
+
+        Args:
+            location: The location to visit.
+        """
+        # TODO: Also accept a URL.
+        self.query_one(Omnibox).visiting = str(location)
+        await self.query_one(MarkdownViewer).go(location)
 
     def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
@@ -51,7 +61,7 @@ class Main(Screen):
         self, event: Omnibox.LocalViewCommand
     ) -> None:
         """Handle the omnibox asking us to view a particular file."""
-        await self.query_one(MarkdownViewer).go(event.path)
+        await self.visit(event.path)
 
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
@@ -65,7 +75,7 @@ class Main(Screen):
         Args:
             event: The event to handle.
         """
-        await self.query_one(MarkdownViewer).go(event.visit)
+        await self.visit(event.visit)
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
@@ -77,7 +87,7 @@ class Main(Screen):
         of a local file (later I may add URL support too).
         """
         if (candidate_file := Path(event.text)).exists():
-            await self.query_one(MarkdownViewer).go(candidate_file)
+            await self.visit(candidate_file)
 
     def action_omnibox(self) -> None:
         """Jump to the omnibox."""

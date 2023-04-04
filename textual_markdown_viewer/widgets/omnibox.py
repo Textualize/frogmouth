@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from textual.message import Message
+from textual.reactive import var
 from textual.widgets import Input
 
 
@@ -35,6 +36,13 @@ class Omnibox(Input):
 
     class QuitCommand(Message):
         """The quit command."""
+
+    visiting: var[str] = var("")
+    """The location that is being visited."""
+
+    def watch_visiting(self) -> None:
+        """Watch the visiting reactive variable."""
+        self.placeholder = self.visiting or "Enter a location or command"
 
     @staticmethod
     def _command_like(value: str) -> bool:
@@ -82,6 +90,7 @@ class Omnibox(Input):
             self._execute_command(cleaned)
         elif Path(cleaned).exists():
             self.post_message(self.LocalViewCommand(Path(cleaned)))
+            self.value = ""
 
     def command_quit(self) -> None:
         """The quit command."""
