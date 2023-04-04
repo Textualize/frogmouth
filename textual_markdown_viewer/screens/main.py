@@ -26,6 +26,10 @@ class Main(Screen):
     MarkdownViewer {
         width: 3fr;
     }
+
+    MarkdownTableOfContents {
+        max-width: 25%;
+    }
     """
 
     BINDINGS = [
