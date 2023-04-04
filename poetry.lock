@@ -969,14 +969,14 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.2.2)", "pytest-
 
 [[package]]
 name = "pre-commit"
-version = "3.2.1"
+version = "3.2.2"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pre_commit-3.2.1-py2.py3-none-any.whl", hash = "sha256:a06a7fcce7f420047a71213c175714216498b49ebc81fe106f7716ca265f5bb6"},
-    {file = "pre_commit-3.2.1.tar.gz", hash = "sha256:b5aee7d75dbba21ee161ba641b01e7ae10c5b91967ebf7b2ab0dfae12d07e1f1"},
+    {file = "pre_commit-3.2.2-py2.py3-none-any.whl", hash = "sha256:0b4210aea813fe81144e87c5a291f09ea66f199f367fa1df41b55e1d26e1e2b4"},
+    {file = "pre_commit-3.2.2.tar.gz", hash = "sha256:5b808fcbda4afbccf6d6633a56663fed35b6c2bc08096fd3d47ce197ac351d9d"},
 ]
 
 [package.dependencies]
@@ -1003,18 +1003,18 @@ plugins = ["importlib-metadata"]
 
 [[package]]
 name = "pylint"
-version = "2.17.1"
+version = "2.17.2"
 description = "python code static checker"
 category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 files = [
-    {file = "pylint-2.17.1-py3-none-any.whl", hash = "sha256:8660a54e3f696243d644fca98f79013a959c03f979992c1ab59c24d3f4ec2700"},
-    {file = "pylint-2.17.1.tar.gz", hash = "sha256:d4d009b0116e16845533bc2163493d6681846ac725eab8ca8014afb520178ddd"},
+    {file = "pylint-2.17.2-py3-none-any.whl", hash = "sha256:001cc91366a7df2970941d7e6bbefcbf98694e00102c1f121c531a814ddc2ea8"},
+    {file = "pylint-2.17.2.tar.gz", hash = "sha256:1b647da5249e7c279118f657ca28b6aaebb299f86bf92affc632acf199f7adbb"},
 ]
 
 [package.dependencies]
-astroid = ">=2.15.0,<=2.17.0-dev0"
+astroid = ">=2.15.2,<=2.17.0-dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
     {version = ">=0.2", markers = "python_version < \"3.11\""},
