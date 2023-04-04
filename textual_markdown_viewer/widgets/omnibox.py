@@ -95,9 +95,9 @@ class Omnibox(Input):
             self._execute_command(cleaned)
         elif Path(cleaned).exists():
             self.post_message(self.LocalViewCommand(Path(cleaned)))
-            self.value = ""
         else:
             return
+        self.value = ""
         event.stop()
 
     def command_quit(self) -> None:
