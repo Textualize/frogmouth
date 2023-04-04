@@ -1,8 +1,10 @@
 """The main screen for the application."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
-from httpx import AsyncClient
+from httpx import AsyncClient, Response
 
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -47,19 +49,25 @@ class Main(Screen):
         yield Omnibox()
         with Horizontal():
             yield Navigation()
-            yield MarkdownViewer(PLACEHOLDER)
+            yield MarkdownViewer(PLACEHOLDER, show_table_of_contents=False)
         yield Footer()
 
-    async def visit(self, location: Path) -> None:
+    async def visit(self, location: Path | Response) -> None:
         """Visit the given location.
 
         Args:
             location: The location to visit.
         """
-        # TODO: Also accept a URL.
-        self.query_one(Omnibox).visiting = str(location)
         self.query_one(MarkdownViewer).focus()
-        await self.query_one(MarkdownViewer).go(location)
+        if isinstance(location, Path):
+            self.query_one(Omnibox).visiting = str(location)
+            await self.query_one(MarkdownViewer).go(location)
+        else:
+            # TODO: This is a bit of a hack right at the moment; really I
+            # want the URL to be coming in here and things flowing from
+            # there. But right now I just want to get the text showing.
+            self.query_one(Omnibox).visiting = str(location.url)
+            self.query_one(MarkdownViewer).document.update(location.text)
 
     def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
@@ -86,9 +94,7 @@ class Main(Screen):
                 headers={"user-agent": f"textual-markdown-client v{__version__}"},
             )
             # TODO: Lots of error handling.
-            # TODO: Go via self.visit, but a version that gets URLs too.
-            self.query_one(MarkdownViewer).document.update(response.text)
-            self.query_one(Omnibox).visiting = str(event.url)
+            await self.visit(response)
 
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
