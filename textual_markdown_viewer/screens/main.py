@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+from httpx import AsyncClient
 
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -68,6 +69,25 @@ class Main(Screen):
     ) -> None:
         """Handle the omnibox asking us to view a particular file."""
         await self.visit(event.path)
+
+    async def on_omnibox_remote_view_command(
+        self, event: Omnibox.RemoteViewCommand
+    ) -> None:
+        """Handle the omnibox asking us to view a particular URL.
+
+        Args:
+            event: The remote view event.
+        """
+        async with AsyncClient() as client:
+            response = await client.get(
+                event.url,
+                follow_redirects=True,
+                headers={"user-agent": "textual-markdown-client"},
+            )
+            # TODO: Lots of error handling.
+            # TODO: Go via self.visit, but a version that gets URLs too.
+            self.query_one(MarkdownViewer).document.update(response.text)
+            self.query_one(Omnibox).visiting = str(event.url)
 
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
