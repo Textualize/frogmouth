@@ -57,7 +57,9 @@ class Main(Screen):
         await self.query_one(MarkdownViewer).go(event.visit)
 
     def action_local_files(self) -> None:
+        """Display and focus the local files selection pane."""
         self.query_one(Navigation).jump_to_local_files()
 
     def action_bookmarks(self) -> None:
+        """Display and focus the bookmarks selection pane."""
         self.query_one(Navigation).jump_to_bookmarks()
