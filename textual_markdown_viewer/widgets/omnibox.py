@@ -91,11 +91,14 @@ class Omnibox(Input):
         Args:
             event: The submit event.
         """
-        cleaned = self.value.strip().lower()
-        if self._is_command(cleaned):
-            self._execute_command(cleaned)
+        cleaned = self.value.strip()
+        lowered = cleaned.lower()
+        if self._is_command(lowered):
+            self._execute_command(lowered)
         elif Path(cleaned).exists():
             self.post_message(self.LocalViewCommand(Path(cleaned)))
+        elif self._is_likely_url(cleaned):
+            self.post_message(self.RemoteViewCommand(URL(cleaned)))
         else:
             return
         self.value = ""
