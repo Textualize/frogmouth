@@ -24,6 +24,11 @@ class Omnibox(Input):
         border-left: none;
         border-right: none;
     }
+
+    Omnibox .input--placeholder {
+        color: $text 70%;
+        text-style: italic;
+    }
     """
 
     class LocalViewCommand(Message):
