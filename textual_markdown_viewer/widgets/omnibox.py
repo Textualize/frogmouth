@@ -57,9 +57,6 @@ class Omnibox(Input):
             self.url = url
             """The URL of the file to view."""
 
-    class QuitCommand(Message):
-        """The quit command."""
-
     visiting: var[str] = var("")
     """The location that is being visited."""
 
@@ -133,6 +130,9 @@ class Omnibox(Input):
             return
         self.value = ""
         event.stop()
+
+    class QuitCommand(Message):
+        """The quit command."""
 
     def command_quit(self, _: str) -> None:
         """The quit command."""
