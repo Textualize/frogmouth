@@ -1,5 +1,7 @@
 """Provides the Markdown viewer's omnibox widget."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 from textual.message import Message
@@ -56,6 +58,9 @@ class Omnibox(Input):
         """
         return len(value.split()) == 1
 
+    _ALIASES: dict[str, str] = {"q": "quit"}
+    """Command aliases."""
+
     def _is_command(self, value: str) -> bool:
         """Is the given string a known command?
 
@@ -65,6 +70,7 @@ class Omnibox(Input):
         Returns:
             `True` if the string is a known command, `False` if not.
         """
+        value = self._ALIASES.get(value, value)
         return (
             self._command_like(value)
             and getattr(self, f"command_{value}", None) is not None
@@ -76,7 +82,7 @@ class Omnibox(Input):
         Args:
             command: The comment to execute.
         """
-        getattr(self, f"command_{command}")()
+        getattr(self, f"command_{self._ALIASES.get(command, command)}")()
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         """Handle the user submitting the input.
