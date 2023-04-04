@@ -11,6 +11,7 @@ from textual.events import Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Header, MarkdownViewer
 
+from .. import __version__
 from ..widgets import Navigation, Omnibox
 
 PLACEHOLDER = """\
@@ -82,7 +83,7 @@ class Main(Screen):
             response = await client.get(
                 event.url,
                 follow_redirects=True,
-                headers={"user-agent": "textual-markdown-client"},
+                headers={"user-agent": f"textual-markdown-client v{__version__}"},
             )
             # TODO: Lots of error handling.
             # TODO: Go via self.visit, but a version that gets URLs too.
