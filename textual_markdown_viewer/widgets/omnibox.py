@@ -67,20 +67,21 @@ class Omnibox(Input):
         """Watch the visiting reactive variable."""
         self.placeholder = self.visiting or "Enter a location or command"
 
-    @staticmethod
-    def _command_like(value: str) -> bool:
-        """Does the given string look command-like?
-
-        Args:
-            value: The value to check for command-likeness.
-
-        Returns:
-            `True` if the value looks like a command, `False` if not.
-        """
-        return len(value.split()) == 1
-
     _ALIASES: dict[str, str] = {"q": "quit"}
     """Command aliases."""
+
+    @staticmethod
+    def _split_command(value: str) -> list[str]:
+        """Split a value into a command and argument tail.
+
+        Args:
+            value: The value to split.
+
+        Returns:
+            A list of the command and the argument(s).
+        """
+        command = value.split(None, 1)
+        return [*command, ""] if len(command) == 1 else command
 
     def _is_command(self, value: str) -> bool:
         """Is the given string a known command?
@@ -91,10 +92,10 @@ class Omnibox(Input):
         Returns:
             `True` if the string is a known command, `False` if not.
         """
-        value = self._ALIASES.get(value, value)
+        command, *_ = self._split_command(value)
         return (
-            self._command_like(value)
-            and getattr(self, f"command_{value}", None) is not None
+            getattr(self, f"command_{self._ALIASES.get(command, command)}", None)
+            is not None
         )
 
     @staticmethod
@@ -110,7 +111,10 @@ class Omnibox(Input):
         Args:
             command: The comment to execute.
         """
-        getattr(self, f"command_{self._ALIASES.get(command, command)}")()
+        command, arguments = self._split_command(command)
+        getattr(self, f"command_{self._ALIASES.get(command, command)}")(
+            arguments.strip()
+        )
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         """Handle the user submitting the input.
@@ -118,19 +122,18 @@ class Omnibox(Input):
         Args:
             event: The submit event.
         """
-        cleaned = self.value.strip()
-        lowered = cleaned.lower()
-        if self._is_command(lowered):
-            self._execute_command(lowered)
-        elif Path(cleaned).exists():
-            self.post_message(self.LocalViewCommand(Path(cleaned)))
-        elif self._is_likely_url(cleaned):
-            self.post_message(self.RemoteViewCommand(URL(cleaned)))
+        submitted = self.value.strip()
+        if self._is_likely_url(submitted):
+            self.post_message(self.RemoteViewCommand(URL(submitted)))
+        elif Path(submitted).exists():
+            self.post_message(self.LocalViewCommand(Path(submitted)))
+        elif self._is_command(submitted := submitted.lower()):
+            self._execute_command(submitted)
         else:
             return
         self.value = ""
         event.stop()
 
-    def command_quit(self) -> None:
+    def command_quit(self, _: str) -> None:
         """The quit command."""
         self.post_message(self.QuitCommand())
