@@ -46,12 +46,12 @@ class Navigation(Vertical):
     def compose(self) -> ComposeResult:
         """Compose the content of the navigation pane."""
         # pylint:disable=attribute-defined-outside-init
+        self._contents = TableOfContents()
+        self._local_files = LocalFiles()
+        self._bookmarks = Bookmarks()
+        self._history = History()
         with TabbedContent() as tabs:
             self._tabs = tabs
-            self._contents = TableOfContents()
-            self._local_files = LocalFiles()
-            self._bookmarks = Bookmarks()
-            self._history = History()
             yield self._contents
             yield self._local_files
             yield self._bookmarks
