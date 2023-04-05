@@ -62,7 +62,7 @@ class History(TabPane):
     """
 
     def __init__(self) -> None:
-        """Initialise the history files navigation pane."""
+        """Initialise the history navigation pane."""
         super().__init__("History")
 
     def compose(self) -> ComposeResult:
