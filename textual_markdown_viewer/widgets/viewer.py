@@ -91,6 +91,19 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             self.viewer: Viewer = viewer
             """The viewer that sent the message."""
 
+    class AddedToHistory(Message):
+        """Message sent when something is added to history."""
+
+        def __init__(self, location: Path | URL) -> None:
+            """Initialise the location history recording message.
+
+            Args:
+                location: The location that was added to history.
+            """
+            super().__init__()
+            self.location = location
+            """The location added to history."""
+
     def compose(self) -> ComposeResult:
         """Compose the markdown viewer."""
         yield Markdown(PLACEHOLDER)
@@ -138,6 +151,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         # Remember the location in the history if we're supposed to.
         if remember:
             self._history.remember(location)
+            self.post_message(self.AddedToHistory(location))
 
         # Let anyone else know we've changed location.
         self.post_message(self.LocationChanged(self))

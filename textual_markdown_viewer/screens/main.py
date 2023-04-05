@@ -13,7 +13,7 @@ from textual.events import Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Header
 
-from ..widgets import Navigation, Omnibox, Viewer
+from ..widgets import History, Navigation, Omnibox, Viewer
 
 
 class Main(Screen):
@@ -44,13 +44,14 @@ class Main(Screen):
             yield Viewer()
         yield Footer()
 
-    async def visit(self, location: Path | URL) -> None:
+    async def visit(self, location: Path | URL, remember: bool = True) -> None:
         """Visit the given location.
 
         Args:
             location: The location to visit.
+            remember: Should the visit be added to the history?
         """
-        await self.query_one(Viewer).visit(location)
+        await self.query_one(Viewer).visit(location, remember)
         self.query_one(Viewer).focus()
 
     def on_mount(self) -> None:
@@ -91,13 +92,27 @@ class Main(Screen):
         """
         await self.visit(event.visit)
 
+    async def on_history_goto(self, event: History.Goto) -> None:
+        """Handle a request to go to a location from history.
+
+        Args:
+            event: The event to handle.
+        """
+        await self.visit(event.location, remember=False)
+
     def on_viewer_location_changed(self, event: Viewer.LocationChanged) -> None:
         """Update for the location being changed."""
         self.query_one(Omnibox).visiting = (
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
-        if event.viewer.location is not None:
-            self.query_one(Navigation).history.add(event.viewer.location)
+
+    def on_viewer_added_to_history(self, event: Viewer.AddedToHistory) -> None:
+        """Handle the viewer adding a location to the history.
+
+        Args:
+            event: The event to handle.
+        """
+        self.query_one(Navigation).history.add(event.location)
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
