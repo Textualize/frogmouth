@@ -9,9 +9,11 @@ mypy    := $(run) mypy
 
 ##############################################################################
 # Methods of running the application.
+.PHONY: run
 run:				# Run the application.
 	$(python) -m $(package)
 
+.PHONY: debug
 debug:				# Run the application in debug mode.
 	TEXTUAL=devtools make run
 
@@ -28,8 +30,34 @@ update:			# Update the development environment.
 
 ##############################################################################
 # Textual tools.
+.PHONY: borders
+borders:			# Preview the Textual borders.
+	$(textual) borders
+
+.PHONY: colours
+colours:			# Preview the Textual colours.
+	$(textual) colors
+
+.PHONY: colour colors color
+colour: colours
+colors: colours
+color: colours
+
+.PHONY: console
 console:			# Run the textual console.
 	$(textual) console
+
+.PHONY: diagnose
+diagnose:			# Print the Textual diagnosis information.
+	$(textual) diagnose
+
+.PHONY: easing
+easing:			# Preview the Textual easing functions.
+	$(textual) easing
+
+.PHONY: keys
+keys:				# Run the textual keys utility.
+	$(textual) keys
 
 ##############################################################################
 # Checking/testing/linting/etc.
