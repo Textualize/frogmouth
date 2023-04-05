@@ -47,7 +47,6 @@ class Main(Screen):
         Args:
             location: The location to visit.
         """
-        self.query_one(Omnibox).visiting = str(location)
         await self.query_one(Viewer).visit(location)
         self.query_one(Viewer).focus()
 
@@ -84,6 +83,12 @@ class Main(Screen):
             event: The event to handle.
         """
         await self.visit(event.visit)
+
+    def on_viewer_location_changed(self, event: Viewer.LocationChanged) -> None:
+        """Update for the location being changed."""
+        self.query_one(Omnibox).visiting = (
+            str(event.viewer.location) if event.viewer.location is not None else ""
+        )
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
