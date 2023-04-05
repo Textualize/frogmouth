@@ -91,6 +91,8 @@ class Main(Screen):
         self.query_one(Omnibox).visiting = (
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
+        if event.viewer.location is not None:
+            self.query_one(Navigation).history.add(event.viewer.location)
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
