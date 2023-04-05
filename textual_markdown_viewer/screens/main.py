@@ -73,6 +73,10 @@ class Main(Screen):
         """
         await self.visit(event.url)
 
+    def on_omnibox_history_command(self) -> None:
+        """Handle being asked to view the history."""
+        self.action_history()
+
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
         self.app.exit()
