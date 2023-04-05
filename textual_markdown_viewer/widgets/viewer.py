@@ -150,7 +150,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         if direction():
             if self._history.location is not None:
-                await self.visit(self._history.location, False)
+                await self.visit(self._history.location, remember=False)
 
     async def back(self) -> None:
         """Go back in the viewer history."""
