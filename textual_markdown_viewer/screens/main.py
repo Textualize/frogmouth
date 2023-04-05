@@ -29,6 +29,7 @@ class Main(Screen):
         Binding("escape", "escape", "Escpae", show=False),
         Binding("/", "omnibox", "Omnibox", show=False),
         Binding("ctrl+b", "bookmarks", "Bookmarks"),
+        Binding("ctrl+y", "history", "History"),
         Binding("ctrl+l", "local_files", "Local Files"),
         Binding("ctrl+left", "backward", "Back"),
         Binding("ctrl+right", "forward", "Forward"),
@@ -124,6 +125,10 @@ class Main(Screen):
     def action_bookmarks(self) -> None:
         """Display and focus the bookmarks selection pane."""
         self.query_one(Navigation).jump_to_bookmarks()
+
+    def action_history(self) -> None:
+        """Display and focus the history pane."""
+        self.query_one(Navigation).jump_to_history()
 
     async def action_backward(self) -> None:
         """Go backward in the history."""
