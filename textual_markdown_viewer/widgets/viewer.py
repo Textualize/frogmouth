@@ -10,8 +10,8 @@ from textual.widgets import Markdown
 
 from .. import __version__
 
-PLACEHOLDER = """\
-# Textual Markdown Viewer
+PLACEHOLDER = f"""\
+# Textual Markdown Viewer {__version__}
 
 Welcome to the Textual Markdown viewer!
 """
