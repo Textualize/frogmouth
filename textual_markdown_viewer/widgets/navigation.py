@@ -9,6 +9,8 @@ from textual.containers import Vertical
 from textual.message import Message
 from textual.widgets import DirectoryTree, TabbedContent, TabPane
 
+from .history import History
+
 
 class LocalFiles(TabPane):
     """Local file picking navigation pane."""
@@ -71,8 +73,15 @@ class Navigation(Vertical):
             self._tabs = tabs
             self._local_files = LocalFiles()
             self._bookmarks = Bookmarks()
+            self._history = History()
             yield self._local_files
             yield self._bookmarks
+            yield self._history
+
+    @property
+    def history(self) -> History:
+        """The history widget."""
+        return self._history
 
     class VisitLocalFile(Message):
         """Message sent when the user wants to visit a local file."""
