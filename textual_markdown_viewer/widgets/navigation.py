@@ -98,3 +98,14 @@ class Navigation(Vertical):
             self._tabs.active = self._bookmarks.id
             # TODO: Focus the content when I add it.
         return self
+
+    def jump_to_history(self) -> Self:
+        """Switch to and focus the history pane.
+
+        Returns:
+            Self.
+        """
+        if self._history.id is not None:
+            self._tabs.active = self._history.id
+            self._history.children[0].focus()
+        return self
