@@ -6,18 +6,12 @@ from typing_extensions import Self
 from textual.app import ComposeResult
 from textual.containers import Vertical
 from textual.message import Message
-from textual.widgets import DirectoryTree, TabbedContent, TabPane
+from textual.widgets import DirectoryTree, TabbedContent
 
+
+from .bookmarks import Bookmarks
 from .history import History
 from .local_files import LocalFiles
-
-
-class Bookmarks(TabPane):
-    """Bookmarks navigation pane."""
-
-    def __init__(self) -> None:
-        """Initialise the bookmarks navigation pane."""
-        super().__init__("Bookmarks")
 
 
 class Navigation(Vertical):
