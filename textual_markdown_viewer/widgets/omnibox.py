@@ -63,6 +63,8 @@ class Omnibox(Input):
     def watch_visiting(self) -> None:
         """Watch the visiting reactive variable."""
         self.placeholder = self.visiting or "Enter a location or command"
+        if self.visiting:
+            self.value = self.visiting
 
     _ALIASES: dict[str, str] = {"h": "history", "q": "quit"}
     """Command aliases."""
