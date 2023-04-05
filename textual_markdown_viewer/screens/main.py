@@ -132,7 +132,7 @@ class Main(Screen):
         Args:
             event: The table of contents update event to handle.
         """
-        # We don't handle this, the navigation pane does. Bound the event
+        # We don't handle this, the navigation pane does. Bounce the event
         # over there.
         self.query_one(Navigation).table_of_contents.on_table_of_contents_updated(event)
 
