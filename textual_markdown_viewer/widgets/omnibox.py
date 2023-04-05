@@ -64,7 +64,7 @@ class Omnibox(Input):
         """Watch the visiting reactive variable."""
         self.placeholder = self.visiting or "Enter a location or command"
 
-    _ALIASES: dict[str, str] = {"q": "quit"}
+    _ALIASES: dict[str, str] = {"h": "history", "q": "quit"}
     """Command aliases."""
 
     @staticmethod
@@ -137,3 +137,10 @@ class Omnibox(Input):
     def command_quit(self, _: str) -> None:
         """The quit command."""
         self.post_message(self.QuitCommand())
+
+    class HistoryCommand(Message):
+        """The history command."""
+
+    def command_history(self, _: str) -> None:
+        """The history command."""
+        self.post_message(self.HistoryCommand())
