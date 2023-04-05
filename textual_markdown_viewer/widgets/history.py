@@ -4,6 +4,9 @@ from pathlib import Path
 
 from httpx import URL
 
+from rich.text import Text
+
+
 from textual.app import ComposeResult
 from textual.message import Message
 from textual.widgets import TabPane, OptionList
@@ -19,9 +22,30 @@ class Entry(Option):
         Args:
             location: The location being added to history.
         """
-        super().__init__(str(location))
+        super().__init__(self._as_prompt(location))
         self.location = location
         """The location for his entry in the history."""
+
+    @staticmethod
+    def _as_prompt(location: Path | URL) -> Text:
+        """Depict the location as a decorated prompt.
+
+        Args:
+            location: The location to depict.
+
+        Returns:
+            A prompt with icon, etc.
+        """
+        if isinstance(location, Path):
+            return Text.from_markup(
+                f":page_facing_up: {location.name}\n{location.parent}",
+                overflow="ellipsis",
+            )
+        return Text.from_markup(
+            f":globe_with_meridians: {Path(location.path).name}"
+            f"\n{Path(location.path).parent}\n{location.host}",
+            overflow="ellipsis",
+        )
 
 
 class History(TabPane):
