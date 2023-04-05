@@ -100,6 +100,11 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """The markdown document."""
         return self.query_one(Markdown)
 
+    @property
+    def location(self) -> Path | URL | None:
+        """The location that is currently being visited."""
+        return self._history.location
+
     async def _remote_load(self, location: URL) -> None:
         """Load a Markdown document from a URL.
 
