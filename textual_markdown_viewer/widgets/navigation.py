@@ -4,9 +4,10 @@ from pathlib import Path
 from typing_extensions import Self
 
 from textual.app import ComposeResult
+from textual.binding import Binding
 from textual.containers import Vertical
 from textual.message import Message
-from textual.widgets import DirectoryTree, TabbedContent
+from textual.widgets import DirectoryTree, TabbedContent, Tabs
 
 
 from .bookmarks import Bookmarks
@@ -36,6 +37,12 @@ class Navigation(Vertical):
         height: 1fr !important;
     }
     """
+
+    BINDINGS = [
+        Binding("left", "previous_tab", "", show=False),
+        Binding("right", "next_tab", "", show=False),
+    ]
+    """Bindings local to the navigation pane."""
 
     def compose(self) -> ComposeResult:
         """Compose the content of the navigation pane."""
@@ -109,3 +116,11 @@ class Navigation(Vertical):
             self._tabs.active = self._history.id
             self._history.children[0].focus()
         return self
+
+    def action_previous_tab(self) -> None:
+        """Switch to the previous tab in the navigation pane."""
+        self.query_one(Tabs).action_previous_tab()
+
+    def action_next_tab(self) -> None:
+        """Switch to the next tab in the navigation pane."""
+        self.query_one(Tabs).action_next_tab()
