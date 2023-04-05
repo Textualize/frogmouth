@@ -30,6 +30,8 @@ class Main(Screen):
         Binding("/", "omnibox", "Omnibox", show=False),
         Binding("ctrl+b", "bookmarks", "Bookmarks"),
         Binding("ctrl+l", "local_files", "Local Files"),
+        Binding("ctrl+left", "backward", "Back"),
+        Binding("ctrl+right", "forward", "Forward"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -120,3 +122,11 @@ class Main(Screen):
     def action_bookmarks(self) -> None:
         """Display and focus the bookmarks selection pane."""
         self.query_one(Navigation).jump_to_bookmarks()
+
+    async def action_backward(self) -> None:
+        """Go backward in the history."""
+        await self.query_one(Viewer).back()
+
+    async def action_forward(self) -> None:
+        """Go forward in the history."""
+        await self.query_one(Viewer).forward()
