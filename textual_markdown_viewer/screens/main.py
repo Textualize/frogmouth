@@ -13,7 +13,7 @@ from textual.events import Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
-from ..widgets import History, Navigation, Omnibox, Viewer
+from ..widgets import History, LocalFiles, Navigation, Omnibox, Viewer
 
 
 class Main(Screen):
@@ -88,15 +88,13 @@ class Main(Screen):
         """Handle being asked to quit."""
         self.app.exit()
 
-    async def on_navigation_visit_local_file(
-        self, event: Navigation.VisitLocalFile
-    ) -> None:
+    async def on_local_files_goto(self, event: LocalFiles.Goto) -> None:
         """Visit a local file in the viewer.
 
         Args:
             event: The local file visit request event.
         """
-        await self.visit(event.visit)
+        await self.visit(event.location)
 
     async def on_history_goto(self, event: History.Goto) -> None:
         """Handle a request to go to a location from history.

@@ -1,13 +1,11 @@
 """Provides the navigation panel widget."""
 
-from pathlib import Path
 from typing_extensions import Self
 
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
-from textual.message import Message
-from textual.widgets import DirectoryTree, TabbedContent, Tabs
+from textual.widgets import TabbedContent, Tabs
 
 
 from .bookmarks import Bookmarks
@@ -68,29 +66,6 @@ class Navigation(Vertical):
     def table_of_contents(self) -> TableOfContents:
         """The table of contents widget."""
         return self._contents
-
-    class VisitLocalFile(Message):
-        """Message sent when the user wants to visit a local file."""
-
-        def __init__(self, visit: Path) -> None:
-            """Initialise the mesage.
-
-            Args:
-                visit: The path to the file to visit.
-            """
-            super().__init__()
-            self.visit = visit
-
-    def on_directory_tree_file_selected(
-        self, event: DirectoryTree.FileSelected
-    ) -> None:
-        """Handle a file being selected in the directory tree.
-
-        Args:
-            event: The direct tree selection event.
-        """
-        event.stop()
-        self.post_message(self.VisitLocalFile(Path(event.path)))
 
     def jump_to_local_files(self) -> Self:
         """Switch to and focus the local files pane.
