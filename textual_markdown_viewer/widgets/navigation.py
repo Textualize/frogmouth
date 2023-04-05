@@ -13,6 +13,7 @@ from textual.widgets import DirectoryTree, TabbedContent, Tabs
 from .bookmarks import Bookmarks
 from .history import History
 from .local_files import LocalFiles
+from .table_of_contents import TableOfContents
 
 
 class Navigation(Vertical):
@@ -49,9 +50,11 @@ class Navigation(Vertical):
         # pylint:disable=attribute-defined-outside-init
         with TabbedContent() as tabs:
             self._tabs = tabs
+            self._contents = TableOfContents()
             self._local_files = LocalFiles()
             self._bookmarks = Bookmarks()
             self._history = History()
+            yield self._contents
             yield self._local_files
             yield self._bookmarks
             yield self._history
@@ -60,6 +63,11 @@ class Navigation(Vertical):
     def history(self) -> History:
         """The history widget."""
         return self._history
+
+    @property
+    def table_of_contents(self) -> TableOfContents:
+        """The table of contents widget."""
+        return self._contents
 
     class VisitLocalFile(Message):
         """Message sent when the user wants to visit a local file."""
@@ -115,6 +123,17 @@ class Navigation(Vertical):
         if self._history.id is not None:
             self._tabs.active = self._history.id
             self._history.children[0].focus()
+        return self
+
+    def jump_to_contents(self) -> Self:
+        """Switch to and focus the table of contents pane.
+
+        Returns:
+            Self.
+        """
+        if self._contents.id is not None:
+            self._tabs.active = self._contents.id
+            self._contents.children[0].children[0].focus()
         return self
 
     def action_previous_tab(self) -> None:

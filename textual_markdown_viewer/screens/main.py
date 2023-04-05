@@ -11,7 +11,7 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.events import Paste
 from textual.screen import Screen
-from textual.widgets import Footer, Header
+from textual.widgets import Footer, Header, Markdown
 
 from ..widgets import History, Navigation, Omnibox, Viewer
 
@@ -28,12 +28,14 @@ class Main(Screen):
     BINDINGS = [
         Binding("escape", "escape", "Escpae", show=False),
         Binding("/", "omnibox", "Omnibox", show=False),
+        Binding("ctrl+t", "table_of_contents", "Contents"),
         Binding("ctrl+b", "bookmarks", "Bookmarks"),
         Binding("ctrl+y", "history", "History"),
         Binding("ctrl+l", "local_files", "Local Files"),
         Binding("ctrl+left", "backward", "Back"),
         Binding("ctrl+right", "forward", "Forward"),
     ]
+    """The keyboard bindings for the main screen."""
 
     def compose(self) -> ComposeResult:
         """Compose the main screen.."""
@@ -61,7 +63,11 @@ class Main(Screen):
     async def on_omnibox_local_view_command(
         self, event: Omnibox.LocalViewCommand
     ) -> None:
-        """Handle the omnibox asking us to view a particular file."""
+        """Handle the omnibox asking us to view a particular file.
+
+        Args:
+            event: The local view command event.
+        """
         await self.visit(event.path)
 
     async def on_omnibox_remote_view_command(
@@ -70,7 +76,7 @@ class Main(Screen):
         """Handle the omnibox asking us to view a particular URL.
 
         Args:
-            event: The remote view event.
+            event: The remote view command event.
         """
         await self.visit(event.url)
 
@@ -88,7 +94,7 @@ class Main(Screen):
         """Visit a local file in the viewer.
 
         Args:
-            event: The event to handle.
+            event: The local file visit request event.
         """
         await self.visit(event.visit)
 
@@ -101,7 +107,11 @@ class Main(Screen):
         await self.visit(event.location, remember=False)
 
     def on_viewer_location_changed(self, event: Viewer.LocationChanged) -> None:
-        """Update for the location being changed."""
+        """Update for the location being changed.
+
+        Args:
+            event: The location change event.
+        """
         self.query_one(Omnibox).visiting = (
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
@@ -110,9 +120,21 @@ class Main(Screen):
         """Handle the viewer adding a location to the history.
 
         Args:
-            event: The event to handle.
+            event: The history addition event.
         """
         self.query_one(Navigation).history.add(event.location)
+
+    def on_markdown_table_of_contents_updated(
+        self, event: Markdown.TableOfContentsUpdated
+    ) -> None:
+        """Handle the table of contents of the document being updated.
+
+        Args:
+            event: The table of contents update event to handle.
+        """
+        # We don't handle this, the navigation pane does. Bound the event
+        # over there.
+        self.query_one(Navigation).table_of_contents.on_table_of_contents_updated(event)
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
@@ -136,6 +158,10 @@ class Main(Screen):
     def action_omnibox(self) -> None:
         """Jump to the omnibox."""
         self.query_one(Omnibox).focus()
+
+    def action_table_of_contents(self) -> None:
+        """Display and focus the table of contents pane."""
+        self.query_one(Navigation).jump_to_contents()
 
     def action_local_files(self) -> None:
         """Display and focus the local files selection pane."""
