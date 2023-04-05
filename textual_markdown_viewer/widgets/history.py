@@ -5,6 +5,7 @@ from pathlib import Path
 from httpx import URL
 
 from textual.app import ComposeResult
+from textual.message import Message
 from textual.widgets import TabPane, OptionList
 from textual.widgets.option_list import Option
 
@@ -51,3 +52,26 @@ class History(TabPane):
             location: The location to add.
         """
         self.query_one(OptionList).add_option(Entry(location))
+
+    class Goto(Message):
+        """Message that requests the viewer goes to a given location."""
+
+        def __init__(self, location: Path | URL) -> None:
+            """Initialise the history goto message.
+
+            Args:
+                location: The location to go to.
+            """
+            super().__init__()
+            self.location = location
+            """The location to go to."""
+
+    def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
+        """Handle an entry in the history being selected.
+
+        Args:
+            event: The event to handle.
+        """
+        event.stop()
+        assert isinstance(event.option, Entry)
+        self.post_message(self.Goto(event.option.location))
