@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from httpx import AsyncClient, Response
+from httpx import URL
 
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -13,14 +13,7 @@ from textual.events import Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Header
 
-from .. import __version__
 from ..widgets import Navigation, Omnibox, Viewer
-
-PLACEHOLDER = """\
-# Textual Markdown Viewer
-
-Welcome to the Textual Markdown viewer!
-"""
 
 
 class Main(Screen):
@@ -29,10 +22,6 @@ class Main(Screen):
     DEFAULT_CSS = """
     Viewer {
         width: 3fr;
-    }
-
-    MarkdownTableOfContents {
-        max-width: 25%;
     }
     """
 
@@ -49,25 +38,18 @@ class Main(Screen):
         yield Omnibox()
         with Horizontal():
             yield Navigation()
-            yield Viewer(PLACEHOLDER, show_table_of_contents=False)
+            yield Viewer()
         yield Footer()
 
-    async def visit(self, location: Path | Response) -> None:
+    async def visit(self, location: Path | URL) -> None:
         """Visit the given location.
 
         Args:
             location: The location to visit.
         """
+        self.query_one(Omnibox).visiting = str(location)
+        await self.query_one(Viewer).visit(location)
         self.query_one(Viewer).focus()
-        if isinstance(location, Path):
-            self.query_one(Omnibox).visiting = str(location)
-            await self.query_one(Viewer).go(location)
-        else:
-            # TODO: This is a bit of a hack right at the moment; really I
-            # want the URL to be coming in here and things flowing from
-            # there. But right now I just want to get the text showing.
-            self.query_one(Omnibox).visiting = str(location.url)
-            self.query_one(Viewer).document.update(location.text)
 
     def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
@@ -87,14 +69,7 @@ class Main(Screen):
         Args:
             event: The remote view event.
         """
-        async with AsyncClient() as client:
-            response = await client.get(
-                event.url,
-                follow_redirects=True,
-                headers={"user-agent": f"textual-markdown-client v{__version__}"},
-            )
-            # TODO: Lots of error handling.
-            await self.visit(response)
+        await self.visit(event.url)
 
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
