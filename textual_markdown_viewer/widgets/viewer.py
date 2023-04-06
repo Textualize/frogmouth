@@ -67,7 +67,7 @@ class History:
             `True` if the location changed, `False` if not.
         """
         if self._current < len(self._history) - 1:
-            self._current -= 1
+            self._current += 1
             return True
         return False
 
