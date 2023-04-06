@@ -1,7 +1,6 @@
 """The main application class for the Markdown viewer."""
 
-from argparse import Namespace, ArgumentParser, ArgumentTypeError
-from pathlib import Path
+from argparse import Namespace, ArgumentParser
 
 from textual.app import App
 from textual import __version__ as textual_version  # pylint: disable=no-name-in-module
