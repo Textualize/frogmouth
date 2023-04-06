@@ -34,9 +34,8 @@ class TableOfContents(NavigationPane):
         """Compose the child widgets."""
         yield MarkdownTableOfContents()
 
-    def activate(self) -> None:
-        """Activate the table of contents navigation pane."""
-        super().activate()
+    def set_focus_within(self) -> None:
+        """Ensure the tree in the table of contents is focused."""
         self.query_one("MarkdownTableOfContents > Tree", Tree).focus()
 
     def on_table_of_contents_updated(self, event: Markdown.TableOfContentsUpdated):

@@ -73,9 +73,8 @@ class History(NavigationPane):
         """Compose the child widgets."""
         yield OptionList()
 
-    def activate(self) -> None:
-        """Activate the history navigation pane."""
-        super().activate()
+    def set_focus_within(self) -> None:
+        """Focus the option list."""
         self.query_one(OptionList).focus()
 
     def add(self, location: Path | URL) -> None:

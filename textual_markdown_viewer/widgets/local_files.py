@@ -38,9 +38,8 @@ class LocalFiles(NavigationPane):
         """Compose the child widgets."""
         yield DirectoryTree(getenv("HOME") or ".")
 
-    def activate(self) -> None:
-        """Activate the local files navigation pane."""
-        super().activate()
+    def set_focus_within(self) -> None:
+        """Focus the directory tree.."""
         self.query_one(DirectoryTree).focus()
 
     class Goto(Message):
