@@ -39,6 +39,15 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     ]
     """The keyboard bindings for the main screen."""
 
+    def __init__(self, initial_location: str | None = None) -> None:
+        """Initialise the main screen.
+
+        Args:
+            initial_location: The initial location to view.
+        """
+        super().__init__()
+        self._initial_location = initial_location
+
     def compose(self) -> ComposeResult:
         """Compose the main screen.."""
         yield Header()
@@ -61,9 +70,12 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         else:
             open_url(str(location))
 
-    def on_mount(self) -> None:
+    async def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
-        self.query_one(Omnibox).focus()
+        (omnibox := self.query_one(Omnibox)).focus()
+        if self._initial_location is not None:
+            omnibox.value = self._initial_location
+            await omnibox.action_submit()
 
     async def on_omnibox_local_view_command(
         self, event: Omnibox.LocalViewCommand
