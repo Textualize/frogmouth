@@ -130,8 +130,8 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
                 follow_redirects=True,
                 headers={"user-agent": f"textual-markdown-client v{__version__}"},
             )
-            # TODO: Lots of error handling.
-            self.document.update(response.text)
+        # TODO: Lots of error handling.
+        self.document.update(response.text)
 
     async def visit(self, location: Path | URL, remember: bool = True) -> None:
         """Visit a location.
