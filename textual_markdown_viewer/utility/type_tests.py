@@ -23,7 +23,7 @@ def maybe_markdown(resource: Any) -> bool:
 
 @maybe_markdown.register
 def _(resource: Path) -> bool:
-    return resource.suffix.lower() == ".md"
+    return resource.suffix.lower() in (".md", ".markdown")
 
 
 @maybe_markdown.register
