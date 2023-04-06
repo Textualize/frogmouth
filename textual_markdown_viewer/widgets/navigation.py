@@ -38,8 +38,8 @@ class Navigation(Vertical):
     """
 
     BINDINGS = [
-        Binding("left", "previous_tab", "", show=False),
-        Binding("right", "next_tab", "", show=False),
+        Binding("comma,a,ctrl+left", "previous_tab", "", show=False),
+        Binding("full_stop,d,ctrl+right", "next_tab", "", show=False),
     ]
     """Bindings local to the navigation pane."""
 
