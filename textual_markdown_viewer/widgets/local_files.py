@@ -1,5 +1,7 @@
 """Provides the local files navigation pane."""
 
+from __future__ import annotations
+
 from os import getenv
 from pathlib import Path
 
