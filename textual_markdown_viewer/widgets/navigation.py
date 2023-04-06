@@ -58,14 +58,24 @@ class Navigation(Vertical):
             yield self._history
 
     @property
-    def history(self) -> History:
-        """The history widget."""
-        return self._history
-
-    @property
     def table_of_contents(self) -> TableOfContents:
         """The table of contents widget."""
         return self._contents
+
+    @property
+    def local_files(self) -> LocalFiles:
+        """The local files widget."""
+        return self._local_files
+
+    @property
+    def bookmarks(self) -> Bookmarks:
+        """The bookmarks widget."""
+        return self._bookmarks
+
+    @property
+    def history(self) -> History:
+        """The history widget."""
+        return self._history
 
     def jump_to_local_files(self) -> Self:
         """Switch to and focus the local files pane.
