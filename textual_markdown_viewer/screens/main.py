@@ -80,6 +80,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """
         await self.visit(event.url)
 
+    def on_omnibox_contents_command(self) -> None:
+        """Handle being asked to show the table of contents."""
+        self.action_table_of_contents()
+
     def on_omnibox_local_files_command(self) -> None:
         """Handle being asked to view the local files picker."""
         self.action_local_files()
