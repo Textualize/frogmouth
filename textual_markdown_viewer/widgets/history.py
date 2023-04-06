@@ -1,5 +1,7 @@
 """Provides the history navigation pane."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 from httpx import URL
