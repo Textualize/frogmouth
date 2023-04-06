@@ -144,6 +144,15 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """
         self.query_one(Viewer).scroll_to_block(event.block_id)
 
+    async def on_markdown_link_clicked(self, event: Markdown.LinkClicked) -> None:
+        """Handle a link being clicked in the Markdown document.
+
+        Args:
+            event: The Markdown link click event to handle.
+        """
+        self.query_one(Omnibox).value = event.href
+        await self.query_one(Omnibox).action_submit()
+
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
 
