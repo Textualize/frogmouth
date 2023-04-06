@@ -92,9 +92,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
-        if self._bookmarks.id is not None:
-            self._tabs.active = self._bookmarks.id
-            # TODO: Focus the content when I add it.
+        self._bookmarks.activate()
         return self
 
     def jump_to_history(self) -> Self:

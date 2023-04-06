@@ -1,9 +1,9 @@
 """Provides the bookmarks navigation pane."""
 
-from textual.widgets import TabPane
+from .navigatgion_pane import NavigationPane
 
 
-class Bookmarks(TabPane):
+class Bookmarks(NavigationPane):
     """Bookmarks navigation pane."""
 
     def __init__(self) -> None:
