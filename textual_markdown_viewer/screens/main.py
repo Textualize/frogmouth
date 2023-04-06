@@ -16,7 +16,7 @@ from textual.widgets import Footer, Header, Markdown
 from ..widgets import History, LocalFiles, Navigation, Omnibox, Viewer
 
 
-class Main(Screen):
+class Main(Screen):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
     DEFAULT_CSS = """
