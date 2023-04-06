@@ -34,3 +34,10 @@ def _(resource: str) -> bool:
 @maybe_markdown.register
 def _(resource: URL) -> bool:
     return maybe_markdown(resource.path)
+
+
+def is_likely_url(candidate: str) -> bool:
+    """Does the given value look something like a URL?"""
+    # Quick and dirty for now.
+    url = URL(candidate)
+    return url.is_absolute_url and url.scheme in ("http", "https")

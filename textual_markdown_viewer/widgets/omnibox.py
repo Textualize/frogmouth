@@ -10,6 +10,8 @@ from textual.message import Message
 from textual.reactive import var
 from textual.widgets import Input
 
+from ..utility import is_likely_url
+
 
 class Omnibox(Input):
     """The command and location input widget for the Markdown viewer."""
@@ -103,13 +105,6 @@ class Omnibox(Input):
             is not None
         )
 
-    @staticmethod
-    def _is_likely_url(candidate: str) -> bool:
-        """Does the given value look something like a URL?"""
-        # Quick and dirty for now.
-        url = URL(candidate)
-        return url.is_absolute_url and url.scheme in ("http", "https")
-
     def _execute_command(self, command: str) -> None:
         """Execute the given command.
 
@@ -128,7 +123,7 @@ class Omnibox(Input):
             event: The submit event.
         """
         submitted = self.value.strip()
-        if self._is_likely_url(submitted):
+        if is_likely_url(submitted):
             self.post_message(self.RemoteViewCommand(URL(submitted)))
         elif Path(submitted).exists():
             self.post_message(self.LocalViewCommand(Path(submitted)))
