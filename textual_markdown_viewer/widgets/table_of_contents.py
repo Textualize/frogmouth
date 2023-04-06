@@ -38,7 +38,9 @@ class TableOfContents(NavigationPane):
         """Ensure the tree in the table of contents is focused."""
         self.query_one("MarkdownTableOfContents > Tree", Tree).focus()
 
-    def on_table_of_contents_updated(self, event: Markdown.TableOfContentsUpdated):
+    def on_table_of_contents_updated(
+        self, event: Markdown.TableOfContentsUpdated
+    ) -> None:
         """Handle a table of contents update event.
 
         Args:
