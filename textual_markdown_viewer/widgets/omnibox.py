@@ -66,7 +66,7 @@ class Omnibox(Input):
         if self.visiting:
             self.value = self.visiting
 
-    _ALIASES: dict[str, str] = {"h": "history", "q": "quit"}
+    _ALIASES: dict[str, str] = {"h": "history", "l": "local", "q": "quit"}
     """Command aliases."""
 
     @staticmethod
@@ -132,6 +132,13 @@ class Omnibox(Input):
             return
         self.value = ""
         event.stop()
+
+    class LocalFilesCommand(Message):
+        """The local files command."""
+
+    def command_local(self, _: str) -> None:
+        """View the local files."""
+        self.post_message(self.LocalFilesCommand())
 
     class QuitCommand(Message):
         """The quit command."""
