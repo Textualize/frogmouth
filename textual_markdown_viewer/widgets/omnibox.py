@@ -126,8 +126,8 @@ class Omnibox(Input):
             self.post_message(self.RemoteViewCommand(URL(submitted)))
         elif Path(submitted).exists():
             self.post_message(self.LocalViewCommand(Path(submitted)))
-        elif self._is_command(submitted := submitted.lower()):
-            self._execute_command(submitted)
+        elif self._is_command(command := submitted.lower()):
+            self._execute_command(command)
         else:
             return
         self.value = ""
