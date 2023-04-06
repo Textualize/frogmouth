@@ -118,6 +118,14 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """The location that is currently being visited."""
         return self._history.location
 
+    def scroll_to_block(self, block_id: str) -> None:
+        """Scroll the document to the given block ID.
+
+        Args:
+            block_id: The ID of the block to scroll to.
+        """
+        self.scroll_to_widget(self.document.query_one(f"#{block_id}"), top=True)
+
     async def _remote_load(self, location: URL) -> None:
         """Load a Markdown document from a URL.
 
