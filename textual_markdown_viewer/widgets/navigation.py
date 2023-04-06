@@ -83,9 +83,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
-        if self._local_files.id is not None:
-            self._tabs.active = self._local_files.id
-            self._local_files.children[0].focus()
+        self._local_files.activate()
         return self
 
     def jump_to_bookmarks(self) -> Self:
@@ -105,9 +103,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
-        if self._history.id is not None:
-            self._tabs.active = self._history.id
-            self._history.children[0].focus()
+        self._history.activate()
         return self
 
     def jump_to_contents(self) -> Self:
@@ -116,9 +112,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
-        if self._contents.id is not None:
-            self._tabs.active = self._contents.id
-            self._contents.children[0].children[0].focus()
+        self._contents.activate()
         return self
 
     def action_previous_tab(self) -> None:

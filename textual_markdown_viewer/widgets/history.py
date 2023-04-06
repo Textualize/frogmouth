@@ -11,8 +11,10 @@ from rich.text import Text
 
 from textual.app import ComposeResult
 from textual.message import Message
-from textual.widgets import TabPane, OptionList
+from textual.widgets import OptionList
 from textual.widgets.option_list import Option
+
+from .navigatgion_pane import NavigationPane
 
 
 class Entry(Option):
@@ -50,7 +52,7 @@ class Entry(Option):
         )
 
 
-class History(TabPane):
+class History(NavigationPane):
     """History navigation pane."""
 
     DEFAULT_CSS = """
@@ -70,6 +72,11 @@ class History(TabPane):
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         yield OptionList()
+
+    def activate(self) -> None:
+        """Activate the history navigation pane."""
+        super().activate()
+        self.query_one(OptionList).focus()
 
     def add(self, location: Path | URL) -> None:
         """Add a new location to the history.

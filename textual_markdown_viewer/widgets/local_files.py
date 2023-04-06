@@ -10,10 +10,13 @@ from httpx import URL
 
 from textual.app import ComposeResult
 from textual.message import Message
-from textual.widgets import DirectoryTree, TabPane
+from textual.widgets import DirectoryTree
 
 
-class LocalFiles(TabPane):
+from .navigatgion_pane import NavigationPane
+
+
+class LocalFiles(NavigationPane):
     """Local file picking navigation pane."""
 
     DEFAULT_CSS = """
@@ -34,6 +37,11 @@ class LocalFiles(TabPane):
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         yield DirectoryTree(getenv("HOME") or ".")
+
+    def activate(self) -> None:
+        """Activate the local files navigation pane."""
+        super().activate()
+        self.query_one(DirectoryTree).focus()
 
     class Goto(Message):
         """Message that requests the viewer goes to a given location."""
