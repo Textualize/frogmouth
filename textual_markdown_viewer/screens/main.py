@@ -134,6 +134,16 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         # over there.
         self.query_one(Navigation).table_of_contents.on_table_of_contents_updated(event)
 
+    def on_markdown_table_of_contents_selected(
+        self, event: Markdown.TableOfContentsSelected
+    ) -> None:
+        """Handle the user selecting something from the table of contents.
+
+        Args:
+            event: The table of contents selection event to handle.
+        """
+        self.query_one(Viewer).scroll_to_block(event.block_id)
+
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
 
