@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from webbrowser import open as open_url
 
 from httpx import URL
 
@@ -14,6 +15,7 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
 from ..widgets import History, LocalFiles, Navigation, Omnibox, Viewer
+from ..utility import maybe_markdown
 
 
 class Main(Screen):  # pylint:disable=too-many-public-methods
@@ -53,8 +55,11 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             location: The location to visit.
             remember: Should the visit be added to the history?
         """
-        await self.query_one(Viewer).visit(location, remember)
-        self.query_one(Viewer).focus()
+        if maybe_markdown(location):
+            await self.query_one(Viewer).visit(location, remember)
+            self.query_one(Viewer).focus()
+        else:
+            open_url(str(location))
 
     def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
