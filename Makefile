@@ -70,7 +70,7 @@ typecheck:			# Perform static type checks with mypy
 	$(mypy) --scripts-are-modules $(package)
 
 .PHONY: stricttypecheck
-stricttypecheck:	        # Perform a strict static type checks with mypy
+stricttypecheck:	        # Perform strict static type checks with mypy
 	$(mypy) --scripts-are-modules --strict $(package)
 
 .PHONY: checkall
