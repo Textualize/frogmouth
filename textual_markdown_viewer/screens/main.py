@@ -7,6 +7,7 @@ from webbrowser import open as open_url
 
 from httpx import URL
 
+from textual import __version__ as textual_version  # pylint: disable=no-name-in-module
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
@@ -14,8 +15,10 @@ from textual.events import Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
+from .. import __version__
 from ..widgets import History, LocalFiles, Navigation, Omnibox, Viewer
 from ..utility import maybe_markdown
+from .dialog import ModalDialog
 
 
 class Main(Screen):  # pylint:disable=too-many-public-methods
@@ -36,6 +39,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Binding("ctrl+l", "local_files", "Local Files"),
         Binding("ctrl+left", "backward", "Back"),
         Binding("ctrl+right", "forward", "Forward"),
+        Binding("f2", "about", "About"),
     ]
     """The keyboard bindings for the main screen."""
 
@@ -224,3 +228,14 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     async def action_forward(self) -> None:
         """Go forward in the history."""
         await self.query_one(Viewer).forward()
+
+    def action_about(self) -> None:
+        """Show the about dialog."""
+        self.app.push_screen(
+            ModalDialog(
+                "About textual-markdown-viewer",
+                f"Version {__version__}.\n\n"
+                f"Built with [link=https://textual.textualize.io/]Textual[/] v{textual_version}.\n\n"
+                "[link]https://github.com/Textualize/textual-markdown-viewer[/]",
+            )
+        )
