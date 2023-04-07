@@ -39,10 +39,12 @@ class ModalDialog(ModalScreen):
         border-bottom: solid $primary;
     }
     """
+    """Default CSS for the base modal dialog screen."""
 
     BINDINGS = [
         Binding("escape", "app.pop_screen", "", show=False),
     ]
+    """Bindings for the base modal dialog screen."""
 
     def __init__(self, title: TextType, message: TextType) -> None:
         """Initialise the modal dialog.
