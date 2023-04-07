@@ -16,7 +16,8 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
-from ..widgets import History, LocalFiles, Navigation, Omnibox, Viewer
+from ..widgets import Navigation, Omnibox, Viewer
+from ..widgets.navigation_panes import History, LocalFiles
 from ..utility import maybe_markdown
 from .dialog import ModalDialog
 

@@ -8,10 +8,10 @@ from textual.containers import Vertical
 from textual.widgets import TabbedContent, Tabs
 
 
-from .bookmarks import Bookmarks
-from .history import History
-from .local_files import LocalFiles
-from .table_of_contents import TableOfContents
+from .navigation_panes.bookmarks import Bookmarks
+from .navigation_panes.history import History
+from .navigation_panes.local_files import LocalFiles
+from .navigation_panes.table_of_contents import TableOfContents
 
 
 class Navigation(Vertical):
