@@ -14,7 +14,7 @@ from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
-from .navigatgion_pane import NavigationPane
+from .navigation_pane import NavigationPane
 
 
 class Entry(Option):

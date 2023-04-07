@@ -1,6 +1,6 @@
 """Provides the bookmarks navigation pane."""
 
-from .navigatgion_pane import NavigationPane
+from .navigation_pane import NavigationPane
 
 
 class Bookmarks(NavigationPane):

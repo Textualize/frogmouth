@@ -13,7 +13,7 @@ from textual.message import Message
 from textual.widgets import DirectoryTree
 
 
-from .navigatgion_pane import NavigationPane
+from .navigation_pane import NavigationPane
 
 
 class LocalFiles(NavigationPane):

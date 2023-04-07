@@ -4,7 +4,7 @@ from textual.app import ComposeResult
 from textual.widgets import Markdown, Tree
 from textual.widgets.markdown import MarkdownTableOfContents
 
-from .navigatgion_pane import NavigationPane
+from .navigation_pane import NavigationPane
 
 
 class TableOfContents(NavigationPane):
