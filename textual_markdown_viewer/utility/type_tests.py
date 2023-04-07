@@ -1,4 +1,4 @@
-"""Support code for testing if files for their potential type."""
+"""Support code for testing files for their potential type."""
 
 from functools import singledispatch
 from pathlib import Path
