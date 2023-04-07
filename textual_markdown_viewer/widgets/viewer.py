@@ -75,6 +75,12 @@ class History:
 class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     """The Markdown viewer class."""
 
+    DEFAULT_CSS = """
+    Viewer {
+        width: 3fr;
+    }
+    """
+
     _history: var[History] = var(History)
     """The browsing history."""
 

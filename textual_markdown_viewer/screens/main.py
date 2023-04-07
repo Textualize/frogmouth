@@ -24,12 +24,6 @@ from .dialog import ModalDialog
 class Main(Screen):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
-    DEFAULT_CSS = """
-    Viewer {
-        width: 3fr;
-    }
-    """
-
     BINDINGS = [
         Binding("escape", "escape", "Escpae", show=False),
         Binding("/", "omnibox", "Omnibox", show=False),
