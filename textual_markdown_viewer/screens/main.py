@@ -20,7 +20,7 @@ from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
 from ..utility import maybe_markdown
 from ..data import load_history, save_history
-from .dialog import InformationDialog
+from ..dialogs import ErrorDialog, InformationDialog
 
 
 class Main(Screen):  # pylint:disable=too-many-public-methods
@@ -122,6 +122,14 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         self, event: Omnibox.LocalChdirCommand
     ) -> None:
         """Handle being asked to view a new directory in the local files picker."""
+        if not event.target.exists():
+            self.app.push_screen(
+                ErrorDialog("No such directory", f"{event.target} does not exist.")
+            )
+        elif not event.target.is_dir():
+            self.app.push_screen(
+                ErrorDialog("Not a directory", f"{event.target} is not a directory.")
+            )
         await self.query_one(Navigation).jump_to_local_files(event.target)
 
     def on_omnibox_history_command(self) -> None:

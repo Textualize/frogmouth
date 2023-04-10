@@ -10,7 +10,6 @@ from textual.message import Message
 from textual.reactive import var
 from textual.widgets import Input
 
-from ..screens import ErrorDialog
 from ..utility import is_likely_url
 
 
@@ -188,13 +187,4 @@ class Omnibox(Input):
 
     def command_chdir(self, target: str) -> None:
         """The chdir command."""
-        directory = Path(target)
-        if directory.exists() and directory.is_dir():
-            self.post_message(self.LocalChdirCommand(directory))
-        else:
-            self.app.push_screen(
-                ErrorDialog(
-                    "Invalid directory",
-                    f"{target} either doesn't exist or isn't a directory.",
-                )
-            )
+        self.post_message(self.LocalChdirCommand(Path(target)))
