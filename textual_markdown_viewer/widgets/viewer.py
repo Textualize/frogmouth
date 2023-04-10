@@ -41,6 +41,16 @@ class History:
         except IndexError:
             return None
 
+    @property
+    def current(self) -> int | None:
+        """The current location in history, or None if there is no current location."""
+        return None if self.location is None else self._current
+
+    @property
+    def locations(self) -> list[Path | URL]:
+        """The locations in the history."""
+        return self._history
+
     def remember(self, location: Path | URL) -> None:
         """Remember a new location in the history.
 
@@ -82,7 +92,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     }
     """
 
-    _history: var[History] = var(History)
+    history: var[History] = var(History)
     """The browsing history."""
 
     class LocationChanged(Message):
@@ -123,7 +133,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     @property
     def location(self) -> Path | URL | None:
         """The location that is currently being visited."""
-        return self._history.location
+        return self.history.location
 
     def scroll_to_block(self, block_id: str) -> None:
         """Scroll the document to the given block ID.
@@ -213,7 +223,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
 
         # Remember the location in the history if we're supposed to.
         if remember:
-            self._history.remember(location)
+            self.history.remember(location)
             self.post_message(self.AddedToHistory(location))
 
         # Let anyone else know we've changed location.
@@ -226,13 +236,13 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             direction: A function that jumps in the desired direction.
         """
         if direction():
-            if self._history.location is not None:
-                await self.visit(self._history.location, remember=False)
+            if self.history.location is not None:
+                await self.visit(self.history.location, remember=False)
 
     async def back(self) -> None:
         """Go back in the viewer history."""
-        await self._jump(self._history.back)
+        await self._jump(self.history.back)
 
     async def forward(self) -> None:
         """Go forward in the viewer history."""
-        await self._jump(self._history.forward)
+        await self._jump(self.history.forward)
