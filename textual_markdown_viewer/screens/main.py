@@ -122,6 +122,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Handle being asked to view the history."""
         self.action_history()
 
+    def on_omnibox_about_command(self) -> None:
+        """Handle being asked to show the about dialog."""
+        self.action_about()
+
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
         self.app.exit()

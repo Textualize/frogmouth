@@ -69,6 +69,7 @@ class Omnibox(Input):
             self.value = self.visiting
 
     _ALIASES: dict[str, str] = {
+        "a": "about",
         "c": "contents",
         "h": "history",
         "l": "local",
@@ -161,3 +162,10 @@ class Omnibox(Input):
     def command_history(self, _: str) -> None:
         """The history command."""
         self.post_message(self.HistoryCommand())
+
+    class AboutCommand(Message):
+        """The about command."""
+
+    def command_about(self, _: str) -> None:
+        """The about command."""
+        self.post_message(self.AboutCommand())
