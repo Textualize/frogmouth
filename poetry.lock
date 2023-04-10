@@ -1330,6 +1330,18 @@ files = [
 ]
 
 [[package]]
+name = "xdg"
+version = "6.0.0"
+description = "Variables defined by the XDG Base Directory Specification"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "xdg-6.0.0-py3-none-any.whl", hash = "sha256:df3510755b4395157fc04fc3b02467c777f3b3ca383257397f09ab0d4c16f936"},
+    {file = "xdg-6.0.0.tar.gz", hash = "sha256:24278094f2d45e846d1eb28a2ebb92d7b67fc0cab5249ee3ce88c95f649a1c92"},
+]
+
+[[package]]
 name = "yarl"
 version = "1.8.2"
 description = "Yet another URL library"
@@ -1436,4 +1448,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "e6b89409aed49ee0a4b4d610dbf039a3b36214b1690b8a244a22ab9e8e67ab18"
+content-hash = "aacc337a6ffa5020d26bd33fbf46f2332401518526383dca9a41896cb159ed46"
