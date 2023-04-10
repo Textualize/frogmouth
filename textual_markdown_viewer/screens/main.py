@@ -72,11 +72,22 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
 
     async def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
+
+        # Load up any history that might be saved.
         if history := load_history():
             self.query_one(Viewer).load_history(history)
-        (omnibox := self.query_one(Omnibox)).focus()
-        if self._initial_location is not None:
-            omnibox.value = self._initial_location
+
+        # If we've not been tasked to start up looking at a very specific
+        # location (in other words if no location was passed on the command
+        # line), and if there is some history...
+        if self._initial_location is None and history:
+            # ...start up revisiting the last location the user was looking
+            # at.
+            await self.query_one(Viewer).visit(history[-1], remember=False)
+        elif self._initial_location is not None:
+            # Seems there is an initial location; so let's start up looking
+            # at that.
+            (omnibox := self.query_one(Omnibox)).value = self._initial_location
             await omnibox.action_submit()
 
     async def on_omnibox_local_view_command(
