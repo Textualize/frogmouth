@@ -77,3 +77,13 @@ class ModalDialog(ModalScreen):
     def on_button_pressed(self) -> None:
         """Handle the OK button being pressed."""
         self.app.pop_screen()
+
+
+class InformationDialog(ModalDialog):
+    """Modal dialog that shows information."""
+
+    DEFAULT_CSS = """
+    InformationDialog > Vertical {
+        border: thick $primary 50%;
+    }
+    """

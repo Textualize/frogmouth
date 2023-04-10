@@ -19,7 +19,7 @@ from .. import __version__
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
 from ..utility import maybe_markdown
-from .dialog import ModalDialog
+from .dialog import InformationDialog
 
 
 class Main(Screen):  # pylint:disable=too-many-public-methods
@@ -227,7 +227,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     def action_about(self) -> None:
         """Show the about dialog."""
         self.app.push_screen(
-            ModalDialog(
+            InformationDialog(
                 "About textual-markdown-viewer",
                 f"Version {__version__}.\n\n"
                 f"Built with [link=https://textual.textualize.io/]Textual[/] v{textual_version}.\n\n"
