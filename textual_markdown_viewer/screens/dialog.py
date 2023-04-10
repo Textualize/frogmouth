@@ -68,7 +68,7 @@ class ModalDialog(ModalScreen):
                 yield Static(self._title, classes="spaced")
             yield Static(self._message, id="message", classes="spaced")
             with Center(classes="spaced"):
-                yield Button("OK")
+                yield Button("OK", variant="primary")
 
     def on_mount(self) -> None:
         """Configure the dialog once the DOM has loaded."""
