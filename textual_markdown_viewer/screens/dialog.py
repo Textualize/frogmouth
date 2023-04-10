@@ -18,6 +18,10 @@ class ModalDialog(ModalScreen):
         align: center middle;
     }
 
+    ModalDialog Center {
+        width: 100%;
+    }
+
     ModalDialog > Vertical {
         background: $panel;
         min-width: 30%;
