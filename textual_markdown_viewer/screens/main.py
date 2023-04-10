@@ -19,6 +19,7 @@ from .. import __version__
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
 from ..utility import maybe_markdown
+from ..data import load_history, save_history
 from .dialog import InformationDialog
 
 
@@ -71,6 +72,8 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
 
     async def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
+        if history := load_history():
+            self.query_one(Viewer).load_history(history)
         (omnibox := self.query_one(Omnibox)).focus()
         if self._initial_location is not None:
             omnibox.value = self._initial_location
@@ -138,9 +141,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
 
-    def on_viewer_added_to_history(self) -> None:
-        """Handle the viewer adding a location to the history."""
+    def on_viewer_history_updated(self) -> None:
+        """Handle the viewer updating the history."""
         self.query_one(Navigation).history.update_from(self.query_one(Viewer))
+        save_history(self.query_one(Viewer).history.locations)
 
     def on_markdown_table_of_contents_updated(
         self, event: Markdown.TableOfContentsUpdated

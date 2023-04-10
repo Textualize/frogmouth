@@ -26,9 +26,9 @@ Welcome to the Textual Markdown viewer!
 class History:
     """Holds the browsing history for the viewer."""
 
-    def __init__(self) -> None:
+    def __init__(self, history: list[Path | URL] | None = None) -> None:
         """Initialise the history object."""
-        self._history: list[Path | URL] = []
+        self._history: list[Path | URL] = history or []
         """The list that holds the history of locations visited."""
         self._current: int = 0
         """The current location."""
@@ -108,18 +108,8 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             self.viewer: Viewer = viewer
             """The viewer that sent the message."""
 
-    class AddedToHistory(Message):
-        """Message sent when something is added to history."""
-
-        def __init__(self, location: Path | URL) -> None:
-            """Initialise the location history recording message.
-
-            Args:
-                location: The location that was added to history.
-            """
-            super().__init__()
-            self.location = location
-            """The location added to history."""
+    class HistoryUpdated(Message):
+        """Message sent when the history is updated."""
 
     def compose(self) -> ComposeResult:
         """Compose the markdown viewer."""
@@ -224,7 +214,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         # Remember the location in the history if we're supposed to.
         if remember:
             self.history.remember(location)
-            self.post_message(self.AddedToHistory(location))
+            self.post_message(self.HistoryUpdated())
 
         # Let anyone else know we've changed location.
         self.post_message(self.LocationChanged(self))
@@ -246,3 +236,12 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     async def forward(self) -> None:
         """Go forward in the viewer history."""
         await self._jump(self.history.forward)
+
+    def load_history(self, history: list[Path | URL]) -> None:
+        """Load up a history list from the given history.
+
+        Args:
+            history: The history load up from.
+        """
+        self.history = History(history)
+        self.post_message(self.HistoryUpdated())
