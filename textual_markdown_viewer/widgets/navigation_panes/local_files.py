@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from os import getenv
 from pathlib import Path
+from typing import Iterable
 
 from httpx import URL
 
@@ -13,7 +14,33 @@ from textual.message import Message
 from textual.widgets import DirectoryTree
 
 
+from ...utility import maybe_markdown
 from .navigation_pane import NavigationPane
+
+
+class FilteredDirectoryTree(DirectoryTree):
+    """A `DirectoryTree` filtered for the Markdown viewer."""
+
+    def filter_paths(self, paths: Iterable[Path]) -> Iterable[Path]:
+        """Filter the directory tree for the Markdown viewer.
+
+        Args:
+            paths: The paths to be filtered.
+
+        Returns:
+            The parts filtered for the Markdown viewer.
+
+        The filtered set will include all filesystem entries that aren't
+        hidden (in a Unix sense of hidden) which are either a directory or a
+        file that looks like it could be a Markdown document.
+        """
+        return [
+            path
+            for path in paths
+            if not path.name.startswith(".")
+            and path.is_dir()
+            or (path.is_file() and maybe_markdown(path))
+        ]
 
 
 class LocalFiles(NavigationPane):
@@ -36,7 +63,7 @@ class LocalFiles(NavigationPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield DirectoryTree(getenv("HOME") or ".")
+        yield FilteredDirectoryTree(getenv("HOME") or ".")
 
     def set_focus_within(self) -> None:
         """Focus the directory tree.."""
