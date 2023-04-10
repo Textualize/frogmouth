@@ -14,6 +14,7 @@ from textual.reactive import var
 from textual.widgets import Markdown
 
 from .. import __version__
+from ..screens.dialog import ErrorDialog
 
 PLACEHOLDER = f"""\
 # Textual Markdown Viewer {__version__}
@@ -156,7 +157,17 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         # Based on the type of the location, load up the content.
         if isinstance(location, Path):
-            await self.document.load(location)
+            # At the moment Textual's Markdown widget's load method captures
+            # *all* exceptions and just returns a true/false. It would be
+            # better to get an exception here and be able to properly report
+            # the problem. Alas, right now, we can't.
+            if not await self.document.load(location):
+                self.app.push_screen(
+                    ErrorDialog(
+                        "Error loading local document",
+                        f"{location}\n\nThere was an error loading the document.",
+                    )
+                )
         elif isinstance(location, URL):
             await self._remote_load(location)
         else:
