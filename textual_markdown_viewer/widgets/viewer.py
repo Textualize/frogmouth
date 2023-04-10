@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from collections import deque
 from pathlib import Path
 from typing import Callable
+from typing_extensions import Final
 
 from httpx import AsyncClient, URL, HTTPStatusError, RequestError
 
@@ -26,9 +28,14 @@ Welcome to the Textual Markdown viewer!
 class History:
     """Holds the browsing history for the viewer."""
 
+    MAXIMUM_HISTORY_LENGTH: Final[int] = 256
+    """The maximum number of items we'll keep in history."""
+
     def __init__(self, history: list[Path | URL] | None = None) -> None:
         """Initialise the history object."""
-        self._history: list[Path | URL] = history or []
+        self._history: deque[Path | URL] = deque(
+            history or [], maxlen=self.MAXIMUM_HISTORY_LENGTH
+        )
         """The list that holds the history of locations visited."""
         self._current: int = 0
         """The current location."""
@@ -49,7 +56,7 @@ class History:
     @property
     def locations(self) -> list[Path | URL]:
         """The locations in the history."""
-        return self._history
+        return list(self._history)
 
     def remember(self, location: Path | URL) -> None:
         """Remember a new location in the history.
