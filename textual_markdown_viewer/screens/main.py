@@ -164,7 +164,9 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
 
     def on_viewer_history_updated(self) -> None:
         """Handle the viewer updating the history."""
-        self.query_one(Navigation).history.update_from(self.query_one(Viewer))
+        self.query_one(Navigation).history.update_from(
+            self.query_one(Viewer).history.locations
+        )
         save_history(self.query_one(Viewer).history.locations)
 
     def on_markdown_table_of_contents_updated(

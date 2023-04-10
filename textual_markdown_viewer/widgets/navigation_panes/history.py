@@ -14,7 +14,6 @@ from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
-from ..viewer import Viewer
 from .navigation_pane import NavigationPane
 
 
@@ -78,11 +77,18 @@ class History(NavigationPane):
         """Focus the option list."""
         self.query_one(OptionList).focus()
 
-    def update_from(self, viewer: Viewer) -> None:
-        """Update the history from the given viewer."""
+    def update_from(self, locations: list[Path | URL]) -> None:
+        """Update the history from the given list of locations.
+
+        Args:
+            locations: A list of locations to update the history with.
+
+        This call removes any existing history and sets it to the given
+        value.
+        """
         option_list = self.query_one(OptionList)
         option_list.clear_options()
-        for location in reversed(viewer.history.locations):
+        for location in reversed(locations):
             option_list.add_option(Entry(location))
 
     class Goto(Message):
