@@ -75,6 +75,7 @@ class Omnibox(Input):
         "l": "local",
         "toc": "contents",
         "q": "quit",
+        "?": "help",
     }
     """Command aliases."""
 
@@ -213,6 +214,13 @@ class Omnibox(Input):
     def command_about(self, _: str) -> None:
         """The about command."""
         self.post_message(self.AboutCommand())
+
+    class HelpCommand(Message):
+        """The help command."""
+
+    def command_help(self, _: str) -> None:
+        """The help command."""
+        self.post_message(self.HelpCommand())
 
     def command_chdir(self, target: str) -> None:
         """The chdir command."""

@@ -21,6 +21,35 @@ from ..utility import maybe_markdown
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
 
+HELP = """\
+# Textual Markdown Viewer Help
+
+## Keys
+
+### Navigation keys:
+
+| Key | Command |
+| -- | -- |
+| `Ctrl+b` | Show the bookmarks |
+| `Ctrl+l` | Show the local file browser |
+| `Ctrl+t` | Show the table of contents |
+| `Ctrl+y` | Show the history |
+
+## Commands
+
+| Command | Arguments | Command |
+| -- | -- | -- |
+| `about` | | Show details about the application |
+| `chdir` | *&lt;dir&gt;* | Switch the local file browser to a new directory |
+| `contents` | | Show the table of contents for the document |
+| `help` | | Show this document |
+| `history` | | Show the history |
+| `local` | | Show the local file browser |
+| `quit` | | Quit the viewer |
+
+"""
+"""The help text."""
+
 
 class Main(Screen):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
@@ -34,6 +63,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Binding("ctrl+l", "local_files", "Local Files"),
         Binding("ctrl+left", "backward", "Back"),
         Binding("ctrl+right", "forward", "Forward"),
+        Binding("f1", "help", "Help"),
         Binding("f2", "about", "About"),
     ]
     """The keyboard bindings for the main screen."""
@@ -143,6 +173,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     def on_omnibox_about_command(self) -> None:
         """Handle being asked to show the about dialog."""
         self.action_about()
+
+    def on_omnibox_help_command(self) -> None:
+        """Handle being asked to show the help document."""
+        self.action_help()
 
     def on_omnibox_quit_command(self) -> None:
         """Handle being asked to quit."""
@@ -266,6 +300,12 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     async def action_forward(self) -> None:
         """Go forward in the history."""
         await self.query_one(Viewer).forward()
+
+    def action_help(self) -> None:
+        """Show the help."""
+        (viewer := self.query_one(Viewer)).show(HELP)
+        viewer.focus()
+        self.query_one(Omnibox).value = "help"
 
     def action_about(self) -> None:
         """Show the about dialog."""
