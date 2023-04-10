@@ -26,9 +26,9 @@ def config_file() -> Path:
         As a side effect the configuration directory will be created if it
         does not exist.
     """
-    config_dir = xdg_config_home() / "textualize" / "markdown-viewer"
-    if not config_dir.exists():
-        config_dir.mkdir(parents=True)
+    (config_dir := xdg_config_home() / "textualize" / "markdown-viewer").mkdir(
+        parents=True, exist_ok=True
+    )
     return config_dir / "configuration.json"
 
 
