@@ -102,11 +102,11 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     history: var[History] = var(History)
     """The browsing history."""
 
-    class LocationChanged(Message):
-        """Message sent when the viewer location changes."""
+    class ViewerMessage(Message):
+        """Base class for viewer messages."""
 
         def __init__(self, viewer: Viewer) -> None:
-            """Initialise the location changed message.
+            """Initialise the message.
 
             Args:
                 viewer: The viewer sending the message.
@@ -115,7 +115,10 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             self.viewer: Viewer = viewer
             """The viewer that sent the message."""
 
-    class HistoryUpdated(Message):
+    class LocationChanged(ViewerMessage):
+        """Message sent when the viewer location changes."""
+
+    class HistoryUpdated(ViewerMessage):
         """Message sent when the history is updated."""
 
     def compose(self) -> ComposeResult:
@@ -221,7 +224,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         # Remember the location in the history if we're supposed to.
         if remember:
             self.history.remember(location)
-            self.post_message(self.HistoryUpdated())
+            self.post_message(self.HistoryUpdated(self))
 
         # Let anyone else know we've changed location.
         self.post_message(self.LocationChanged(self))
@@ -251,4 +254,4 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             history: The history load up from.
         """
         self.history = History(history)
-        self.post_message(self.HistoryUpdated())
+        self.post_message(self.HistoryUpdated(self))

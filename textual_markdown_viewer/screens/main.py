@@ -162,12 +162,14 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
 
-    def on_viewer_history_updated(self) -> None:
-        """Handle the viewer updating the history."""
-        self.query_one(Navigation).history.update_from(
-            self.query_one(Viewer).history.locations
-        )
-        save_history(self.query_one(Viewer).history.locations)
+    def on_viewer_history_updated(self, event: Viewer.HistoryUpdated) -> None:
+        """Handle the viewer updating the history.
+
+        Args:
+            event: The history update event.
+        """
+        self.query_one(Navigation).history.update_from(event.viewer.history.locations)
+        save_history(event.viewer.history.locations)
 
     def on_markdown_table_of_contents_updated(
         self, event: Markdown.TableOfContentsUpdated
