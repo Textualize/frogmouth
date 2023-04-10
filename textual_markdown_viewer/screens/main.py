@@ -157,7 +157,9 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Args:
             event: The event to handle.
         """
-        await self.visit(event.location, remember=False)
+        await self.visit(
+            event.location, remember=event.location != self.query_one(Viewer).location
+        )
 
     def on_viewer_location_changed(self, event: Viewer.LocationChanged) -> None:
         """Update for the location being changed.
