@@ -146,7 +146,7 @@ class Omnibox(Input):
             # It looks like it's an URL of some description so try and load
             # it as such.
             self.post_message(self.RemoteViewCommand(URL(submitted)))
-        elif (path := Path(submitted)).exists():
+        elif (path := Path(submitted).expanduser().resolve()).exists():
             # It's a match for something in the local filesystem. Is it...
             if path.is_file():
                 # a file! Try and open it for viewing.
@@ -224,4 +224,4 @@ class Omnibox(Input):
 
     def command_chdir(self, target: str) -> None:
         """The chdir command."""
-        self.post_message(self.LocalChdirCommand(Path(target)))
+        self.post_message(self.LocalChdirCommand(Path(target).expanduser().resolve()))
