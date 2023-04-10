@@ -60,6 +60,19 @@ keys:				# Run the textual keys utility.
 	$(textual) keys
 
 ##############################################################################
+# Reformatting tools.
+.PHONY: black
+black:				# Run black over the code.
+	$(run) black $(package)
+
+.PHONY: isort
+isort:				# Run isort over the code.
+	$(run) isort $(package)
+
+.PHONY: reformat
+reformat: isort black		# Run all the formatting tools over the code.
+
+##############################################################################
 # Checking/testing/linting/etc.
 .PHONY: lint
 lint:				# Run Pylint over the library
