@@ -228,6 +228,14 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         # Let anyone else know we've changed location.
         self.post_message(self.LocationChanged(self))
 
+    def show(self, content: str) -> None:
+        """Show some direct text in the viewer.
+
+        Args:
+            content: The text to show.
+        """
+        self.document.update(content)
+
     async def _jump(self, direction: Callable[[], bool]) -> None:
         """Jump in a particular direction within the history.
 
