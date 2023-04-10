@@ -67,7 +67,7 @@ black:				# Run black over the code.
 
 .PHONY: isort
 isort:				# Run isort over the code.
-	$(run) isort $(package)
+	$(run) isort --profile black $(package)
 
 .PHONY: reformat
 reformat: isort black		# Run all the formatting tools over the code.
