@@ -17,7 +17,7 @@ from textual.widgets import Footer, Header, Markdown
 from .. import __version__
 from ..data import load_history, save_history
 from ..dialogs import ErrorDialog, InformationDialog
-from ..utility import maybe_markdown
+from ..utility import is_likely_url, maybe_markdown
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
 
@@ -252,7 +252,9 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Args:
             event: The Markdown link click event to handle.
         """
-        await self.visit(URL(event.href))
+        await self.visit(
+            URL(event.href) if is_likely_url(event.href) else Path(event.href)
+        )
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
