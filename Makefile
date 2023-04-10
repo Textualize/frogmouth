@@ -6,6 +6,8 @@ python  := $(run) python
 textual := $(run) textual
 lint    := $(run) pylint
 mypy    := $(run) mypy
+black   := $(run) black
+isort   := $(run) isort
 
 ##############################################################################
 # Methods of running the application.
@@ -63,11 +65,11 @@ keys:				# Run the textual keys utility.
 # Reformatting tools.
 .PHONY: black
 black:				# Run black over the code.
-	$(run) black $(package)
+	$(black) $(package)
 
 .PHONY: isort
 isort:				# Run isort over the code.
-	$(run) isort --profile black $(package)
+	$(isort) --profile black $(package)
 
 .PHONY: reformat
 reformat: isort black		# Run all the formatting tools over the code.
