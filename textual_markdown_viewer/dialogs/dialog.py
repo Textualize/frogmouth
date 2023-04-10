@@ -1,11 +1,9 @@
 """Provides modal dialog screens for the application."""
 
 from rich.text import TextType
-
-
 from textual.app import ComposeResult
 from textual.binding import Binding
-from textual.containers import Vertical, Center
+from textual.containers import Center, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Button, Static
 from textual.widgets._button import ButtonVariant

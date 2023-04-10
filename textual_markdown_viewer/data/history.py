@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
+from json import JSONEncoder, dumps, loads
 from pathlib import Path
-from json import dumps, loads, JSONEncoder
 from typing import Any
 
-
 from httpx import URL
-
 from xdg import xdg_data_home
 
 from ..utility import is_likely_url

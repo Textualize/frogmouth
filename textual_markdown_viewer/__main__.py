@@ -6,6 +6,5 @@ that can be called upon from an executable script.
 
 from .app import run
 
-
 if __name__ == "__main__":
     run()

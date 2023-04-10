@@ -5,10 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from httpx import URL
-
 from rich.text import Text
-
-
 from textual.app import ComposeResult
 from textual.message import Message
 from textual.widgets import OptionList

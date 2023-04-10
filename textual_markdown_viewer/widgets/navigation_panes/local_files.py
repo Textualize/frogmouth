@@ -7,12 +7,9 @@ from pathlib import Path
 from typing import Iterable
 
 from httpx import URL
-
-
 from textual.app import ComposeResult
 from textual.message import Message
 from textual.widgets import DirectoryTree
-
 
 from ...utility import maybe_markdown
 from .navigation_pane import NavigationPane

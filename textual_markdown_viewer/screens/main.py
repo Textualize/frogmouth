@@ -6,7 +6,6 @@ from pathlib import Path
 from webbrowser import open as open_url
 
 from httpx import URL
-
 from textual import __version__ as textual_version  # pylint: disable=no-name-in-module
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -16,11 +15,11 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
-from ..widgets import Navigation, Omnibox, Viewer
-from ..widgets.navigation_panes import History, LocalFiles
-from ..utility import maybe_markdown
 from ..data import load_history, save_history
 from ..dialogs import ErrorDialog, InformationDialog
+from ..utility import maybe_markdown
+from ..widgets import Navigation, Omnibox, Viewer
+from ..widgets.navigation_panes import History, LocalFiles
 
 
 class Main(Screen):  # pylint:disable=too-many-public-methods

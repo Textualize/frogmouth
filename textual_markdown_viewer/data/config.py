@@ -1,9 +1,8 @@
 """Provides code for loading/saving configuration."""
 
-from pathlib import Path
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from json import dumps, loads
-
+from pathlib import Path
 
 from xdg import xdg_config_home
 

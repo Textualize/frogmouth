@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing_extensions import Self
 
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
 from textual.widgets import TabbedContent, Tabs
-
+from typing_extensions import Self
 
 from .navigation_panes.bookmarks import Bookmarks
 from .navigation_panes.history import History

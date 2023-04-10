@@ -5,15 +5,14 @@ from __future__ import annotations
 from collections import deque
 from pathlib import Path
 from typing import Callable
-from typing_extensions import Final
 
-from httpx import AsyncClient, URL, HTTPStatusError, RequestError
-
+from httpx import URL, AsyncClient, HTTPStatusError, RequestError
 from textual.app import ComposeResult
 from textual.containers import VerticalScroll
 from textual.message import Message
 from textual.reactive import var
 from textual.widgets import Markdown
+from typing_extensions import Final
 
 from .. import __version__
 from ..dialogs import ErrorDialog
