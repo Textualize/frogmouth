@@ -133,6 +133,24 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.scroll_to_widget(self.document.query_one(f"#{block_id}"), top=True)
 
+    async def _local_load(self, location: Path) -> None:
+        """Load a Markdown document from a local file.
+
+        Args:
+            location: The location to load from.
+        """
+        # At the moment Textual's Markdown widget's load method captures
+        # *all* exceptions and just returns a true/false. It would be
+        # better to get an exception here and be able to properly report
+        # the problem. Alas, right now, we can't.
+        if not await self.document.load(location):
+            self.app.push_screen(
+                ErrorDialog(
+                    "Error loading local document",
+                    f"{location}\n\nThere was an error loading the document.",
+                )
+            )
+
     async def _remote_load(self, location: URL) -> None:
         """Load a Markdown document from a URL.
 
@@ -157,17 +175,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         # Based on the type of the location, load up the content.
         if isinstance(location, Path):
-            # At the moment Textual's Markdown widget's load method captures
-            # *all* exceptions and just returns a true/false. It would be
-            # better to get an exception here and be able to properly report
-            # the problem. Alas, right now, we can't.
-            if not await self.document.load(location):
-                self.app.push_screen(
-                    ErrorDialog(
-                        "Error loading local document",
-                        f"{location}\n\nThere was an error loading the document.",
-                    )
-                )
+            await self._local_load(location)
         elif isinstance(location, URL):
             await self._remote_load(location)
         else:
