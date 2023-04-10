@@ -68,7 +68,11 @@ def load_history() -> list[Path | URL]:
     Returns:
         The history.
     """
-    return [
-        URL(location) if is_likely_url(location) else Path(location)
-        for location in loads(history_file().read_text())
-    ]
+    return (
+        [
+            URL(location) if is_likely_url(location) else Path(location)
+            for location in loads(history.read_text())
+        ]
+        if (history := history_file()).exists()
+        else []
+    )
