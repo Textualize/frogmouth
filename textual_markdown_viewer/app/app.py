@@ -6,8 +6,8 @@ from textual.app import App
 from textual import __version__ as textual_version  # pylint: disable=no-name-in-module
 
 from .. import __version__
+from ..data import load_config
 from ..screens import Main
-from ..utility import load_config
 
 
 class MarkdownViewer(App[None]):
