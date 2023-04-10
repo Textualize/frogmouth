@@ -114,9 +114,15 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Handle being asked to show the table of contents."""
         self.action_table_of_contents()
 
-    def on_omnibox_local_files_command(self) -> None:
+    async def on_omnibox_local_files_command(self) -> None:
         """Handle being asked to view the local files picker."""
-        self.action_local_files()
+        await self.action_local_files()
+
+    async def on_omnibox_local_chdir_command(
+        self, event: Omnibox.LocalChdirCommand
+    ) -> None:
+        """Handle being asked to view a new directory in the local files picker."""
+        await self.query_one(Navigation).jump_to_local_files(event.target)
 
     def on_omnibox_history_command(self) -> None:
         """Handle being asked to view the history."""
@@ -219,9 +225,9 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Display and focus the table of contents pane."""
         self.query_one(Navigation).jump_to_contents()
 
-    def action_local_files(self) -> None:
+    async def action_local_files(self) -> None:
         """Display and focus the local files selection pane."""
-        self.query_one(Navigation).jump_to_local_files()
+        await self.query_one(Navigation).jump_to_local_files()
 
     def action_bookmarks(self) -> None:
         """Display and focus the bookmarks selection pane."""

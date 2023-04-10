@@ -10,6 +10,7 @@ from textual.message import Message
 from textual.reactive import var
 from textual.widgets import Input
 
+from ..screens.dialog import ErrorDialog
 from ..utility import is_likely_url
 
 
@@ -71,6 +72,7 @@ class Omnibox(Input):
     _ALIASES: dict[str, str] = {
         "a": "about",
         "c": "contents",
+        "cd": "chdir",
         "h": "history",
         "l": "local",
         "toc": "contents",
@@ -117,6 +119,15 @@ class Omnibox(Input):
             arguments.strip()
         )
 
+    class LocalChdirCommand(Message):
+        """Command for changing the local files directory."""
+
+        def __init__(self, target: Path) -> None:
+            """Initialise the local files chdir command."""
+            super().__init__()
+            self.target = target
+            """The target directory to change to."""
+
     def on_input_submitted(self, event: Input.Submitted) -> None:
         """Handle the user submitting the input.
 
@@ -126,8 +137,13 @@ class Omnibox(Input):
         submitted = self.value.strip()
         if is_likely_url(submitted):
             self.post_message(self.RemoteViewCommand(URL(submitted)))
-        elif Path(submitted).exists():
-            self.post_message(self.LocalViewCommand(Path(submitted)))
+        elif (path := Path(submitted)).exists():
+            if path.is_file():
+                self.post_message(self.LocalViewCommand(path))
+            elif path.is_dir():
+                self.post_message(self.LocalChdirCommand(path))
+            else:
+                return
         elif self._is_command(command := submitted.lower()):
             self._execute_command(command)
         else:
@@ -169,3 +185,16 @@ class Omnibox(Input):
     def command_about(self, _: str) -> None:
         """The about command."""
         self.post_message(self.AboutCommand())
+
+    def command_chdir(self, target: str) -> None:
+        """The chdir command."""
+        directory = Path(target)
+        if directory.exists() and directory.is_dir():
+            self.post_message(self.LocalChdirCommand(directory))
+        else:
+            self.app.push_screen(
+                ErrorDialog(
+                    "Invalid directory",
+                    f"{target} either doesn't exist or isn't a directory.",
+                )
+            )

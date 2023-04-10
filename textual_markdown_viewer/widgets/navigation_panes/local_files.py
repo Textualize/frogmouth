@@ -65,6 +65,14 @@ class LocalFiles(NavigationPane):
         """Compose the child widgets."""
         yield FilteredDirectoryTree(getenv("HOME") or ".")
 
+    async def chdir(self, path: Path) -> None:
+        """Change the filesystem view to the given directory."""
+        # At the moment Textual's DirectoryTree doesn't support changing
+        # directory to a new root, so here we're going to remove it and
+        # mount a fresh one with a new root.
+        await self.query_one(FilteredDirectoryTree).remove()
+        await self.mount(FilteredDirectoryTree(path))
+
     def set_focus_within(self) -> None:
         """Focus the directory tree.."""
         self.query_one(DirectoryTree).focus()

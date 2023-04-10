@@ -1,5 +1,8 @@
 """Provides the navigation panel widget."""
 
+from __future__ import annotations
+
+from pathlib import Path
 from typing_extensions import Self
 
 from textual.app import ComposeResult
@@ -77,12 +80,14 @@ class Navigation(Vertical):
         """The history widget."""
         return self._history
 
-    def jump_to_local_files(self) -> Self:
+    async def jump_to_local_files(self, target: Path | None = None) -> Self:
         """Switch to and focus the local files pane.
 
         Returns:
             Self.
         """
+        if target is not None:
+            await self._local_files.chdir(target)
         self._local_files.activate()
         return self
 
