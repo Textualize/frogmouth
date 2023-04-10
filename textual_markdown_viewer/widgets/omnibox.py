@@ -10,7 +10,7 @@ from textual.message import Message
 from textual.reactive import var
 from textual.widgets import Input
 
-from ..screens.dialog import ErrorDialog
+from ..screens import ErrorDialog
 from ..utility import is_likely_url
 
 

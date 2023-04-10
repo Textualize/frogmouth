@@ -16,7 +16,7 @@ from textual.reactive import var
 from textual.widgets import Markdown
 
 from .. import __version__
-from ..screens.dialog import ErrorDialog
+from ..screens import ErrorDialog
 
 PLACEHOLDER = f"""\
 # Textual Markdown Viewer {__version__}
