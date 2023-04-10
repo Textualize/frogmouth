@@ -132,21 +132,51 @@ class Omnibox(Input):
         Args:
             event: The submit event.
         """
+
+        # Clean up whatever the user input.
         submitted = self.value.strip()
+
+        # Now that we've got it, empty the value. We'll put it back
+        # depending on the outcome.
+        self.value = ""
+
+        # Work through the possible options for what the user entered.
         if is_likely_url(submitted):
+            # It looks like it's an URL of some description so try and load
+            # it as such.
             self.post_message(self.RemoteViewCommand(URL(submitted)))
         elif (path := Path(submitted)).exists():
+            # It's a match for something in the local filesystem. Is it...
             if path.is_file():
+                # a file! Try and open it for viewing.
                 self.post_message(self.LocalViewCommand(path))
+                self.value = str(path)
             elif path.is_dir():
+                # Nope, it's a directory. Take that to be a request to open
+                # the local file selection navigation pane with the
+                # directory as the root.
                 self.post_message(self.LocalChdirCommand(path))
             else:
+                # It's something that exists in the filesystem, but it's not
+                # a directory or a file. Let's nope on that for now.
                 return
         elif self._is_command(command := submitted.lower()):
+            # Having checked for URLs and existing filesystem things, it's
+            # now safe look for commands. Having got here, it is a match for
+            # a command so we handle it as such.
             self._execute_command(command)
         else:
-            return
-        self.value = ""
+            # Having got this far, the best thing to do now is assume that
+            # the user was attempting to enter a filename to view and got it
+            # wrong. So that they get some sort of feedback, let's attempt
+            # to view it anyway.
+            self.post_message(self.LocalViewCommand(Path(submitted)))
+            # Because it'll raise an error and the user may want to edit the
+            # input to get it right, we put the original input back in
+            # place.
+            self.value = submitted
+
+        # If we got a match above stop the event.
         event.stop()
 
     class ContentsCommand(Message):

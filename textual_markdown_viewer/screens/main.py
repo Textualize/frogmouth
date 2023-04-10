@@ -63,10 +63,15 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             location: The location to visit.
             remember: Should the visit be added to the history?
         """
+        # If the location we've been given looks like it is markdown, be it
+        # locally in the filesystem or out on the web...
         if maybe_markdown(location):
+            # ...attempt to visit it in the viewer.
             await self.query_one(Viewer).visit(location, remember)
-            self.query_one(Viewer).focus()
         else:
+            # It looks like it's something we can't handle, but it could be
+            # coming from a link in a document we're viewing, so let's be
+            # kind to the user and hand it off to the operating system.
             open_url(str(location))
 
     async def on_mount(self) -> None:
@@ -167,9 +172,13 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Args:
             event: The location change event.
         """
+        # Update the omnibox with whatever is appropriate for the new location.
         self.query_one(Omnibox).visiting = (
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
+        # Having safely arrived at a new location, that implies that we want
+        # to focus on the viewer/
+        self.query_one(Viewer).focus()
 
     def on_viewer_history_updated(self, event: Viewer.HistoryUpdated) -> None:
         """Handle the viewer updating the history.
