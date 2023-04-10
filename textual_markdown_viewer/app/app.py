@@ -7,6 +7,7 @@ from textual import __version__ as textual_version  # pylint: disable=no-name-in
 
 from .. import __version__
 from ..screens import Main
+from ..utility import load_config
 
 
 class MarkdownViewer(App[None]):
@@ -26,6 +27,7 @@ class MarkdownViewer(App[None]):
         """
         super().__init__()
         self._args = cli_args
+        self.dark = not load_config().light_mode
 
     def on_mount(self) -> None:
         """Set up the application after the DOM is ready."""
