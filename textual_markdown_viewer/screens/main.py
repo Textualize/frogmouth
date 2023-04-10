@@ -252,8 +252,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Args:
             event: The Markdown link click event to handle.
         """
-        self.query_one(Omnibox).value = event.href
-        await self.query_one(Omnibox).action_submit()
+        await self.visit(URL(event.href))
 
     async def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
