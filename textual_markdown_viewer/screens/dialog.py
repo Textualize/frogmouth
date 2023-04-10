@@ -8,6 +8,7 @@ from textual.binding import Binding
 from textual.containers import Vertical, Center
 from textual.screen import ModalScreen
 from textual.widgets import Button, Static
+from textual.widgets._button import ButtonVariant
 
 
 class ModalDialog(ModalScreen):
@@ -61,6 +62,11 @@ class ModalDialog(ModalScreen):
         self._title = title
         self._message = message
 
+    @property
+    def button_style(self) -> ButtonVariant:
+        """The style for the dialog's button."""
+        return "primary"
+
     def compose(self) -> ComposeResult:
         """Compose the content of the modal dialog."""
         with Vertical():
@@ -68,7 +74,7 @@ class ModalDialog(ModalScreen):
                 yield Static(self._title, classes="spaced")
             yield Static(self._message, id="message", classes="spaced")
             with Center(classes="spaced"):
-                yield Button("OK", variant="primary")
+                yield Button("OK", variant=self.button_style)
 
     def on_mount(self) -> None:
         """Configure the dialog once the DOM has loaded."""
@@ -87,3 +93,24 @@ class InformationDialog(ModalDialog):
         border: thick $primary 50%;
     }
     """
+
+
+class ErrorDialog(ModalDialog):
+    """Modal dialog for showing errors."""
+
+    DEFAULT_CSS = """
+    ErrorDialog > Vertical {
+        background: $error 70%;
+        border: thick $error 50%;
+    }
+
+    ErrorDialog #message {
+        border-top: solid $panel;
+        border-bottom: solid $panel;
+    }
+    """
+
+    @property
+    def button_style(self) -> ButtonVariant:
+        """The style for the dialog's button."""
+        return "error"
