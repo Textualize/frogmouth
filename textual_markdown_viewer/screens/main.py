@@ -118,6 +118,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             # ...start up revisiting the last location the user was looking
             # at.
             await self.query_one(Viewer).visit(history[-1], remember=False)
+            self.query_one(Omnibox).value = str(history[-1])
         elif self._initial_location is not None:
             # Seems there is an initial location; so let's start up looking
             # at that.
