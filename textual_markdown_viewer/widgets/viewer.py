@@ -209,7 +209,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         # Based on the type of the location, load up the content.
         loaded = False
         if isinstance(location, Path):
-            loaded = await self._local_load(location := location.resolve())
+            loaded = await self._local_load(location := location.expanduser().resolve())
         elif isinstance(location, URL):
             loaded = await self._remote_load(location)
         else:
