@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
-from httpx import AsyncClient, URL
+from httpx import AsyncClient, URL, HTTPStatusError, RequestError
 
 from textual.app import ComposeResult
 from textual.containers import VerticalScroll
@@ -133,11 +133,14 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.scroll_to_widget(self.document.query_one(f"#{block_id}"), top=True)
 
-    async def _local_load(self, location: Path) -> None:
+    async def _local_load(self, location: Path) -> bool:
         """Load a Markdown document from a local file.
 
         Args:
             location: The location to load from.
+
+        Returns:
+            `True` if the document seemed to load fine, `False` if not.
         """
         # At the moment Textual's Markdown widget's load method captures
         # *all* exceptions and just returns a true/false. It would be
@@ -150,21 +153,41 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
                     f"{location}\n\nThere was an error loading the document.",
                 )
             )
+            return False
+        return True
 
-    async def _remote_load(self, location: URL) -> None:
+    async def _remote_load(self, location: URL) -> bool:
         """Load a Markdown document from a URL.
 
         Args:
             location: The location to load from.
+
+        Returns:
+            `True` if the document seemed to load fine, `False` if not.
         """
-        async with AsyncClient() as client:
-            response = await client.get(
-                location,
-                follow_redirects=True,
-                headers={"user-agent": f"textual-markdown-client v{__version__}"},
-            )
-        # TODO: Lots of error handling.
+
+        try:
+            async with AsyncClient() as client:
+                response = await client.get(
+                    location,
+                    follow_redirects=True,
+                    headers={"user-agent": f"textual-markdown-client v{__version__}"},
+                )
+        except RequestError as error:
+            self.app.push_screen(ErrorDialog("Error getting document", str(error)))
+            return False
+
+        try:
+            response.raise_for_status()
+        except HTTPStatusError as error:
+            self.app.push_screen(ErrorDialog("Error getting document", str(error)))
+            return False
+
+        # There didn't seem to be an error transporting the data, and
+        # neither did there seem to be an error with the resource itself. So
+        # at this point we should hopefully have the document's content.
         self.document.update(response.text)
+        return True
 
     async def visit(self, location: Path | URL, remember: bool = True) -> None:
         """Visit a location.
@@ -173,13 +196,20 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             location: The location to visit.
             remember: Should this visit be added to the history?
         """
+
         # Based on the type of the location, load up the content.
+        loaded = False
         if isinstance(location, Path):
-            await self._local_load(location)
+            loaded = await self._local_load(location)
         elif isinstance(location, URL):
-            await self._remote_load(location)
+            loaded = await self._remote_load(location)
         else:
             raise ValueError("Unknown location type passed to the Markdown viewer")
+
+        # If we didn't manage to load anything don't do anything else for
+        # the visit.
+        if not loaded:
+            return
 
         # Remember the location in the history if we're supposed to.
         if remember:
