@@ -38,7 +38,7 @@ class History:
             history or [], maxlen=self.MAXIMUM_HISTORY_LENGTH
         )
         """The list that holds the history of locations visited."""
-        self._current: int = len(self._history)
+        self._current: int = max(len(self._history) - 1, 0)
         """The current location."""
 
     @property
