@@ -126,7 +126,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             yield Viewer()
         yield Footer()
 
-    async def visit(self, location: Path | URL, remember: bool = True) -> None:
+    def visit(self, location: Path | URL, remember: bool = True) -> None:
         """Visit the given location.
 
         Args:
@@ -137,7 +137,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         # locally in the filesystem or out on the web...
         if maybe_markdown(location):
             # ...attempt to visit it in the viewer.
-            await self.query_one(Viewer).visit(location, remember)
+            self.query_one(Viewer).visit(location, remember)
         else:
             # It looks like it's something we can't handle, but it could be
             # coming from a link in a document we're viewing, so let's be
@@ -157,7 +157,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         if self._initial_location is None and history:
             # ...start up revisiting the last location the user was looking
             # at.
-            await self.query_one(Viewer).visit(history[-1], remember=False)
+            self.query_one(Viewer).visit(history[-1], remember=False)
             self.query_one(Omnibox).value = str(history[-1])
         elif self._initial_location is not None:
             # Seems there is an initial location; so let's start up looking
@@ -165,25 +165,21 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             (omnibox := self.query_one(Omnibox)).value = self._initial_location
             await omnibox.action_submit()
 
-    async def on_omnibox_local_view_command(
-        self, event: Omnibox.LocalViewCommand
-    ) -> None:
+    def on_omnibox_local_view_command(self, event: Omnibox.LocalViewCommand) -> None:
         """Handle the omnibox asking us to view a particular file.
 
         Args:
             event: The local view command event.
         """
-        await self.visit(event.path)
+        self.visit(event.path)
 
-    async def on_omnibox_remote_view_command(
-        self, event: Omnibox.RemoteViewCommand
-    ) -> None:
+    def on_omnibox_remote_view_command(self, event: Omnibox.RemoteViewCommand) -> None:
         """Handle the omnibox asking us to view a particular URL.
 
         Args:
             event: The remote view command event.
         """
-        await self.visit(event.url)
+        self.visit(event.url)
 
     def on_omnibox_contents_command(self) -> None:
         """Handle being asked to show the table of contents."""
@@ -228,7 +224,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         if url := await builder(
             event.owner, event.repository, event.branch, event.desired_file
         ):
-            await self.visit(url)
+            self.visit(url)
         else:
             self.app.push_screen(
                 ErrorDialog(
@@ -258,21 +254,21 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Handle being asked to quit."""
         self.app.exit()
 
-    async def on_local_files_goto(self, event: LocalFiles.Goto) -> None:
+    def on_local_files_goto(self, event: LocalFiles.Goto) -> None:
         """Visit a local file in the viewer.
 
         Args:
             event: The local file visit request event.
         """
-        await self.visit(event.location)
+        self.visit(event.location)
 
-    async def on_history_goto(self, event: History.Goto) -> None:
+    def on_history_goto(self, event: History.Goto) -> None:
         """Handle a request to go to a location from history.
 
         Args:
             event: The event to handle.
         """
-        await self.visit(
+        self.visit(
             event.location, remember=event.location != self.query_one(Viewer).location
         )
 
@@ -321,17 +317,15 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """
         self.query_one(Viewer).scroll_to_block(event.block_id)
 
-    async def on_markdown_link_clicked(self, event: Markdown.LinkClicked) -> None:
+    def on_markdown_link_clicked(self, event: Markdown.LinkClicked) -> None:
         """Handle a link being clicked in the Markdown document.
 
         Args:
             event: The Markdown link click event to handle.
         """
-        await self.visit(
-            URL(event.href) if is_likely_url(event.href) else Path(event.href)
-        )
+        self.visit(URL(event.href) if is_likely_url(event.href) else Path(event.href))
 
-    async def on_paste(self, event: Paste) -> None:
+    def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
 
         Args:
@@ -341,7 +335,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         of a local file (later I may add URL support too).
         """
         if (candidate_file := Path(event.text)).exists():
-            await self.visit(candidate_file)
+            self.visit(candidate_file)
 
     def action_escape(self) -> None:
         """Process the escape key."""
@@ -370,13 +364,13 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Display and focus the history pane."""
         self.query_one(Navigation).jump_to_history()
 
-    async def action_backward(self) -> None:
+    def action_backward(self) -> None:
         """Go backward in the history."""
-        await self.query_one(Viewer).back()
+        self.query_one(Viewer).back()
 
-    async def action_forward(self) -> None:
+    def action_forward(self) -> None:
         """Go forward in the history."""
-        await self.query_one(Viewer).forward()
+        self.query_one(Viewer).forward()
 
     def action_help(self) -> None:
         """Show the help."""

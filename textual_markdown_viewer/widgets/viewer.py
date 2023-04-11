@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Callable
 
 from httpx import URL, AsyncClient, HTTPStatusError, RequestError
+from textual import work
 from textual.app import ComposeResult
 from textual.containers import VerticalScroll
 from textual.message import Message
@@ -143,37 +144,49 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.scroll_to_widget(self.document.query_one(f"#{block_id}"), top=True)
 
-    async def _local_load(self, location: Path) -> bool:
+    def _post_load(self, location: Path | URL, remember: bool = True) -> None:
+        """Perform some post-load tasks.
+
+        Args:
+            location: The location that has been loaded.
+            remember: Should we remember the location in the history?
+        """
+        # Remember the location in the history if we're supposed to.
+        if remember:
+            self.history.remember(location)
+            self.post_message(self.HistoryUpdated(self))
+        # Let anyone else know we've changed location.
+        self.post_message(self.LocationChanged(self))
+
+    @work(exclusive=True)
+    async def _local_load(self, location: Path, remember: bool = True) -> None:
         """Load a Markdown document from a local file.
 
         Args:
             location: The location to load from.
-
-        Returns:
-            `True` if the document seemed to load fine, `False` if not.
+            remember: Should we remember the location in th ehistory?
         """
         # At the moment Textual's Markdown widget's load method captures
         # *all* exceptions and just returns a true/false. It would be
         # better to get an exception here and be able to properly report
         # the problem. Alas, right now, we can't.
-        if not await self.document.load(location):
+        if await self.document.load(location):
+            self._post_load(location, remember)
+        else:
             self.app.push_screen(
                 ErrorDialog(
                     "Error loading local document",
                     f"{location}\n\nThere was an error loading the document.",
                 )
             )
-            return False
-        return True
 
-    async def _remote_load(self, location: URL) -> bool:
+    @work(exclusive=True)
+    async def _remote_load(self, location: URL, remember: bool = True) -> None:
         """Load a Markdown document from a URL.
 
         Args:
             location: The location to load from.
-
-        Returns:
-            `True` if the document seemed to load fine, `False` if not.
+            remember: Should we remember the location in the history?
         """
 
         try:
@@ -185,49 +198,34 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
                 )
         except RequestError as error:
             self.app.push_screen(ErrorDialog("Error getting document", str(error)))
-            return False
+            return
 
         try:
             response.raise_for_status()
         except HTTPStatusError as error:
             self.app.push_screen(ErrorDialog("Error getting document", str(error)))
-            return False
+            return
 
         # There didn't seem to be an error transporting the data, and
         # neither did there seem to be an error with the resource itself. So
         # at this point we should hopefully have the document's content.
         self.document.update(response.text)
-        return True
+        self._post_load(location, remember)
 
-    async def visit(self, location: Path | URL, remember: bool = True) -> None:
+    def visit(self, location: Path | URL, remember: bool = True) -> None:
         """Visit a location.
 
         Args:
             location: The location to visit.
             remember: Should this visit be added to the history?
         """
-
         # Based on the type of the location, load up the content.
-        loaded = False
         if isinstance(location, Path):
-            loaded = await self._local_load(location := location.expanduser().resolve())
+            self._local_load(location.expanduser().resolve(), remember)
         elif isinstance(location, URL):
-            loaded = await self._remote_load(location)
+            self._remote_load(location, remember)
         else:
             raise ValueError("Unknown location type passed to the Markdown viewer")
-
-        # If we didn't manage to load anything don't do anything else for
-        # the visit.
-        if not loaded:
-            return
-
-        # Remember the location in the history if we're supposed to.
-        if remember:
-            self.history.remember(location)
-            self.post_message(self.HistoryUpdated(self))
-
-        # Let anyone else know we've changed location.
-        self.post_message(self.LocationChanged(self))
 
     def show(self, content: str) -> None:
         """Show some direct text in the viewer.
@@ -237,7 +235,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.document.update(content)
 
-    async def _jump(self, direction: Callable[[], bool]) -> None:
+    def _jump(self, direction: Callable[[], bool]) -> None:
         """Jump in a particular direction within the history.
 
         Args:
@@ -245,15 +243,15 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         if direction():
             if self.history.location is not None:
-                await self.visit(self.history.location, remember=False)
+                self.visit(self.history.location, remember=False)
 
-    async def back(self) -> None:
+    def back(self) -> None:
         """Go back in the viewer history."""
-        await self._jump(self.history.back)
+        self._jump(self.history.back)
 
-    async def forward(self) -> None:
+    def forward(self) -> None:
         """Go forward in the viewer history."""
-        await self._jump(self.history.forward)
+        self._jump(self.history.forward)
 
     def load_history(self, history: list[Path | URL]) -> None:
         """Load up a history list from the given history.
