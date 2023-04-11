@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from re import compile as compile_re
+from re import compile as compile_regexp
 from typing import Type
 
 from httpx import URL
@@ -235,12 +235,12 @@ class Omnibox(Input):
         """
         self.post_message(self.LocalChdirCommand(Path(target).expanduser().resolve()))
 
-    _GUESS_BRANCH = compile_re(
+    _GUESS_BRANCH = compile_regexp(
         r"^(?P<owner>[^/ ]+)[/ ](?P<repo>[^ :]+)(?: +(?P<file>[^ ]+))?$"
     )
     """Regular expression for matching a repo and file where we'll guess the branch."""
 
-    _SPECIFIC_BRANCH = compile_re(
+    _SPECIFIC_BRANCH = compile_regexp(
         r"^(?P<owner>[^/ ]+)[/ ](?P<repo>[^ :]+):(?P<branch>[^ ]+)(?: +(?P<file>[^ ]+))?$"
     )
     """Regular expression for matching a repo and file where the branch is also given."""
