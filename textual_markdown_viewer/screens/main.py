@@ -65,12 +65,12 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     BINDINGS = [
         Binding("escape", "escape", "Escpae", show=False),
         Binding("/", "omnibox", "Omnibox", show=False),
-        Binding("ctrl+t", "table_of_contents", "Contents"),
-        Binding("ctrl+b", "bookmarks", "Bookmarks"),
-        Binding("ctrl+y", "history", "History"),
-        Binding("ctrl+l", "local_files", "Local Files"),
-        Binding("ctrl+left", "backward", "Back"),
-        Binding("ctrl+right", "forward", "Forward"),
+        Binding("ctrl+t", "table_of_contents", "Contents", show=False),
+        Binding("ctrl+b", "bookmarks", "Bookmarks", show=False),
+        Binding("ctrl+y", "history", "History", show=False),
+        Binding("ctrl+l", "local_files", "Local Files", show=False),
+        Binding("ctrl+left", "backward", "Back", show=False),
+        Binding("ctrl+right", "forward", "Forward", show=False),
         Binding("f1", "help", "Help"),
         Binding("f2", "about", "About"),
     ]
