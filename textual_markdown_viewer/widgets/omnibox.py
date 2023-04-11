@@ -281,12 +281,20 @@ class Omnibox(Input):
         """The GitHub quick load command."""
 
     def command_github(self, tail: str) -> None:
-        """The github command."""
+        """The github command.
+
+        Args:
+            tail: The tail of the command.
+        """
         self._forge_quick_look(self.GitHubCommand, tail)
 
     class GitLabCommand(ForgeCommand):
         """The GitLab quick load command."""
 
     def command_gitlab(self, tail: str) -> None:
-        """The Gitlab command."""
+        """The Gitlab command.
+
+        Args:
+            tail: The tail of the command.
+        """
         self._forge_quick_look(self.GitLabCommand, tail)
