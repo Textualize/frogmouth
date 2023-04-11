@@ -34,32 +34,6 @@ class Omnibox(Input):
     }
     """
 
-    class LocalViewCommand(Message):
-        """The local file view command."""
-
-        def __init__(self, path: Path) -> None:
-            """Initialise the local view command.
-
-            Args:
-                path: The path to view.
-            """
-            super().__init__()
-            self.path = path
-            """The path of the file to view."""
-
-    class RemoteViewCommand(Message):
-        """The remote file view command."""
-
-        def __init__(self, url: URL) -> None:
-            """Initialise the remove view command.
-
-            Args:
-                url: The URL of the remote file to view.
-            """
-            super().__init__()
-            self.url = url
-            """The URL of the file to view."""
-
     visiting: var[str] = var("")
     """The location that is being visited."""
 
@@ -121,6 +95,32 @@ class Omnibox(Input):
         getattr(self, f"command_{self._ALIASES.get(command, command)}")(
             arguments.strip()
         )
+
+    class LocalViewCommand(Message):
+        """The local file view command."""
+
+        def __init__(self, path: Path) -> None:
+            """Initialise the local view command.
+
+            Args:
+                path: The path to view.
+            """
+            super().__init__()
+            self.path = path
+            """The path of the file to view."""
+
+    class RemoteViewCommand(Message):
+        """The remote file view command."""
+
+        def __init__(self, url: URL) -> None:
+            """Initialise the remove view command.
+
+            Args:
+                url: The URL of the remote file to view.
+            """
+            super().__init__()
+            self.url = url
+            """The URL of the file to view."""
 
     class LocalChdirCommand(Message):
         """Command for changing the local files directory."""
