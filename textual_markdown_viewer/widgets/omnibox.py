@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+from re import compile as compile_re
+from typing import Type
 
 from httpx import URL
 from textual.message import Message
@@ -71,6 +73,8 @@ class Omnibox(Input):
         "a": "about",
         "c": "contents",
         "cd": "chdir",
+        "gh": "github",
+        "gl": "gitlab",
         "h": "history",
         "l": "local",
         "toc": "contents",
@@ -225,3 +229,64 @@ class Omnibox(Input):
     def command_chdir(self, target: str) -> None:
         """The chdir command."""
         self.post_message(self.LocalChdirCommand(Path(target).expanduser().resolve()))
+
+    _GUESS_BRANCH = compile_re(
+        r"^(?P<owner>[^/ ]+)[/ ](?P<repo>[^ :]+)(?: +(?P<file>[^ ]+))?$"
+    )
+    """Regular expression for matching a repo and file where we'll guess the branch."""
+
+    _SPECIFIC_BRANCH = compile_re(
+        r"^(?P<owner>[^/ ]+)[/ ](?P<repo>[^ :]+):(?P<branch>[^ ]+)(?: +(?P<file>[^ ]+))?$"
+    )
+    """Regular expression for matching a repo and file where the branch is also given."""
+
+    class ForgeCommand(Message):
+        """The base git force quick load command."""
+
+        def __init__(
+            self,
+            owner: str,
+            repository: str,
+            branch: str | None = None,
+            desired_file: str | None = None,
+        ) -> None:
+            """Initialise the git forge quick load command."""
+            super().__init__()
+            self.owner = owner
+            """The owner of the repository."""
+            self.repository = repository
+            """The repository."""
+            self.branch: str | None = branch
+            """The optional branch to attempt to pull the file from."""
+            self.desired_file: str | None = desired_file
+            """The optional file the user wants from the repository."""
+
+    def _forge_quick_look(self, command: Type[ForgeCommand], tail: str) -> None:
+        tail = tail.strip()
+        if hit := self._GUESS_BRANCH.match(tail):
+            self.post_message(
+                command(hit["owner"], hit["repo"], desired_file=hit["file"])
+            )
+        elif hit := self._SPECIFIC_BRANCH.match(tail):
+            self.post_message(
+                command(
+                    hit["owner"],
+                    hit["repo"],
+                    branch=hit["branch"],
+                    desired_file=hit["file"],
+                )
+            )
+
+    class GitHubCommand(ForgeCommand):
+        """The GitHub quick load command."""
+
+    def command_github(self, tail: str) -> None:
+        """The github command."""
+        self._forge_quick_look(self.GitHubCommand, tail)
+
+    class GitLabCommand(ForgeCommand):
+        """The GitLab quick load command."""
+
+    def command_gitlab(self, tail: str) -> None:
+        """The Gitlab command."""
+        self._forge_quick_look(self.GitLabCommand, tail)

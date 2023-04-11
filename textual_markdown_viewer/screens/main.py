@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Awaitable, Callable
 from webbrowser import open as open_url
 
 from httpx import URL
@@ -17,7 +18,12 @@ from textual.widgets import Footer, Header, Markdown
 from .. import __version__
 from ..data import load_history, save_history
 from ..dialogs import ErrorDialog, InformationDialog
-from ..utility import is_likely_url, maybe_markdown
+from ..utility import (
+    build_raw_github_url,
+    build_raw_gitlab_url,
+    is_likely_url,
+    maybe_markdown,
+)
 from ..utility.advertising import APPLICATION_TITLE, PACKAGE_NAME
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
@@ -49,13 +55,34 @@ HELP = f"""\
 | Command | Aliases | Arguments | Command |
 | -- | -- | -- | -- |
 | `about` | `a` | | Show details about the application |
-| `chdir` | `cd` | *&lt;dir&gt;* | Switch the local file browser to a new directory |
+| `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
+| `github` | `gh` | `<repo-info>` | View a file on GitHub (see below). |
+| `gitlab` | `gl` | `<repo-info>` | View a file on GitLab (see below). |
 | `help` | `?` | | Show this document |
 | `history` | `h` | | Show the history |
 | `local` | `l` | | Show the local file browser |
 | `quit` | `q` | | Quit the viewer |
 
+## Git forge quick view
+
+The git forge quick view command can be used to quickly view a file on a git
+forge such as GitHub or GitLab. Various forms of specifying the repository,
+branch and file are supported. For example:
+
+- `<owner>`/`<repo>`
+- `<owner>`/`<repo>` `<file>`
+- `<owner>` `<repo>`
+- `<owner>` `<repo>` `<file>`
+- `<owner>`/`<repo>`:`<branch>`
+- `<owner>`/`<repo>`:`<branch>` `<file>`
+- `<owner>` `<repo>`:`<branch>`
+- `<owner>` `<repo>`:`<branch>` `<file>`
+
+Anywhere where `<file>` is omitted it is assumed `README.md` is desired.
+
+Anywhere where `<branch>` is omitted a test is made for the desired file on
+first a `main` and then a `master` branch.
 """
 """The help text."""
 
@@ -184,6 +211,40 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     def on_omnibox_history_command(self) -> None:
         """Handle being asked to view the history."""
         self.action_history()
+
+    async def _from_forge(
+        self,
+        forge: str,
+        event: Omnibox.ForgeCommand,
+        builder: Callable[[str, str, str | None, str | None], Awaitable[URL | None]],
+    ) -> None:
+        """Build a URL for getting a file from a given forge.
+
+        Args:
+            forge: The display name of the forge.
+            event: The event that contains the request information for the file.
+            builder: The function that builds the URL.
+        """
+        if url := await builder(
+            event.owner, event.repository, event.branch, event.desired_file
+        ):
+            await self.visit(url)
+        else:
+            self.app.push_screen(
+                ErrorDialog(
+                    f"Unable to work out a {forge} URL",
+                    f"After trying a few options it hasn't been possible to work out the {forge} URL.\n\n"
+                    "Perhaps the file you're after is on an unusual branch, or the spelling is wrong?",
+                )
+            )
+
+    async def on_omnibox_git_hub_command(self, event: Omnibox.GitHubCommand) -> None:
+        """Handle a GitHub file shortcut command."""
+        await self._from_forge("GitHub", event, build_raw_github_url)
+
+    async def on_omnibox_git_lab_command(self, event: Omnibox.GitLabCommand) -> None:
+        """Handle a GitLab file shortcut command."""
+        await self._from_forge("GitLab", event, build_raw_gitlab_url)
 
     def on_omnibox_about_command(self) -> None:
         """Handle being asked to show the about dialog."""
