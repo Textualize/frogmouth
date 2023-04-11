@@ -45,7 +45,7 @@ def get_args() -> Namespace:
     # Create the parser object.
     parser = ArgumentParser(
         prog="tmv",
-        description="Textual Markdown Viewer -- A Markdown viewer for the terminal.",
+        description=f"{APPLICATION_TITLE} -- A Markdown viewer for the terminal.",
         epilog=f"v{__version__}",
     )
 
