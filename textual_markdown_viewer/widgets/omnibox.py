@@ -227,7 +227,11 @@ class Omnibox(Input):
         self.post_message(self.HelpCommand())
 
     def command_chdir(self, target: str) -> None:
-        """The chdir command."""
+        """The chdir command.
+
+        Args:
+            target: The target directory to change to.
+        """
         self.post_message(self.LocalChdirCommand(Path(target).expanduser().resolve()))
 
     _GUESS_BRANCH = compile_re(
