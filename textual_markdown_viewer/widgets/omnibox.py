@@ -33,6 +33,7 @@ class Omnibox(Input):
         text-style: italic;
     }
     """
+    """Default styling for the omnibox."""
 
     visiting: var[str] = var("")
     """The location that is being visited."""
