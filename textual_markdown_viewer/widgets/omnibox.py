@@ -262,6 +262,12 @@ class Omnibox(Input):
             """The optional file the user wants from the repository."""
 
     def _forge_quick_look(self, command: Type[ForgeCommand], tail: str) -> None:
+        """Core forge quick look support method.
+
+        Args:
+            command: The command message to be posted.
+            tail: The tail of the command to be parsed.
+        """
         tail = tail.strip()
         if hit := self._GUESS_BRANCH.match(tail):
             self.post_message(
