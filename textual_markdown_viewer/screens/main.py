@@ -45,15 +45,15 @@ HELP = """\
 
 ## Commands
 
-| Command | Arguments | Command |
-| -- | -- | -- |
-| `about` | | Show details about the application |
-| `chdir` | *&lt;dir&gt;* | Switch the local file browser to a new directory |
-| `contents` | | Show the table of contents for the document |
-| `help` | | Show this document |
-| `history` | | Show the history |
-| `local` | | Show the local file browser |
-| `quit` | | Quit the viewer |
+| Command | Aliases | Arguments | Command |
+| -- | -- | -- | -- |
+| `about` | `a` | | Show details about the application |
+| `chdir` | `cd` | *&lt;dir&gt;* | Switch the local file browser to a new directory |
+| `contents` | `c`, `toc` | | Show the table of contents for the document |
+| `help` | `?` | | Show this document |
+| `history` | `h` | | Show the history |
+| `local` | `l` | | Show the local file browser |
+| `quit` | `q` | | Quit the viewer |
 
 """
 """The help text."""
