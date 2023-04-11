@@ -86,7 +86,11 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         self._initial_location = initial_location
 
     def compose(self) -> ComposeResult:
-        """Compose the main screen.."""
+        """Compose the main screen.
+
+        Returns:
+            The result of composing the screen.
+        """
         yield Header()
         yield Omnibox()
         with Horizontal():
