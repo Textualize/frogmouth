@@ -33,13 +33,17 @@ def config_file() -> Path:
     return config_dir / "configuration.json"
 
 
-def save_config(config: Config) -> None:
+def save_config(config: Config) -> Config:
     """Save the given configuration to storage.
 
     Args:
         config: The configuration to save.
+
+    Returns:
+        The configuration.
     """
     config_file().write_text(dumps(asdict(config), indent=4))
+    return config
 
 
 def load_config() -> Config:
@@ -47,8 +51,14 @@ def load_config() -> Config:
 
     Returns:
         The configuration.
+
+    Note:
+        As a side-effect, if the configuration doesn't exist a default one
+        will be saved.
     """
     source_file = config_file()
     return (
-        Config(**loads(source_file.read_text())) if source_file.exists() else Config()
+        Config(**loads(source_file.read_text()))
+        if source_file.exists()
+        else save_config(Config())
     )
