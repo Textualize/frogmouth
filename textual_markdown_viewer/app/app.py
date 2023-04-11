@@ -8,12 +8,13 @@ from textual.app import App
 from .. import __version__
 from ..data import load_config
 from ..screens import Main
+from ..utility.advertising import APPLICATION_TITLE
 
 
 class MarkdownViewer(App[None]):
     """The main application class."""
 
-    TITLE = "Textual Markdown Viewer"
+    TITLE = APPLICATION_TITLE
     """The main title for the application."""
 
     SUB_TITLE = f"{__version__}"

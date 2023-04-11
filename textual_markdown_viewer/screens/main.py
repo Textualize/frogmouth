@@ -18,11 +18,12 @@ from .. import __version__
 from ..data import load_history, save_history
 from ..dialogs import ErrorDialog, InformationDialog
 from ..utility import is_likely_url, maybe_markdown
+from ..utility.advertising import APPLICATION_TITLE, PACKAGE_NAME
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import History, LocalFiles
 
-HELP = """\
-# Textual Markdown Viewer Help
+HELP = f"""\
+# {APPLICATION_TITLE} Help
 
 ## Keys
 
@@ -326,7 +327,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Show the about dialog."""
         self.app.push_screen(
             InformationDialog(
-                "About textual-markdown-viewer",
+                f"About {PACKAGE_NAME}",
                 f"Version {__version__}.\n\n"
                 f"Built with [link=https://textual.textualize.io/]Textual[/] v{textual_version}.\n\n"
                 "[link]https://github.com/Textualize/textual-markdown-viewer[/]",

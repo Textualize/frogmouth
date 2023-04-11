@@ -6,6 +6,8 @@ from pathlib import Path
 
 from xdg import xdg_config_home
 
+from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
+
 
 @dataclass
 class Config:
@@ -25,7 +27,7 @@ def config_file() -> Path:
         As a side effect the configuration directory will be created if it
         does not exist.
     """
-    (config_dir := xdg_config_home() / "textualize" / "markdown-viewer").mkdir(
+    (config_dir := xdg_config_home() / ORGANISATION_NAME / PACKAGE_NAME).mkdir(
         parents=True, exist_ok=True
     )
     return config_dir / "configuration.json"

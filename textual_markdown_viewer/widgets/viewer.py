@@ -16,11 +16,12 @@ from typing_extensions import Final
 
 from .. import __version__
 from ..dialogs import ErrorDialog
+from ..utility.advertising import APPLICATION_TITLE, USER_AGENT
 
 PLACEHOLDER = f"""\
-# Textual Markdown Viewer {__version__}
+# {APPLICATION_TITLE} {__version__}
 
-Welcome to the Textual Markdown viewer!
+Welcome to the {APPLICATION_TITLE}!
 """
 
 
@@ -180,7 +181,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
                 response = await client.get(
                     location,
                     follow_redirects=True,
-                    headers={"user-agent": f"textual-markdown-client v{__version__}"},
+                    headers={"user-agent": USER_AGENT},
                 )
         except RequestError as error:
             self.app.push_screen(ErrorDialog("Error getting document", str(error)))

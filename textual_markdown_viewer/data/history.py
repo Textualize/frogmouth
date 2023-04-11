@@ -10,6 +10,7 @@ from httpx import URL
 from xdg import xdg_data_home
 
 from ..utility import is_likely_url
+from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
 
 
 def data_directory() -> Path:
@@ -21,7 +22,7 @@ def data_directory() -> Path:
     Note:
         As a side effect, if the directory doesn't exist it will be created.
     """
-    (target_directory := xdg_data_home() / "textualize" / "markdown-viewer").mkdir(
+    (target_directory := xdg_data_home() / ORGANISATION_NAME / PACKAGE_NAME).mkdir(
         parents=True, exist_ok=True
     )
     return target_directory
