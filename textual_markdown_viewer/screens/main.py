@@ -35,6 +35,14 @@ HELP = """\
 | `Ctrl+t` | Show the table of contents |
 | `Ctrl+y` | Show the history |
 
+
+### History keys:
+
+| Key | Command |
+| -- | -- |
+| `Ctrl+left` | Go backward in history |
+| `Ctrl+right` | Go forward in history |
+
 ## Commands
 
 | Command | Arguments | Command |
