@@ -323,7 +323,19 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Args:
             event: The Markdown link click event to handle.
         """
-        self.visit(URL(event.href) if is_likely_url(event.href) else Path(event.href))
+        # If the link we're to handle obviously looks like URL...
+        if is_likely_url(event.href):
+            # ...handle it as such. No point in truing trying to do anything
+            # else.
+            self.visit(URL(event.href))
+        elif isinstance(current_location := self.query_one(Viewer).location, URL):
+            # Seems we're currently visiting a remote location, and the href
+            # looks like a simple file path, so let's make a best effort to
+            # visit the file at the remote location.
+            self.visit(current_location.copy_with().join(event.href))
+        else:
+            # Final option is that it's a local path.
+            self.visit(Path(event.href))
 
     def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
