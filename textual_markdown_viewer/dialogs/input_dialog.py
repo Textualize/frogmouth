@@ -138,3 +138,7 @@ class InputDialog(ModalScreen):
         elif event.button.id == "ok" and self.query_one(Input).value.strip():
             self._return_input()
             self.app.pop_screen()
+
+    def on_input_submitted(self) -> None:
+        """Do default processing when the user hits enter in the input."""
+        self.query_one("#ok", Button).press()
