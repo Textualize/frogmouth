@@ -2,5 +2,6 @@
 
 from .error import ErrorDialog
 from .information import InformationDialog
+from .input_dialog import InputDialog
 
-__all__ = ["ErrorDialog", "InformationDialog"]
+__all__ = ["ErrorDialog", "InformationDialog", "InputDialog"]
