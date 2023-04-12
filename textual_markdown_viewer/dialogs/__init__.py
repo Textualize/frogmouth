@@ -1,5 +1,6 @@
 """Provides useful dialogs for the application."""
 
-from .dialog import ErrorDialog, InformationDialog
+from .error import ErrorDialog
+from .information import InformationDialog
 
 __all__ = ["ErrorDialog", "InformationDialog"]
