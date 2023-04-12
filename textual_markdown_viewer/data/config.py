@@ -1,6 +1,7 @@
 """Provides code for loading/saving configuration."""
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
+from functools import cache
 from json import dumps, loads
 from pathlib import Path
 
@@ -15,6 +16,9 @@ class Config:
 
     light_mode: bool = False
     """Should we run in light mode?"""
+
+    markdown_extensions: list[str] = field(default_factory=lambda: [".md", ".markdown"])
+    """What Markdown extensions will we look for?"""
 
 
 def config_file() -> Path:
@@ -42,10 +46,12 @@ def save_config(config: Config) -> Config:
     Returns:
         The configuration.
     """
+    load_config.cache_clear()
     config_file().write_text(dumps(asdict(config), indent=4))
     return config
 
 
+@cache
 def load_config() -> Config:
     """Load the configuration from storage.
 
