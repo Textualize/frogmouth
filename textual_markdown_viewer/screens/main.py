@@ -27,7 +27,7 @@ from ..utility import (
 )
 from ..utility.advertising import PACKAGE_NAME
 from ..widgets import Navigation, Omnibox, Viewer
-from ..widgets.navigation_panes import History, LocalFiles
+from ..widgets.navigation_panes import Bookmarks, History, LocalFiles
 
 
 class Main(Screen):  # pylint:disable=too-many-public-methods
@@ -220,6 +220,14 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         self.visit(
             event.location, remember=event.location != self.query_one(Viewer).location
         )
+
+    def on_bookmarks_goto(self, event: Bookmarks.Goto) -> None:
+        """Handle a request to go to a bookmark.
+
+        Args:
+            event: The event to handle.
+        """
+        self.visit(event.bookmark.location)
 
     def on_viewer_location_changed(self, event: Viewer.LocationChanged) -> None:
         """Update for the location being changed.
