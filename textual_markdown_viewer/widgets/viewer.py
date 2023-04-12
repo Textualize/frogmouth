@@ -103,6 +103,9 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     history: var[History] = var(History)
     """The browsing history."""
 
+    viewing_location: var[bool] = var(False)
+    """Is an actual location being viewed?"""
+
     class ViewerMessage(Message):
         """Base class for viewer messages."""
 
@@ -134,7 +137,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     @property
     def location(self) -> Path | URL | None:
         """The location that is currently being visited."""
-        return self.history.location
+        return self.history.location if self.viewing_location else None
 
     def scroll_to_block(self, block_id: str) -> None:
         """Scroll the document to the given block ID.
@@ -151,6 +154,8 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             location: The location that has been loaded.
             remember: Should we remember the location in the history?
         """
+        # If we've made it in here we are viewing an actual location.
+        self.viewing_location = True
         # Remember the location in the history if we're supposed to.
         if remember:
             self.history.remember(location)
@@ -233,6 +238,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         Args:
             content: The text to show.
         """
+        self.viewing_location = False
         self.document.update(content)
 
     def _jump(self, direction: Callable[[], bool]) -> None:
