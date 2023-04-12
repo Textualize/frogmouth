@@ -51,7 +51,7 @@ def save_bookmarks(bookmarks: list[Bookmark]) -> None:
     Args:
         bookmarks: The bookmarks to save.
     """
-    bookmarks_file().write_text(dumps(bookmarks, indent=4))
+    bookmarks_file().write_text(dumps(bookmarks, indent=4, cls=BookmarkEncoder))
 
 
 def load_bookmarks() -> list[Bookmark]:
