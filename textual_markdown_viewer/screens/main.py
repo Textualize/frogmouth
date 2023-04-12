@@ -133,6 +133,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """Handle being asked to view the local files picker."""
         await self.action_local_files()
 
+    def on_omnibox_bookmarks_command(self) -> None:
+        """Handle being asked to view the bookmarks."""
+        self.action_bookmarks()
+
     async def on_omnibox_local_chdir_command(
         self, event: Omnibox.LocalChdirCommand
     ) -> None:

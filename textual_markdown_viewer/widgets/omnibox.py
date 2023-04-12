@@ -46,6 +46,8 @@ class Omnibox(Input):
 
     _ALIASES: dict[str, str] = {
         "a": "about",
+        "b": "bookmarks",
+        "bm": "bookmarks",
         "bb": "bitbucket",
         "c": "contents",
         "cd": "chdir",
@@ -199,6 +201,13 @@ class Omnibox(Input):
     def command_local(self, _: str) -> None:
         """View the local files."""
         self.post_message(self.LocalFilesCommand())
+
+    class BookmarksCommand(Message):
+        """The bookmarks command."""
+
+    def command_bookmarks(self, _: str) -> None:
+        """View the bookmarks."""
+        self.post_message(self.BookmarksCommand())
 
     class QuitCommand(Message):
         """The quit command."""
