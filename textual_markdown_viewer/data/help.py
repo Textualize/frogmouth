@@ -19,20 +19,22 @@ HELP: Final[
 | `Ctrl+l` | Show the local file browser |
 | `Ctrl+t` | Show the table of contents |
 | `Ctrl+y` | Show the history |
+| `Ctrl+left` | Go backward in history |
+| `Ctrl+right` | Go forward in history |
 
 
-### History keys:
+### General keys:
 
 | Key | Command |
 | -- | -- |
-| `Ctrl+left` | Go backward in history |
-| `Ctrl+right` | Go forward in history |
+| `Ctrl+d` | Add the current document to the bookmarks. |
 
 ## Commands
 
 | Command | Aliases | Arguments | Command |
 | -- | -- | -- | -- |
 | `about` | `a` | | Show details about the application |
+| `bookmarks` | `b`, `bm` | | Show the bookmarks list. |
 | `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below). |
 | `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
