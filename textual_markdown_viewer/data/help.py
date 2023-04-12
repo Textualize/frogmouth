@@ -34,13 +34,13 @@ HELP: Final[
 | Command | Aliases | Arguments | Command |
 | -- | -- | -- | -- |
 | `about` | `a` | | Show details about the application |
-| `bookmarks` | `b`, `bm` | | Show the bookmarks list. |
-| `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below). |
+| `bookmarks` | `b`, `bm` | | Show the bookmarks list |
+| `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below) |
 | `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
 | `discord` | | | Visit the Textualize Discord server |
-| `github` | `gh` | `<repo-info>` | View a file on GitHub (see below). |
-| `gitlab` | `gl` | `<repo-info>` | View a file on GitLab (see below). |
+| `github` | `gh` | `<repo-info>` | View a file on GitHub (see below) |
+| `gitlab` | `gl` | `<repo-info>` | View a file on GitLab (see below) |
 | `help` | `?` | | Show this document |
 | `history` | `h` | | Show the history |
 | `local` | `l` | | Show the local file browser |
