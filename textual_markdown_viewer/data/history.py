@@ -7,25 +7,9 @@ from pathlib import Path
 from typing import Any
 
 from httpx import URL
-from xdg import xdg_data_home
 
 from ..utility import is_likely_url
-from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
-
-
-def data_directory() -> Path:
-    """Get the location of the data directory.
-
-    Returns:
-        The location of the data directory.
-
-    Note:
-        As a side effect, if the directory doesn't exist it will be created.
-    """
-    (target_directory := xdg_data_home() / ORGANISATION_NAME / PACKAGE_NAME).mkdir(
-        parents=True, exist_ok=True
-    )
-    return target_directory
+from .data_directory import data_directory
 
 
 def history_file() -> Path:
