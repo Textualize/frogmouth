@@ -15,3 +15,6 @@ APPLICATION_TITLE: Final[str] = "Textual Markdown Viewer"
 
 USER_AGENT: Final[str] = f"{PACKAGE_NAME} v{__version__}"
 """The user agent to use when making web requests."""
+
+DISCORD: Final[str] = "https://discord.gg/Enf6Z3qhVr"
+"""The link to the Textualize Discord server."""

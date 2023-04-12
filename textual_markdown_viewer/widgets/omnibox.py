@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from re import compile as compile_regexp
+from webbrowser import open as open_url
 from typing import Type
 
 from httpx import URL
@@ -12,6 +13,7 @@ from textual.reactive import var
 from textual.widgets import Input
 
 from ..utility import is_likely_url
+from ..utility.advertising import DISCORD
 
 
 class Omnibox(Input):
@@ -330,3 +332,7 @@ class Omnibox(Input):
             tail: The tail of the command.
         """
         self._forge_quick_look(self.BitBucketCommand, tail)
+
+    def command_discord(self, _: str) -> None:
+        """The command to visit the Textualize discord server."""
+        open_url(DISCORD)

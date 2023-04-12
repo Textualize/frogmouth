@@ -38,6 +38,7 @@ HELP: Final[
 | `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below). |
 | `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
+| `discord` | | | Visit the Textualize Discord server |
 | `github` | `gh` | `<repo-info>` | View a file on GitHub (see below). |
 | `gitlab` | `gl` | `<repo-info>` | View a file on GitLab (see below). |
 | `help` | `?` | | Show this document |
