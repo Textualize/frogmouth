@@ -59,12 +59,13 @@ class InputDialog(ModalScreen):
     ]
     """Bindings for the dialog."""
 
-    def __init__(
+    def __init__(  # pylint:disable=redefined-builtin,too-many-arguments
         self,
         requester: Widget,
         prompt: str,
         initial: str | None = None,
         cargo: Any = None,
+        id: str | None = None,
     ) -> None:
         """Initialise the input dialog.
 
@@ -73,8 +74,9 @@ class InputDialog(ModalScreen):
             prompt: The prompt for the input.
             initial: The initial value for the input.
             cargo: Any cargo value for the input.
+            id: The ID for the dialog.
         """
-        super().__init__()
+        super().__init__(id=id)
         self._requester = requester
         """A reference to the widget requesting the input."""
         self._prompt = prompt
@@ -101,14 +103,19 @@ class InputDialog(ModalScreen):
     class Result(Message):
         """The input dialog result message."""
 
-        def __init__(self, value: str, cargo: Any = None) -> None:
+        def __init__(
+            self, sender_id: str | None, value: str, cargo: Any = None
+        ) -> None:
             """Initialise the result message.
 
             Args:
+                input_dialog: The input dialog sending the message.
                 value: The value to attach as the result.
                 cargo: Any cargo data for the result.
             """
             super().__init__()
+            self.sender_id = sender_id
+            """The ID of the sending dialog."""
             self.value: str = value
             """The value of the result."""
             self.cargo: Any = cargo
@@ -117,7 +124,7 @@ class InputDialog(ModalScreen):
     def _return_input(self) -> None:
         """Return the input value from the dialog."""
         self._requester.post_message(
-            self.Result(self.query_one(Input).value, self._cargo)
+            self.Result(self.id, self.query_one(Input).value, self._cargo)
         )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
