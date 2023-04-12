@@ -83,8 +83,7 @@ class History(NavigationPane):
         This call removes any existing history and sets it to the given
         value.
         """
-        option_list = self.query_one(OptionList)
-        option_list.clear_options()
+        option_list = self.query_one(OptionList).clear_options()
         for location in reversed(locations):
             option_list.add_option(Entry(location))
 
