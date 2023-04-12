@@ -17,7 +17,7 @@ from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
 from ..data import HELP, load_history, save_history
-from ..dialogs import ErrorDialog, InformationDialog
+from ..dialogs import ErrorDialog, InformationDialog, InputDialog
 from ..utility import (
     build_raw_bitbucket_url,
     build_raw_github_url,
@@ -379,6 +379,21 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         # location; let's make the filename the default title.
         title = (location if isinstance(location, Path) else Path(location.path)).name
 
-        # We've got a title, we've got a location; let's add it! (TODO: let
-        # the user edit the title).
-        self.query_one(Navigation).bookmarks.add_bookmark(title, location)
+        # Give the user a chance to edit the title.
+        self.app.push_screen(
+            InputDialog(self, "Bookmark title:", title, location, id="add_bookmark")
+        )
+
+    def on_input_dialog_result(self, event: InputDialog.Result) -> None:
+        """Handle a result coming back from an input dialog.
+
+        Args:
+            event: The input dialog result event.
+        """
+        # Handle the correct source dialog.
+        if event.sender_id == "add_bookmark":
+            # The cargo value for the result should be the location, which
+            # should be a path or a URL.
+            assert isinstance(event.cargo, (Path, URL))
+            # Save the bookmark.
+            self.query_one(Navigation).bookmarks.add_bookmark(event.value, event.cargo)
