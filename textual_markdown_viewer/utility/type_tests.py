@@ -6,6 +6,8 @@ from typing import Any
 
 from httpx import URL
 
+from ..data.config import load_config
+
 
 @singledispatch
 def maybe_markdown(resource: Any) -> bool:
@@ -23,7 +25,7 @@ def maybe_markdown(resource: Any) -> bool:
 
 @maybe_markdown.register
 def _(resource: Path) -> bool:
-    return resource.suffix.lower() in (".md", ".markdown")
+    return resource.suffix.lower() in load_config().markdown_extensions
 
 
 @maybe_markdown.register
