@@ -38,6 +38,7 @@ class ModalDialog(ModalScreen):
     }
 
     ModalDialog #message {
+        min-width: 100%;
         border-top: solid $primary;
         border-bottom: solid $primary;
     }
