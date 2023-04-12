@@ -232,7 +232,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             str(event.viewer.location) if event.viewer.location is not None else ""
         )
         # Having safely arrived at a new location, that implies that we want
-        # to focus on the viewer/
+        # to focus on the viewer.
         self.query_one(Viewer).focus()
 
     def on_viewer_history_updated(self, event: Viewer.HistoryUpdated) -> None:
