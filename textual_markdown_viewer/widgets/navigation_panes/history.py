@@ -39,12 +39,12 @@ class Entry(Option):
         """
         if isinstance(location, Path):
             return Text.from_markup(
-                f":page_facing_up: {location.name}\n{location.parent}",
+                f":page_facing_up: [bold]{location.name}[/]\n[dim]{location.parent}[/]",
                 overflow="ellipsis",
             )
         return Text.from_markup(
-            f":globe_with_meridians: {Path(location.path).name}"
-            f"\n{Path(location.path).parent}\n{location.host}",
+            f":globe_with_meridians: [bold]{Path(location.path).name}[/]"
+            f"\n[dim]{Path(location.path).parent}\n{location.host}[/]",
             overflow="ellipsis",
         )
 
