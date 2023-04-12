@@ -10,7 +10,9 @@ from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
-from ...data import Bookmark, load_bookmarks
+from httpx import URL
+
+from ...data import Bookmark, load_bookmarks, save_bookmarks
 from .navigation_pane import NavigationPane
 
 
@@ -55,20 +57,30 @@ class Bookmarks(NavigationPane):
     def __init__(self) -> None:
         """Initialise the bookmarks navigation pane."""
         super().__init__("Bookmarks")
+        self._bookmarks: list[Bookmark] = load_bookmarks()
+        """The internal list of bookmarks."""
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield OptionList()
-
-    def on_mount(self) -> None:
-        """Load up the bookmarks once the DOM is ready."""
-        bookmarks = self.query_one(OptionList)
-        for bookmark in load_bookmarks():
-            bookmarks.add_option(Entry(bookmark))
+        yield OptionList(*[Entry(bookmark) for bookmark in self._bookmarks])
 
     def set_focus_within(self) -> None:
         """Focus the option list."""
         self.query_one(OptionList).focus()
+
+    def add_bookmark(self, title: str, location: Path | URL) -> None:
+        """Add a new bookmark.
+
+        Args:
+            title: The title of the bookmark.
+            location: The location of the bookmark.
+        """
+        self._bookmarks.append(Bookmark(title, location))
+        self._bookmarks = sorted(self._bookmarks, key=lambda bookmark: bookmark.title)
+        bookmarks = self.query_one(OptionList).clear_options()
+        for bookmark in self._bookmarks:
+            bookmarks.add_option(Entry(bookmark))
+        save_bookmarks(self._bookmarks)
 
     class Goto(Message):
         """Message that requests that the viewer goes to a given bookmark."""

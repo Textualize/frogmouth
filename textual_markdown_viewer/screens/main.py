@@ -34,14 +34,15 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
     BINDINGS = [
-        Binding("escape", "escape", "Escpae", show=False),
         Binding("/", "omnibox", "Omnibox", show=False),
-        Binding("ctrl+t", "table_of_contents", "Contents", show=False),
         Binding("ctrl+b", "bookmarks", "Bookmarks", show=False),
-        Binding("ctrl+y", "history", "History", show=False),
+        Binding("ctrl+d", "bookmark_this", "Add Bookmark", show=False),
         Binding("ctrl+l", "local_files", "Local Files", show=False),
         Binding("ctrl+left", "backward", "Back", show=False),
         Binding("ctrl+right", "forward", "Forward", show=False),
+        Binding("ctrl+t", "table_of_contents", "Contents", show=False),
+        Binding("ctrl+y", "history", "History", show=False),
+        Binding("escape", "escape", "Escpae", show=False),
         Binding("f1", "help", "Help"),
         Binding("f2", "about", "About"),
     ]
@@ -357,3 +358,27 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
                 "[link]https://github.com/Textualize/textual-markdown-viewer[/]",
             )
         )
+
+    def action_bookmark_this(self) -> None:
+        """Add a bookmark for the currently-viewed file."""
+
+        location = self.query_one(Viewer).location
+
+        # Only allow bookmarking if we're actually viewing something that
+        # can be bookmarked.
+        if not isinstance(location, (Path, URL)):
+            self.app.push_screen(
+                ErrorDialog(
+                    "Not a bookmarkable location",
+                    "The current view can't be bookmarked.",
+                )
+            )
+            return
+
+        # To make a bookmark, we need a title and a location. We've got a
+        # location; let's make the filename the default title.
+        title = (location if isinstance(location, Path) else Path(location.path)).name
+
+        # We've got a title, we've got a location; let's add it! (TODO: let
+        # the user edit the title).
+        self.query_one(Navigation).bookmarks.add_bookmark(title, location)
