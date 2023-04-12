@@ -21,6 +21,7 @@ from ..dialogs import ErrorDialog, InformationDialog
 from ..utility import (
     build_raw_github_url,
     build_raw_gitlab_url,
+    build_raw_bitbucket_url,
     is_likely_url,
     maybe_markdown,
 )
@@ -55,6 +56,7 @@ HELP = f"""\
 | Command | Aliases | Arguments | Command |
 | -- | -- | -- | -- |
 | `about` | `a` | | Show details about the application |
+| `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below). |
 | `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
 | `github` | `gh` | `<repo-info>` | View a file on GitHub (see below). |
@@ -241,6 +243,12 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     async def on_omnibox_git_lab_command(self, event: Omnibox.GitLabCommand) -> None:
         """Handle a GitLab file shortcut command."""
         await self._from_forge("GitLab", event, build_raw_gitlab_url)
+
+    async def on_omnibox_bit_bucket_command(
+        self, event: Omnibox.BitBucketCommand
+    ) -> None:
+        """Handle a BitBucket shortcut command."""
+        await self._from_forge("BitBucket", event, build_raw_bitbucket_url)
 
     def on_omnibox_about_command(self) -> None:
         """Handle being asked to show the about dialog."""
