@@ -1,6 +1,6 @@
 """General utility and support code."""
 
-from .forge import build_raw_github_url, build_raw_gitlab_url, build_raw_bitbucket_url
+from .forge import build_raw_bitbucket_url, build_raw_github_url, build_raw_gitlab_url
 from .type_tests import is_likely_url, maybe_markdown
 
 __all__ = [

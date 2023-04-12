@@ -16,12 +16,12 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
-from ..data import load_history, save_history, HELP
+from ..data import HELP, load_history, save_history
 from ..dialogs import ErrorDialog, InformationDialog
 from ..utility import (
+    build_raw_bitbucket_url,
     build_raw_github_url,
     build_raw_gitlab_url,
-    build_raw_bitbucket_url,
     is_likely_url,
     maybe_markdown,
 )
