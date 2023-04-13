@@ -109,7 +109,7 @@ class InputDialog(ModalScreen):
             """Initialise the result message.
 
             Args:
-                input_dialog: The input dialog sending the message.
+                sender_id: The ID of the dialog sending the message.
                 value: The value to attach as the result.
                 cargo: Any cargo data for the result.
             """
