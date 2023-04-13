@@ -173,8 +173,8 @@ class Omnibox(Input):
                 return
         elif self._is_command(command := submitted.lower()):
             # Having checked for URLs and existing filesystem things, it's
-            # now safe look for commands. Having got here, it is a match for
-            # a command so we handle it as such.
+            # now safe to look for commands. Having got here, it is a match
+            # for a command so we handle it as such.
             self._execute_command(command)
         else:
             # Having got this far, the best thing to do now is assume that
