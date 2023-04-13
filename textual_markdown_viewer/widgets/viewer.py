@@ -156,6 +156,8 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             location: The location that has been loaded.
             remember: Should we remember the location in the history?
         """
+        # We've loaded something fresh, ensure we're at the top.
+        self.scroll_home(animate=False)
         # If we've made it in here we are viewing an actual location.
         self.viewing_location = True
         # Remember the location in the history if we're supposed to.
@@ -257,6 +259,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.viewing_location = False
         self.document.update(content)
+        self.scroll_home(animate=False)
 
     def _jump(self, direction: Callable[[], bool]) -> None:
         """Jump in a particular direction within the history.
