@@ -9,8 +9,8 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.message import Message
 from textual.screen import ModalScreen
-from textual.widgets import Button, Input, Label
 from textual.widget import Widget
+from textual.widgets import Button, Input, Label
 
 
 class InputDialog(ModalScreen):

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 from re import compile as compile_regexp
-from webbrowser import open as open_url
 from typing import Type
+from webbrowser import open as open_url
 
 from httpx import URL
 from textual.message import Message
