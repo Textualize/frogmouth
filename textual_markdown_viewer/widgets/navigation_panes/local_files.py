@@ -31,13 +31,16 @@ class FilteredDirectoryTree(DirectoryTree):
         hidden (in a Unix sense of hidden) which are either a directory or a
         file that looks like it could be a Markdown document.
         """
-        return [
-            path
-            for path in paths
-            if not path.name.startswith(".")
-            and path.is_dir()
-            or (path.is_file() and maybe_markdown(path))
-        ]
+        try:
+            return [
+                path
+                for path in paths
+                if not path.name.startswith(".")
+                and path.is_dir()
+                or (path.is_file() and maybe_markdown(path))
+            ]
+        except PermissionError:
+            return []
 
 
 class LocalFiles(NavigationPane):
