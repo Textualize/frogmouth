@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from os import getenv
 from pathlib import Path
 from typing import Iterable
 
@@ -68,7 +67,7 @@ class LocalFiles(NavigationPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield FilteredDirectoryTree(getenv("HOME") or getenv("USERPROFILE") or ".")
+        yield FilteredDirectoryTree(Path("~").expanduser())
 
     async def chdir(self, path: Path) -> None:
         """Change the filesystem view to the given directory."""
