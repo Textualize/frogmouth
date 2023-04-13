@@ -52,6 +52,11 @@ class LocalFiles(NavigationPane):
         background: $primary-background;
         width: 1fr;
     }
+
+    LocalFiles > DirectoryTree:focus .tree--cursor, LocalFiles > DirectoryTree .tree--cursor {
+        background: $accent 50%;
+        color: $text;
+    }
     """
 
     def __init__(self) -> None:

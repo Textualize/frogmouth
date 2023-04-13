@@ -24,6 +24,11 @@ class TableOfContents(NavigationPane):
         background: $primary-background;
         padding: 0;
     }
+
+    TableOfContents > MarkdownTableOfContents > Tree:focus .tree--cursor, TableOfContents > MarkdownTableOfContents > Tree .tree--cursor {
+        background: $accent 50%;
+        color: $text;
+    }
     """
 
     def __init__(self) -> None:
