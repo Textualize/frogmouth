@@ -1,4 +1,4 @@
-"""Provides modal dialog screens for the application."""
+"""Provides a base modal dialog for showing text to the user."""
 
 from rich.text import TextType
 from textual.app import ComposeResult
@@ -9,19 +9,19 @@ from textual.widgets import Button, Static
 from textual.widgets._button import ButtonVariant
 
 
-class ModalDialog(ModalScreen):
-    """Base modal dialog screen."""
+class TextDialog(ModalScreen):
+    """Base modal dialog for showing information."""
 
     DEFAULT_CSS = """
-    ModalDialog {
+    TextDialog {
         align: center middle;
     }
 
-    ModalDialog Center {
+    TextDialog Center {
         width: 100%;
     }
 
-    ModalDialog > Vertical {
+    TextDialog > Vertical {
         background: $panel;
         min-width: 30%;
         width: auto;
@@ -29,29 +29,29 @@ class ModalDialog(ModalScreen):
         border: round $primary;
     }
 
-    ModalDialog Static {
+    TextDialog Static {
         width: auto;
     }
 
-    ModalDialog .spaced {
+    TextDialog .spaced {
         padding: 1;
     }
 
-    ModalDialog #message {
+    TextDialog #message {
         min-width: 100%;
         border-top: solid $primary;
         border-bottom: solid $primary;
     }
     """
-    """Default CSS for the base modal dialog screen."""
+    """Default CSS for the base text modal dialog."""
 
     BINDINGS = [
         Binding("escape", "app.pop_screen", "", show=False),
     ]
-    """Bindings for the base modal dialog screen."""
+    """Bindings for the base text modal dialog."""
 
     def __init__(self, title: TextType, message: TextType) -> None:
-        """Initialise the modal dialog.
+        """Initialise the dialog.
 
         Args:
             title: The title for the dialog.

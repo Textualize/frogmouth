@@ -2,10 +2,10 @@
 
 from textual.widgets._button import ButtonVariant
 
-from .dialog import ModalDialog
+from .text_dialog import TextDialog
 
 
-class ErrorDialog(ModalDialog):
+class ErrorDialog(TextDialog):
     """Modal dialog for showing errors."""
 
     DEFAULT_CSS = """

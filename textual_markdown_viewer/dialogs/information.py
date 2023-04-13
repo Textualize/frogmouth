@@ -1,9 +1,9 @@
 """Provides an information dialog."""
 
-from .dialog import ModalDialog
+from .text_dialog import TextDialog
 
 
-class InformationDialog(ModalDialog):
+class InformationDialog(TextDialog):
     """Modal dialog that shows information."""
 
     DEFAULT_CSS = """
