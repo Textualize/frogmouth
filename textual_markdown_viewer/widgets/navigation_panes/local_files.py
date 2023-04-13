@@ -65,7 +65,7 @@ class LocalFiles(NavigationPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield FilteredDirectoryTree(getenv("HOME") or ".")
+        yield FilteredDirectoryTree(getenv("HOME") or getenv("USERPROFILE") or ".")
 
     async def chdir(self, path: Path) -> None:
         """Change the filesystem view to the given directory."""
