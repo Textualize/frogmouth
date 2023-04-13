@@ -52,6 +52,7 @@ class Bookmarks(NavigationPane):
         background: $primary;
     }
     """
+    """The default CSS for the bookmarks navigation pane."""
 
     def __init__(self) -> None:
         """Initialise the bookmarks navigation pane."""
