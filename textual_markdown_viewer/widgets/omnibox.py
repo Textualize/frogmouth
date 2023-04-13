@@ -246,7 +246,9 @@ class Omnibox(Input):
         Args:
             target: The target directory to change to.
         """
-        self.post_message(self.LocalChdirCommand(Path(target).expanduser().resolve()))
+        self.post_message(
+            self.LocalChdirCommand(Path(target or "~").expanduser().resolve())
+        )
 
     _GUESS_BRANCH = compile_regexp(
         r"^(?P<owner>[^/ ]+)[/ ](?P<repo>[^ :]+)(?: +(?P<file>[^ ]+))?$"
