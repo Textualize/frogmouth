@@ -13,7 +13,7 @@ from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
 from ...data import Bookmark, load_bookmarks, save_bookmarks
-from ...dialogs import YesNoDialog
+from ...dialogs import InputDialog, YesNoDialog
 from .navigation_pane import NavigationPane
 
 
@@ -58,6 +58,7 @@ class Bookmarks(NavigationPane):
 
     BINDINGS = [
         Binding("delete", "delete", "Delete the bookmark"),
+        Binding("r", "rename", "Rename the bookmark"),
     ]
     """The bindings for the bookmarks navigation pane."""
 
@@ -143,4 +144,29 @@ class Bookmarks(NavigationPane):
         bookmarks = self.query_one(OptionList)
         if event.sender_id == "delete" and bookmarks.highlighted is not None:
             del self._bookmarks[bookmarks.highlighted]
+            self._bookmarks_updated()
+
+    def action_rename(self) -> None:
+        """Rename the highlighted bookmark."""
+        if (bookmark := self.query_one(OptionList).highlighted) is not None:
+            self.app.push_screen(
+                InputDialog(
+                    self,
+                    "Bookmark title:",
+                    self._bookmarks[bookmark].title,
+                    bookmark,
+                    id="edit_title",
+                )
+            )
+
+    def on_input_dialog_result(self, event: InputDialog.Result) -> None:
+        """Handle an input dialog result being passed to us."""
+        if event.sender_id == "edit_title":
+            # The cargo value for the result should be the index of the
+            # bookmark we're changing.
+            assert isinstance(event.cargo, int)
+            # Everything looks good, update the bookmarks.
+            self._bookmarks[event.cargo] = Bookmark(
+                event.value, self._bookmarks[event.cargo].location
+            )
             self._bookmarks_updated()
