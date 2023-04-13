@@ -7,11 +7,13 @@ from pathlib import Path
 from httpx import URL
 from rich.text import Text
 from textual.app import ComposeResult
+from textual.binding import Binding
 from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
 from ...data import Bookmark, load_bookmarks, save_bookmarks
+from ...dialogs import YesNoDialog
 from .navigation_pane import NavigationPane
 
 
@@ -54,6 +56,11 @@ class Bookmarks(NavigationPane):
     """
     """The default CSS for the bookmarks navigation pane."""
 
+    BINDINGS = [
+        Binding("delete", "delete", "Delete the bookmark"),
+    ]
+    """The bindings for the bookmarks navigation pane."""
+
     def __init__(self) -> None:
         """Initialise the bookmarks navigation pane."""
         super().__init__("Bookmarks")
@@ -68,6 +75,20 @@ class Bookmarks(NavigationPane):
         """Focus the option list."""
         self.query_one(OptionList).focus()
 
+    def _bookmarks_updated(self) -> None:
+        """Handle the bookmarks being updated."""
+        # It's slightly costly, but currently there's no easier way to do
+        # this; and really it's not going to be that frequent. Here we nuke
+        # the content of the OptionList and rebuild it based on the actual
+        # list of bookmarks.
+        bookmarks = self.query_one(OptionList)
+        old_position = bookmarks.highlighted
+        bookmarks.clear_options()
+        for bookmark in self._bookmarks:
+            bookmarks.add_option(Entry(bookmark))
+        save_bookmarks(self._bookmarks)
+        bookmarks.highlighted = old_position
+
     def add_bookmark(self, title: str, location: Path | URL) -> None:
         """Add a new bookmark.
 
@@ -77,10 +98,7 @@ class Bookmarks(NavigationPane):
         """
         self._bookmarks.append(Bookmark(title, location))
         self._bookmarks = sorted(self._bookmarks, key=lambda bookmark: bookmark.title)
-        bookmarks = self.query_one(OptionList).clear_options()
-        for bookmark in self._bookmarks:
-            bookmarks.add_option(Entry(bookmark))
-        save_bookmarks(self._bookmarks)
+        self._bookmarks_updated()
 
     class Goto(Message):
         """Message that requests that the viewer goes to a given bookmark."""
@@ -103,3 +121,26 @@ class Bookmarks(NavigationPane):
         event.stop()
         assert isinstance(event.option, Entry)
         self.post_message(self.Goto(event.option.bookmark))
+
+    def action_delete(self) -> None:
+        """Delete the highlighted bookmark."""
+        if self.query_one(OptionList).highlighted is not None:
+            self.app.push_screen(
+                YesNoDialog(
+                    self,
+                    "Delete bookmark",
+                    "Are you sure you want to delete the bookmark?",
+                    id="delete",
+                )
+            )
+
+    def on_yes_no_dialog_positive_reply(self, event: YesNoDialog.PositiveReply) -> None:
+        """Handle a yes/no dialog giving a positive reply.
+
+        Args:
+            event: The event to handle.
+        """
+        bookmarks = self.query_one(OptionList)
+        if event.sender_id == "delete" and bookmarks.highlighted is not None:
+            del self._bookmarks[bookmarks.highlighted]
+            self._bookmarks_updated()
