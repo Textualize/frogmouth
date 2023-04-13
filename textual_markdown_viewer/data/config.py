@@ -30,7 +30,7 @@ def config_file() -> Path:
         The path to the configuration file.
 
     Note:
-        As a side effect the configuration directory will be created if it
+        As a side-effect, the configuration directory will be created if it
         does not exist.
     """
     (config_dir := xdg_config_home() / ORGANISATION_NAME / PACKAGE_NAME).mkdir(
