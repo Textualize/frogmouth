@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import deque
 from pathlib import Path
 from typing import Callable
+from webbrowser import open as open_url
 
 from httpx import URL, AsyncClient, HTTPStatusError, RequestError
 from textual import work
@@ -215,8 +216,23 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         # There didn't seem to be an error transporting the data, and
         # neither did there seem to be an error with the resource itself. So
         # at this point we should hopefully have the document's content.
-        self.document.update(response.text)
-        self._post_load(location, remember)
+        # However... it's possible we've been fooled into loading up
+        # something that looked like it was a markdown file, but really it's
+        # a web-rendering of such a file; so as a final check we make sure
+        # we're looking at something that's plain text, or actually
+        # Markdown.
+        content_type = response.headers.get("content-type", "")
+        if any(
+            content_type.startswith(f"text/{sub_type}")
+            for sub_type in ("plain", "markdown", "x-markdown")
+        ):
+            self.document.update(response.text)
+            self._post_load(location, remember)
+        else:
+            # Didn't look like something we could handle with the Markdown
+            # viewer. We could throw up an error, or we could just be nice
+            # to the user. Let's be nice...
+            open_url(str(location))
 
     def visit(self, location: Path | URL, remember: bool = True) -> None:
         """Visit a location.
