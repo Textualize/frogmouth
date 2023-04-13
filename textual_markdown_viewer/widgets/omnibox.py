@@ -339,7 +339,18 @@ class Omnibox(Input):
         open_url(DISCORD)
 
     def command_obsidian(self, vault: str) -> None:
-        """The command to visit an obsidian vault, if one can be seen."""
+        """The command to visit an obsidian vault, if one can be seen.
+
+        Args:
+            vault: The vault to visit.
+
+        If the vault is empty, an attempt will be made to visit the root
+        level of all Obsidian vaults.
+
+        Note:
+            At the moment this will only work with Obsidian on macOS where
+            the vaults are being held in iCloud.
+        """
         # Right now this will only work on macOS. I've not used Obsidian on
         # any other OS so I'm unsure where the vault will be stored. I'll
         # add to this once I've found out.
