@@ -1,7 +1,9 @@
 """Provides code for loading/saving configuration."""
 
+from __future__ import annotations
+
 from dataclasses import asdict, dataclass, field
-from functools import cache
+from functools import lru_cache
 from json import dumps, loads
 from pathlib import Path
 
@@ -51,7 +53,7 @@ def save_config(config: Config) -> Config:
     return config
 
 
-@cache
+@lru_cache(maxsize=None)
 def load_config() -> Config:
     """Load the configuration from storage.
 
