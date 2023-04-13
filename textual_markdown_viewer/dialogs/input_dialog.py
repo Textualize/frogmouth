@@ -114,7 +114,7 @@ class InputDialog(ModalScreen):
                 cargo: Any cargo data for the result.
             """
             super().__init__()
-            self.sender_id = sender_id
+            self.sender_id: str | None = sender_id
             """The ID of the sending dialog."""
             self.value: str = value
             """The value of the result."""
