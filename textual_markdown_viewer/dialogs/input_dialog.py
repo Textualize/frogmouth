@@ -48,7 +48,7 @@ class InputDialog(ModalScreen):
 
     InputDialog #buttons {
         width: 100%;
-        align-horizontal: right !important;
+        align-horizontal: right;
         padding-right: 1;
     }
     """
