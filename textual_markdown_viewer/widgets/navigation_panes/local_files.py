@@ -49,7 +49,7 @@ class LocalFiles(NavigationPane):
     }
 
     LocalFiles > DirectoryTree {
-        background: $primary;
+        background: $primary-background;
         width: 1fr;
     }
     """

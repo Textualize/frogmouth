@@ -16,12 +16,12 @@ class TableOfContents(NavigationPane):
     }
 
     TableOfContents > MarkdownTableOfContents {
-        background: $primary;
+        background: $primary-background;
         border: none;
     }
 
     TableOfContents > MarkdownTableOfContents > Tree {
-        background: $primary;
+        background: $primary-background;
         padding: 0;
     }
     """

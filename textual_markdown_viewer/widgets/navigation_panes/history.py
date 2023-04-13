@@ -58,7 +58,7 @@ class History(NavigationPane):
     }
 
     History > OptionList {
-        background: $primary;
+        background: $primary-background;
     }
     """
 

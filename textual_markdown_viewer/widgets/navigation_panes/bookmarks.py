@@ -51,7 +51,7 @@ class Bookmarks(NavigationPane):
     }
 
     Bookmarks > OptionList {
-        background: $primary;
+        background: $primary-background;
     }
     """
     """The default CSS for the bookmarks navigation pane."""
