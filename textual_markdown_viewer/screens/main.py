@@ -183,17 +183,29 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             )
 
     async def on_omnibox_git_hub_command(self, event: Omnibox.GitHubCommand) -> None:
-        """Handle a GitHub file shortcut command."""
+        """Handle a GitHub file shortcut command.
+
+        Args:
+            event: The GitHub shortcut command event to handle.
+        """
         await self._from_forge("GitHub", event, build_raw_github_url)
 
     async def on_omnibox_git_lab_command(self, event: Omnibox.GitLabCommand) -> None:
-        """Handle a GitLab file shortcut command."""
+        """Handle a GitLab file shortcut command.
+
+        Args:
+            event: The GitLab shortcut command event to handle.
+        """
         await self._from_forge("GitLab", event, build_raw_gitlab_url)
 
     async def on_omnibox_bit_bucket_command(
         self, event: Omnibox.BitBucketCommand
     ) -> None:
-        """Handle a BitBucket shortcut command."""
+        """Handle a BitBucket shortcut command.
+
+        Args:
+            event: The BitBucket shortcut command event to handle.
+        """
         await self._from_forge("BitBucket", event, build_raw_bitbucket_url)
 
     def on_omnibox_about_command(self) -> None:
