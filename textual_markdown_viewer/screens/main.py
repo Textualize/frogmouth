@@ -325,10 +325,19 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
 
     def action_escape(self) -> None:
         """Process the escape key."""
-        if self.query_one(Omnibox).has_focus:
-            self.app.exit()
+        # Escape is designed to work backwards out of the application. If
+        # the viewer is focused, the omnibox gets focused, if omnibox has
+        # focus but it isn't empty, it gets emptied, if it's empty we exit
+        # the application. The idea being that folk who use this often want
+        # to build up muscle memory on the keyboard will know to camp on the
+        # escape key until they get to where they want to be.
+        if (omnibox := self.query_one(Omnibox)).has_focus:
+            if omnibox.value:
+                omnibox.value = ""
+            else:
+                self.app.exit()
         else:
-            self.query_one(Omnibox).focus()
+            omnibox.focus()
 
     def action_omnibox(self) -> None:
         """Jump to the omnibox."""
