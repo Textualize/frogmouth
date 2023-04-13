@@ -57,6 +57,7 @@ class Omnibox(Input):
         "gl": "gitlab",
         "h": "history",
         "l": "local",
+        "obs": "obsidian",
         "toc": "contents",
         "q": "quit",
         "?": "help",
@@ -336,3 +337,18 @@ class Omnibox(Input):
     def command_discord(self, _: str) -> None:
         """The command to visit the Textualize discord server."""
         open_url(DISCORD)
+
+    def command_obsidian(self, vault: str) -> None:
+        """The command to visit an obsidian vault, if one can be seen."""
+        # Right now this will only work on macOS. I've not used Obsidian on
+        # any other OS so I'm unsure where the vault will be stored. I'll
+        # add to this once I've found out.
+        if (
+            target := (
+                Path(
+                    "~/Library/Mobile Documents/iCloud~md~obsidian/Documents"
+                ).expanduser()
+                / vault
+            )
+        ).exists():
+            self.command_chdir(str(target))
