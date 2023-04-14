@@ -48,9 +48,13 @@ def save_config(config: Config) -> Config:
     Returns:
         The configuration.
     """
+    # Ensure any cached copy of the config is cleaned up.
     load_config.cache_clear()
+    # Dump the given config to storage.
     config_file().write_text(dumps(asdict(config), indent=4))
-    return config
+    # Finally, load it up again. This is to make sure that the updated
+    # version is in the cache.
+    return load_config()
 
 
 @lru_cache(maxsize=None)
@@ -62,7 +66,11 @@ def load_config() -> Config:
 
     Note:
         As a side-effect, if the configuration doesn't exist a default one
-        will be saved.
+        will be saved to storage.
+
+        This function is designed so that it's safe and low-cost to
+        repeatedly call it. The configuration is cached and will only be
+        loaded from storage when necessary.
     """
     source_file = config_file()
     return (
