@@ -346,8 +346,8 @@ class Omnibox(Input):
         Args:
             vault: The vault to visit.
 
-        If the vault is empty, an attempt will be made to visit the root
-        level of all Obsidian vaults.
+        If the vault name is empty, an attempt will be made to visit the
+        root level of all Obsidian vaults.
 
         Note:
             At the moment this will only work with Obsidian on macOS where
