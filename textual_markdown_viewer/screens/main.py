@@ -141,7 +141,11 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     async def on_omnibox_local_chdir_command(
         self, event: Omnibox.LocalChdirCommand
     ) -> None:
-        """Handle being asked to view a new directory in the local files picker."""
+        """Handle being asked to view a new directory in the local files picker.
+
+        Args:
+            event: The chdir command event to handle.
+        """
         if not event.target.exists():
             self.app.push_screen(
                 ErrorDialog("No such directory", f"{event.target} does not exist.")
@@ -319,7 +323,8 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             event: The paste event.
 
         This method is here to capture paste events that look like the name
-        of a local file (later I may add URL support too).
+        of a local file (later I may add URL support too). The main purpose
+        of this is to handle drag/drop into the terminal.
         """
         if (candidate_file := Path(event.text)).exists():
             self.visit(candidate_file)
