@@ -27,8 +27,8 @@ HELP: Final[
 
 | Key | Command |
 | -- | -- |
-| `Ctrl+d` | Add the current document to the bookmarks. |
-| `F10` | Toggle dark/light theme. |
+| `Ctrl+d` | Add the current document to the bookmarks |
+| `F10` | Toggle dark/light theme |
 
 ## Commands
 
