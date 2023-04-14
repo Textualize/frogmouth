@@ -25,7 +25,7 @@ from ..utility import (
     is_likely_url,
     maybe_markdown,
 )
-from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
+from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME, TEXTUAL_URL
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import Bookmarks, History, LocalFiles
 
@@ -379,7 +379,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             InformationDialog(
                 f"About {PACKAGE_NAME}",
                 f"Version {__version__}.\n\n"
-                f"Built with [link=https://textual.textualize.io/]Textual[/] v{textual_version}.\n\n"
+                f"Built with [link={TEXTUAL_URL}]Textual[/] v{textual_version}.\n\n"
                 f"[link]https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}[/]",
             )
         )

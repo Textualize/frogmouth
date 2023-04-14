@@ -18,3 +18,6 @@ USER_AGENT: Final[str] = f"{PACKAGE_NAME} v{__version__}"
 
 DISCORD: Final[str] = "https://discord.gg/Enf6Z3qhVr"
 """The link to the Textualize Discord server."""
+
+TEXTUAL_URL: Final[str] = "https://textual.textualize.io/"
+"""The URL people should visit to find out more about Textual."""
