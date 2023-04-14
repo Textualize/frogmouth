@@ -25,7 +25,7 @@ from ..utility import (
     is_likely_url,
     maybe_markdown,
 )
-from ..utility.advertising import PACKAGE_NAME
+from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import Bookmarks, History, LocalFiles
 
@@ -380,7 +380,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
                 f"About {PACKAGE_NAME}",
                 f"Version {__version__}.\n\n"
                 f"Built with [link=https://textual.textualize.io/]Textual[/] v{textual_version}.\n\n"
-                "[link]https://github.com/Textualize/textual-markdown-viewer[/]",
+                f"[link]https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}[/]",
             )
         )
 
