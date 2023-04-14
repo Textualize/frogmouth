@@ -16,7 +16,7 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
-from ..data import HELP, load_history, save_history
+from ..data import HELP, load_config, load_history, save_config, save_history
 from ..dialogs import ErrorDialog, InformationDialog, InputDialog
 from ..utility import (
     build_raw_bitbucket_url,
@@ -45,6 +45,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Binding("escape", "escape", "", show=False),
         Binding("f1", "help", "Help"),
         Binding("f2", "about", "About"),
+        Binding("f10", "toggle_theme", "", show=False),
     ]
     """The keyboard bindings for the main screen."""
 
@@ -422,3 +423,11 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             assert isinstance(event.cargo, (Path, URL))
             # Save the bookmark.
             self.query_one(Navigation).bookmarks.add_bookmark(event.value, event.cargo)
+
+    def action_toggle_theme(self) -> None:
+        """Toggle the light/dark mode theme."""
+        config = load_config()
+        config.light_mode = not config.light_mode
+        save_config(config)
+        # pylint:disable=attribute-defined-outside-init
+        self.app.dark = not config.light_mode
