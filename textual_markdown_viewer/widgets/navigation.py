@@ -22,7 +22,7 @@ class Navigation(Vertical):
     DEFAULT_CSS = """
     Navigation {
         width: 1fr;
-        min-width: 30;
+        min-width: 42;
         background: $primary-background;
         display: none;
     }
