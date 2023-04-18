@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from httpx import URL, AsyncClient
+from httpx import URL, AsyncClient, HTTPStatusError
 
 from .advertising import USER_AGENT
 
@@ -44,8 +44,11 @@ async def build_raw_forge_url(
                 follow_redirects=True,
                 headers={"user-agent": USER_AGENT},
             )
-            if response.status_code == 200:
+            try:
+                response.raise_for_status()
                 return URL(url)
+            except HTTPStatusError:
+                pass
     return None
 
 
