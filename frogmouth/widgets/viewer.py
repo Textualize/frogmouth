@@ -97,7 +97,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
 
     DEFAULT_CSS = """
     Viewer {
-        width: 3fr;
+        width: 1fr;
         scrollbar-gutter: stable;
     }
     """
