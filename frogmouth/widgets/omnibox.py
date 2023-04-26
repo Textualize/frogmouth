@@ -1,4 +1,4 @@
-"""Provides the Markdown viewer's omnibox widget."""
+"""Provides the viewer's omnibox widget."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from ..utility.advertising import DISCORD
 
 
 class Omnibox(Input):
-    """The command and location input widget for the Markdown viewer."""
+    """The command and location input widget for the viewer."""
 
     DEFAULT_CSS = """
     Omnibox {

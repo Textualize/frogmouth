@@ -15,7 +15,7 @@ from .navigation_pane import NavigationPane
 
 
 class FilteredDirectoryTree(DirectoryTree):
-    """A `DirectoryTree` filtered for the Markdown viewer."""
+    """A `DirectoryTree` filtered for the markdown viewer."""
 
     def filter_paths(self, paths: Iterable[Path]) -> Iterable[Path]:
         """Filter the directory tree for the Markdown viewer.

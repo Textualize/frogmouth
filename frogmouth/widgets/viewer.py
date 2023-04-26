@@ -93,7 +93,7 @@ class History:
 
 
 class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
-    """The Markdown viewer class."""
+    """The markdown viewer class."""
 
     DEFAULT_CSS = """
     Viewer {

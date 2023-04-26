@@ -1,4 +1,4 @@
-"""The main application class for the Markdown viewer."""
+"""The main application class for the viewer."""
 
 from argparse import ArgumentParser, Namespace
 

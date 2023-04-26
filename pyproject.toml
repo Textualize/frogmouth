@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "textual-markdown-viewer"
+name = "frogmouth"
 version = "0.1.0"
 description = "A Markdown document viewer for the terminal"
 authors = ["Dave Pearson <dave@textualize.io>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "textual_markdown_viewer"}]
+packages = [{include = "frogmouth"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"

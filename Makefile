@@ -1,6 +1,6 @@
 ##############################################################################
 # Common make values.
-package := textual_markdown_viewer
+package := frogmouth
 run     := poetry run
 python  := $(run) python
 textual := $(run) textual
