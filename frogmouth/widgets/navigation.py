@@ -23,7 +23,7 @@ class Navigation(Vertical):
     Navigation {
         width: 1fr;
         min-width: 42;
-        background: $primary-background;
+        background: $panel;
         display: none;
     }
 

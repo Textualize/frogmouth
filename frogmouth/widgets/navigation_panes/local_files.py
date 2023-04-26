@@ -51,7 +51,7 @@ class LocalFiles(NavigationPane):
     }
 
     LocalFiles > DirectoryTree {
-        background: $primary-background;
+        background: $panel;
         width: 1fr;
     }
 
