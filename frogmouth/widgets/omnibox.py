@@ -21,6 +21,7 @@ class Omnibox(Input):
 
     DEFAULT_CSS = """
     Omnibox {
+        dock: top;
         border-left: none;
         border-right: none;
     }
