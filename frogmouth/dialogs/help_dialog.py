@@ -113,7 +113,7 @@ class HelpDialog(ModalScreen):
             with VerticalScroll():
                 yield Markdown(HELP)
             with Center():
-                yield Button("Close")
+                yield Button("Close", variant="primary")
 
     def on_mount(self) -> None:
         """Configure the help screen once the DOM is ready."""
