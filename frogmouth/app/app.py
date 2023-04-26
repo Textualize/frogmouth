@@ -9,7 +9,7 @@ from textual.app import App
 from .. import __version__
 from ..data import load_config
 from ..screens import Main
-from ..utility.advertising import APPLICATION_TITLE
+from ..utility.advertising import APPLICATION_TITLE, PACKAGE_NAME
 
 
 class MarkdownViewer(App[None]):
@@ -53,7 +53,7 @@ def get_args() -> Namespace:
 
     # Create the parser object.
     parser = ArgumentParser(
-        prog="tmv",
+        prog=PACKAGE_NAME,
         description=f"{APPLICATION_TITLE} -- A Markdown viewer for the terminal.",
         epilog=f"v{__version__}",
     )
