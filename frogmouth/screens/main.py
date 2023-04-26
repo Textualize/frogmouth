@@ -92,6 +92,13 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     async def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
 
+        # Currently Textual's Markdown can steal focus, which gets confusing
+        # as it's not obvious *what* is focused. So let's stop it from
+        # allowing the content to get focus.
+        #
+        # https://github.com/Textualize/textual/issues/2380
+        self.query_one(Markdown).can_focus_children = False
+
         # Load up any history that might be saved.
         if history := load_history():
             self.query_one(Viewer).load_history(history)
