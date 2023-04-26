@@ -7,6 +7,7 @@ from pathlib import Path
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
+from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
@@ -21,14 +22,21 @@ class Navigation(Vertical):
 
     DEFAULT_CSS = """
     Navigation {
-        width: 42;
+        width: 44;
         background: $panel;
-        display: none;
+        display: block;
         dock: left;
+        border-left: wide $background;
+        border-right: wide $background;
     }
 
     Navigation:focus-within {
-        display: block;
+        border-left: wide $accent;
+        border-right: wide $accent;
+    }
+
+    Navigation.hidden {
+        display: none;
     }
 
     TabbedContent {
@@ -46,8 +54,12 @@ class Navigation(Vertical):
     ]
     """Bindings local to the navigation pane."""
 
+    popped_out: var[bool] = var(False)
+    """Is the navigation popped out?"""
+
     def compose(self) -> ComposeResult:
         """Compose the content of the navigation pane."""
+        self.popped_out = False
         # pylint:disable=attribute-defined-outside-init
         self._contents = TableOfContents()
         self._local_files = LocalFiles()
@@ -59,6 +71,14 @@ class Navigation(Vertical):
             yield self._local_files
             yield self._bookmarks
             yield self._history
+
+    def watch_popped_out(self) -> None:
+        """Watch for changes to the popped out state."""
+        self.set_class(not self.popped_out, "hidden")
+
+    def toggle(self) -> None:
+        """Toggle the popped/unpopped state."""
+        self.popped_out = not self.popped_out
 
     @property
     def table_of_contents(self) -> TableOfContents:
@@ -86,6 +106,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
+        self.popped_out = True
         if target is not None:
             await self._local_files.chdir(target)
         self._local_files.activate()
@@ -97,6 +118,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
+        self.popped_out = True
         self._bookmarks.activate()
         return self
 
@@ -106,6 +128,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
+        self.popped_out = True
         self._history.activate()
         return self
 
@@ -115,6 +138,7 @@ class Navigation(Vertical):
         Returns:
             Self.
         """
+        self.popped_out = True
         self._contents.activate()
         return self
 

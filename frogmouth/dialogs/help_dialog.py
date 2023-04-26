@@ -21,6 +21,7 @@ HELP: Final[
 
 | Key | Command |
 | -- | -- |
+| `Ctrl+n` | Show/hide the navigation |
 | `Ctrl+b` | Show the bookmarks |
 | `Ctrl+l` | Show the local file browser |
 | `Ctrl+t` | Show the table of contents |

@@ -45,6 +45,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         Binding("escape", "escape", "", show=False),
         Binding("f1", "help", "Help"),
         Binding("f2", "about", "About"),
+        Binding("ctrl+n", "navigation", "Navigation"),
         Binding("f10", "toggle_theme", "", show=False),
     ]
     """The keyboard bindings for the main screen."""
@@ -335,6 +336,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         """
         if (candidate_file := Path(event.text)).exists():
             self.visit(candidate_file)
+
+    def action_navigation(self) -> None:
+        """Toggle the availability of the navigation sidebar."""
+        self.query_one(Navigation).toggle()
 
     def action_escape(self) -> None:
         """Process the escape key."""
