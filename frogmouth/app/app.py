@@ -1,6 +1,7 @@
 """The main application class for the viewer."""
 
 from argparse import ArgumentParser, Namespace
+from webbrowser import open as open_url
 
 from textual import __version__ as textual_version  # pylint: disable=no-name-in-module
 from textual.app import App
@@ -33,6 +34,14 @@ class MarkdownViewer(App[None]):
     def on_mount(self) -> None:
         """Set up the application after the DOM is ready."""
         self.push_screen(Main(self._args.file))
+
+    def action_visit(self, url: str) -> None:
+        """Visit the given URL, via the operating system.
+
+        Args:
+            url: The URL to visit.
+        """
+        open_url(url)
 
 
 def get_args() -> Namespace:
