@@ -385,8 +385,9 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             InformationDialog(
                 f"About {PACKAGE_NAME}",
                 f"Version {__version__}.\n\n"
-                f"Built with [link={TEXTUAL_URL}]Textual[/] v{textual_version}.\n\n"
-                f"[link]https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}[/]",
+                f"Built with [@click=app.visit('{TEXTUAL_URL}')]Textual[/] v{textual_version}.\n\n"
+                f"[@click=app.visit('https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}')]"
+                f"https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}[/]",
             )
         )
 
