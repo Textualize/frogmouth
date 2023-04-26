@@ -16,8 +16,8 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
-from ..data import HELP, load_config, load_history, save_config, save_history
-from ..dialogs import ErrorDialog, InformationDialog, InputDialog
+from ..data import load_config, load_history, save_config, save_history
+from ..dialogs import ErrorDialog, InformationDialog, InputDialog, HelpDialog
 from ..utility import (
     build_raw_bitbucket_url,
     build_raw_github_url,
@@ -375,9 +375,7 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
 
     def action_help(self) -> None:
         """Show the help."""
-        (viewer := self.query_one(Viewer)).show(HELP)
-        viewer.focus()
-        self.query_one(Omnibox).value = "help"
+        self.app.push_screen(HelpDialog())
 
     def action_about(self) -> None:
         """Show the about dialog."""

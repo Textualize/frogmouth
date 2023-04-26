@@ -2,13 +2,11 @@
 
 from .bookmarks import Bookmark, load_bookmarks, save_bookmarks
 from .config import Config, load_config, save_config
-from .help import HELP
 from .history import load_history, save_history
 
 __all__ = [
     "Bookmark",
     "Config",
-    "HELP",
     "load_bookmarks",
     "load_config",
     "load_history",

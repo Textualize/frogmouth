@@ -1,6 +1,12 @@
-"""Provides the main help text for the application."""
+"""The main help dialog for the application."""
 
 from typing_extensions import Final
+
+from textual.app import ComposeResult
+from textual.binding import Binding
+from textual.containers import Center, Vertical, VerticalScroll
+from textual.screen import ModalScreen
+from textual.widgets import Button, Markdown
 
 from ..utility.advertising import APPLICATION_TITLE
 
@@ -67,4 +73,55 @@ Anywhere where `<file>` is omitted it is assumed `README.md` is desired.
 Anywhere where `<branch>` is omitted a test is made for the desired file on
 first a `main` and then a `master` branch.
 """
-"""The main help text for the markdown viewer application."""
+"""The main help text for the application."""
+
+
+class HelpDialog(ModalScreen):
+    """Modal dialog that shows the application's help."""
+
+    DEFAULT_CSS = """
+    HelpDialog {
+        align: center middle;
+    }
+
+    HelpDialog > Vertical {
+        border: thick $primary 50%;
+        width: 80%;
+        height: 80%;
+        background: $panel;
+    }
+
+    HelpDialog > Vertical > VerticalScroll {
+        height: 1fr;
+    }
+
+    HelpDialog > Vertical > Center {
+        border-top: solid $primary;
+        padding: 1;
+        height: auto;
+    }
+    """
+
+    BINDINGS = [
+        Binding("escape,f1", "app.pop_screen", "", show=False),
+    ]
+    """Bindings for the help dialog."""
+
+    def compose(self) -> ComposeResult:
+        """Compose the help screen."""
+        with Vertical():
+            with VerticalScroll():
+                yield Markdown(HELP)
+            with Center():
+                yield Button("Close")
+
+    def on_mount(self) -> None:
+        """Configure the help screen once the DOM is ready."""
+        # It seems that some things inside Markdown can still grab focus;
+        # which might not be right. Let's ensure that can't happen here.
+        self.query_one(Markdown).can_focus_children = False
+        self.query_one("Vertical > VerticalScroll").focus()
+
+    def on_button_pressed(self) -> None:
+        """React to button press."""
+        self.app.pop_screen()
