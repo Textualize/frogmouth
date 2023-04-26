@@ -21,10 +21,10 @@ class Navigation(Vertical):
 
     DEFAULT_CSS = """
     Navigation {
-        width: 1fr;
-        min-width: 42;
+        width: 42;
         background: $panel;
         display: none;
+        dock: left;
     }
 
     Navigation:focus-within {
