@@ -30,7 +30,7 @@ $ make setup
 To run the development version:
 
 ```sh
-make
+$ make
 ```
 
 To see other `make` targets:
