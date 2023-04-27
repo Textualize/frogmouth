@@ -35,6 +35,7 @@ HELP: Final[
 | Key | Command |
 | -- | -- |
 | `Ctrl+d` | Add the current document to the bookmarks |
+| `Ctrl+q` | Quit the application |
 | `F1` | This help |
 | `F2` | Details about {APPLICATION_TITLE} |
 | `F10` | Toggle dark/light theme |

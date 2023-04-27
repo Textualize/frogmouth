@@ -70,6 +70,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         Binding("f1", "help", "Help"),
         Binding("f2", "about", "About"),
         Binding("ctrl+n", "navigation", "Navigation"),
+        Binding("ctrl+q", "app.quit", "Quit"),
         Binding("f10", "toggle_theme", "", show=False),
     ]
     """The keyboard bindings for the main screen."""
