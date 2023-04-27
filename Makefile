@@ -12,11 +12,11 @@ isort   := $(run) isort
 ##############################################################################
 # Methods of running the application.
 .PHONY: run
-run:				# Run the application.
+run:				# Run the application
 	$(python) -m $(package)
 
 .PHONY: debug
-debug:				# Run the application in debug mode.
+debug:				# Run the application in debug mode
 	TEXTUAL=devtools TEXTUAL_DEBUG=1 make run
 
 ##############################################################################
@@ -27,27 +27,27 @@ setup:				# Set up the development environment
 	$(run) pre-commit install
 
 .PHONY: update
-update:			# Update the development environment.
+update:			# Update the development environment
 	poetry update
 
 ##############################################################################
 # Package building and distribution.
 .PHONY: build
-build:				# Build the package for distribution.
+build:				# Build the package for distribution
 	poetry build
 
 .PHONY: clean
-clean:				# Clean up the package builds.
+clean:				# Clean up the package builds
 	rm -rf dist
 
 ##############################################################################
 # Textual tools.
 .PHONY: borders
-borders:			# Preview the Textual borders.
+borders:			# Preview the Textual borders
 	$(textual) borders
 
 .PHONY: colours
-colours:			# Preview the Textual colours.
+colours:			# Preview the Textual colours
 	$(textual) colors
 
 .PHONY: colour colors color
@@ -56,33 +56,33 @@ colors: colours
 color: colours
 
 .PHONY: console
-console:			# Run the textual console.
+console:			# Run the textual console
 	$(textual) console
 
 .PHONY: diagnose
-diagnose:			# Print the Textual diagnosis information.
+diagnose:			# Print the Textual diagnosis information
 	$(textual) diagnose
 
 .PHONY: easing
-easing:			# Preview the Textual easing functions.
+easing:			# Preview the Textual easing functions
 	$(textual) easing
 
 .PHONY: keys
-keys:				# Run the textual keys utility.
+keys:				# Run the textual keys utility
 	$(textual) keys
 
 ##############################################################################
 # Reformatting tools.
 .PHONY: black
-black:				# Run black over the code.
+black:				# Run black over the code
 	$(black) $(package)
 
 .PHONY: isort
-isort:				# Run isort over the code.
+isort:				# Run isort over the code
 	$(isort) --profile black $(package)
 
 .PHONY: reformat
-reformat: isort black		# Run all the formatting tools over the code.
+reformat: isort black		# Run all the formatting tools over the code
 
 ##############################################################################
 # Checking/testing/linting/etc.
