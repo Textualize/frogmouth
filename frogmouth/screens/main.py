@@ -34,16 +34,16 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
     DEFAULT_CSS = """
-    /* Lack of hilight for when a major component doesn't have focus. */
-    .hilightable {
+    /* Lack of highlight for when a major component doesn't have focus. */
+    .highlight {
         border-top: none !important;
         border-bottom: none !important;
         border-left: thick $background !important;
         border-right: none !important;
     }
 
-    /* Hilight for when a major component has focus. */
-    .hilightable:focus, .hilightable:focus-within {
+    /* Highlight for when a major component has focus. */
+    .highlight:focus, .highlight:focus-within {
         border-top: none !important;
         border-bottom: none !important;
         border-left: thick $secondary-darken-3 50% !important;
@@ -84,10 +84,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             The result of composing the screen.
         """
         yield Header()
-        yield Omnibox(classes="hilightable")
+        yield Omnibox(classes="highlight")
         with Horizontal():
-            yield Navigation(classes="hilightable")
-            yield Viewer(classes="hilightable")
+            yield Navigation(classes="highlight")
+            yield Viewer(classes="highlight")
         yield Footer()
 
     def visit(self, location: Path | URL, remember: bool = True) -> None:
