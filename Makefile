@@ -31,6 +31,16 @@ update:			# Update the development environment.
 	poetry update
 
 ##############################################################################
+# Package building and distribution.
+.PHONY: build
+build:
+	poetry build
+
+.PHONY: clean
+clean:
+	rm -rf dist
+
+##############################################################################
 # Textual tools.
 .PHONY: borders
 borders:			# Preview the Textual borders.
