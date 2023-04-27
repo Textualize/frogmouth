@@ -2,10 +2,16 @@
 
 from typing_extensions import Final
 
-from .. import __version__
+from .. import __version__, __author__
 
 ORGANISATION_NAME: Final[str] = "textualize"
 """The organisation name to use when creating namespaced resources."""
+
+ORGANISATION_TITLE: Final[str] = __author__
+"""The organisation title."""
+
+ORGANISATION_URL: Final[str] = "https://www.textualize.io/"
+"""The organisation URL."""
 
 PACKAGE_NAME: Final[str] = "frogmouth"
 """The name of the package."""
