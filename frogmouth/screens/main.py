@@ -17,7 +17,7 @@ from textual.widgets import Footer, Header, Markdown
 
 from .. import __version__
 from ..data import load_config, load_history, save_config, save_history
-from ..dialogs import ErrorDialog, InformationDialog, InputDialog, HelpDialog
+from ..dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
 from ..utility import (
     build_raw_bitbucket_url,
     build_raw_github_url,
@@ -27,10 +27,10 @@ from ..utility import (
 )
 from ..utility.advertising import (
     ORGANISATION_NAME,
-    PACKAGE_NAME,
-    TEXTUAL_URL,
     ORGANISATION_TITLE,
     ORGANISATION_URL,
+    PACKAGE_NAME,
+    TEXTUAL_URL,
 )
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import Bookmarks, History, LocalFiles

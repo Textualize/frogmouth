@@ -1,12 +1,11 @@
 """The main help dialog for the application."""
 
-from typing_extensions import Final
-
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Center, Vertical, VerticalScroll
 from textual.screen import ModalScreen
 from textual.widgets import Button, Markdown
+from typing_extensions import Final
 
 from ..utility.advertising import APPLICATION_TITLE
 
