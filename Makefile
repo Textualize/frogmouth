@@ -33,11 +33,11 @@ update:			# Update the development environment.
 ##############################################################################
 # Package building and distribution.
 .PHONY: build
-build:
+build:				# Build the package for distribution.
 	poetry build
 
 .PHONY: clean
-clean:
+clean:				# Clean up the package builds.
 	rm -rf dist
 
 ##############################################################################
