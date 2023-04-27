@@ -84,11 +84,26 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
         if maybe_markdown(location):
             # ...attempt to visit it in the viewer.
             self.query_one(Viewer).visit(location, remember)
+        elif isinstance(location, Path):
+            # So, it's not Markdown, but it *is* a Path of some sort. If the
+            # resource seems to exist...
+            if location.exists():
+                # ...ask the OS to open it.
+                open_url(str(location))
+            else:
+                # It's a Path but it doesn't exist, there's not much else we
+                # can do with it.
+                self.app.push_screen(
+                    ErrorDialog(
+                        "Does not exist",
+                        f"Unable to open {location} because it does not exist.",
+                    )
+                )
         else:
-            # It looks like it's something we can't handle, but it could be
-            # coming from a link in a document we're viewing, so let's be
-            # kind to the user and hand it off to the operating system.
-            open_url(str(location))
+            # By this point all that's left is it's a URL that, on the
+            # surface, doesn't look like a Markdown file. Let's hand off to
+            # the operating system anyway.
+            open_url(str(location), new=2, autoraise=True)
 
     async def on_mount(self) -> None:
         """Set up the main screen once the DOM is ready."""
