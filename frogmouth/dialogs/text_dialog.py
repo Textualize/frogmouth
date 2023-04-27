@@ -46,7 +46,7 @@ class TextDialog(ModalScreen[None]):
     """Default CSS for the base text modal dialog."""
 
     BINDINGS = [
-        Binding("escape", "app.pop_screen", "", show=False),
+        Binding("escape", "dismiss(None)", "", show=False),
     ]
     """Bindings for the base text modal dialog."""
 
@@ -81,4 +81,4 @@ class TextDialog(ModalScreen[None]):
 
     def on_button_pressed(self) -> None:
         """Handle the OK button being pressed."""
-        self.app.pop_screen()
+        self.dismiss(None)
