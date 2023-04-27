@@ -14,7 +14,7 @@ from ...utility import maybe_markdown
 from .navigation_pane import NavigationPane
 
 
-class FilteredDirectoryTree(DirectoryTree):
+class FilteredDirectoryTree(DirectoryTree):  # pylint:disable=too-many-ancestors
     """A `DirectoryTree` filtered for the markdown viewer."""
 
     def filter_paths(self, paths: Iterable[Path]) -> Iterable[Path]:
