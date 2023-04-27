@@ -103,7 +103,7 @@ class HelpDialog(ModalScreen[None]):
     """
 
     BINDINGS = [
-        Binding("escape,f1", "app.pop_screen", "", show=False),
+        Binding("escape,f1", "dismiss(None)", "", show=False),
     ]
     """Bindings for the help dialog."""
 
@@ -124,4 +124,4 @@ class HelpDialog(ModalScreen[None]):
 
     def on_button_pressed(self) -> None:
         """React to button press."""
-        self.app.pop_screen()
+        self.dismiss(None)
