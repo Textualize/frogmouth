@@ -394,6 +394,8 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             else:
                 self.app.exit()
         else:
+            if self.query("Navigation:focus-within"):
+                self.query_one(Navigation).popped_out = False
             omnibox.focus()
 
     def action_omnibox(self) -> None:
