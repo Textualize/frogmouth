@@ -7,52 +7,5 @@
 
 
 # Frogmouth
-
-Frogmount is a terminal-based Markdown application for viewing and browsing Markdown files.
-
-## Installing
-
-The easiest way to install Frogmouth is with [pipx](https://pypa.github.io/pipx/).
-If you have pipx installed, run the following:
-
-```
-pipx install frogmouth
-```
-
-You can also install Frogmouth as a Python package with pip:
-
-```
-pip install frogmouth
-```
-TODO
-
-## Using
-
-TODO
-
-## Developing
-
-To get the source (actually not quite this, fork then clone your own; this
-is a placeholder):
-
-```sh
-$ git clone git@github.com:Textualize/frogmouth.git
-```
-
-To set up the development environment:
-
-```sh
-$ make setup
-```
-
-To run the development version:
-
-```sh
-$ make
-```
-
-To see other `make` targets:
-
-```sh
-$ make help
-```
+ 
+ Coming soon...
