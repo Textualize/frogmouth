@@ -2,7 +2,7 @@
 
 from typing_extensions import Final
 
-from .. import __author__, __version__
+from .. import __version__
 
 ORGANISATION_NAME: Final[str] = "textualize"
 """The organisation name to use when creating namespaced resources."""
