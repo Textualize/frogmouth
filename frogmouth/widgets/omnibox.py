@@ -22,13 +22,8 @@ class Omnibox(Input):
     DEFAULT_CSS = """
     Omnibox {
         dock: top;
-        border-left: none;
-        border-right: none;
-    }
-
-    Omnibox:focus {
-        border-left: none;
-        border-right: none;
+        padding: 1 0;
+        height: 3;
     }
 
     Omnibox .input--placeholder {

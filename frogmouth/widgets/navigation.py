@@ -26,13 +26,6 @@ class Navigation(Vertical):
         background: $panel;
         display: block;
         dock: left;
-        border-left: wide $background;
-        border-right: wide $background;
-    }
-
-    Navigation:focus-within {
-        border-left: wide $accent;
-        border-right: wide $accent;
     }
 
     Navigation.hidden {

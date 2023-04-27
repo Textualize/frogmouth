@@ -99,13 +99,6 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     Viewer {
         width: 1fr;
         scrollbar-gutter: stable;
-        border-left: wide $background;
-        border-right: wide $background;
-    }
-
-    Viewer:focus {
-        border-left: wide $accent;
-        border-right: wide $accent;
     }
     """
 

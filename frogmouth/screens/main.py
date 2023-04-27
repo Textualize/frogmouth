@@ -33,6 +33,24 @@ from ..widgets.navigation_panes import Bookmarks, History, LocalFiles
 class Main(Screen):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
+    DEFAULT_CSS = """
+    /* Lack of hilight for when a major component doesn't have focus. */
+    .hilightable {
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: thick $background !important;
+        border-right: none !important;
+    }
+
+    /* Hilight for when a major component has focus. */
+    .hilightable:focus, .hilightable:focus-within {
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: thick $secondary-darken-3 50% !important;
+        border-right: none !important;
+    }
+    """
+
     BINDINGS = [
         Binding("/", "omnibox", "Omnibox", show=False),
         Binding("ctrl+b", "bookmarks", "", show=False),
@@ -66,10 +84,10 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             The result of composing the screen.
         """
         yield Header()
-        yield Omnibox()
+        yield Omnibox(classes="hilightable")
         with Horizontal():
-            yield Navigation()
-            yield Viewer()
+            yield Navigation(classes="hilightable")
+            yield Viewer(classes="hilightable")
         yield Footer()
 
     def visit(self, location: Path | URL, remember: bool = True) -> None:
