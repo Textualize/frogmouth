@@ -25,7 +25,13 @@ from ..utility import (
     is_likely_url,
     maybe_markdown,
 )
-from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME, TEXTUAL_URL
+from ..utility.advertising import (
+    ORGANISATION_NAME,
+    PACKAGE_NAME,
+    TEXTUAL_URL,
+    ORGANISATION_TITLE,
+    ORGANISATION_URL,
+)
 from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import Bookmarks, History, LocalFiles
 
@@ -428,7 +434,8 @@ class Main(Screen):  # pylint:disable=too-many-public-methods
             InformationDialog(
                 f"About {PACKAGE_NAME}",
                 f"Version {__version__}.\n\n"
-                f"Built with [@click=app.visit('{TEXTUAL_URL}')]Textual[/] v{textual_version}.\n\n"
+                f"Built with [@click=app.visit('{TEXTUAL_URL}')]Textual[/] v{textual_version} "
+                f"by [@click=app.visit('{ORGANISATION_URL}')]{ORGANISATION_TITLE}[/].\n\n"
                 f"[@click=app.visit('https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}')]"
                 f"https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}[/]",
             )
