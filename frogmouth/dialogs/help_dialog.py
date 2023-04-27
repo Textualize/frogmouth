@@ -7,12 +7,13 @@ from textual.screen import ModalScreen
 from textual.widgets import Button, Markdown
 from typing_extensions import Final
 
+from .. import __version__
 from ..utility.advertising import APPLICATION_TITLE
 
 HELP: Final[
     str
 ] = f"""\
-# {APPLICATION_TITLE} Help
+# {APPLICATION_TITLE} v{__version__} Help
 
 ## Keys
 
