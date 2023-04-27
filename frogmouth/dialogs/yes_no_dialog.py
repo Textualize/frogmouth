@@ -13,7 +13,7 @@ from textual.widget import Widget
 from textual.widgets import Button, Static
 
 
-class YesNoDialog(ModalScreen):
+class YesNoDialog(ModalScreen[None]):
     """A dialog for asking a user a yes/no question."""
 
     DEFAULT_CSS = """

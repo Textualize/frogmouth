@@ -36,7 +36,7 @@ from ..widgets import Navigation, Omnibox, Viewer
 from ..widgets.navigation_panes import Bookmarks, History, LocalFiles
 
 
-class Main(Screen):  # pylint:disable=too-many-public-methods
+class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
     DEFAULT_CSS = """

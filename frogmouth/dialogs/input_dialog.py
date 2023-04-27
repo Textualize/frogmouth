@@ -13,7 +13,7 @@ from textual.widget import Widget
 from textual.widgets import Button, Input, Label
 
 
-class InputDialog(ModalScreen):
+class InputDialog(ModalScreen[None]):
     """A modal dialog for getting a single input from the user."""
 
     DEFAULT_CSS = """

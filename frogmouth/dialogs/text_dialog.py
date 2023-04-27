@@ -9,7 +9,7 @@ from textual.widgets import Button, Static
 from textual.widgets._button import ButtonVariant
 
 
-class TextDialog(ModalScreen):
+class TextDialog(ModalScreen[None]):
     """Base modal dialog for showing information."""
 
     DEFAULT_CSS = """

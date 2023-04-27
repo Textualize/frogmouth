@@ -76,7 +76,7 @@ first a `main` and then a `master` branch.
 """The main help text for the application."""
 
 
-class HelpDialog(ModalScreen):
+class HelpDialog(ModalScreen[None]):
     """Modal dialog that shows the application's help."""
 
     DEFAULT_CSS = """
