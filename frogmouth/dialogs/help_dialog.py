@@ -34,6 +34,8 @@ HELP: Final[
 | Key | Command |
 | -- | -- |
 | `Ctrl+d` | Add the current document to the bookmarks |
+| `F1` | This help |
+| `F2` | Details about {APPLICATION_TITLE} |
 | `F10` | Toggle dark/light theme |
 
 ## Commands
