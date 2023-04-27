@@ -7,7 +7,7 @@ from .. import __author__, __version__
 ORGANISATION_NAME: Final[str] = "textualize"
 """The organisation name to use when creating namespaced resources."""
 
-ORGANISATION_TITLE: Final[str] = __author__
+ORGANISATION_TITLE: Final[str] = "Textualize"
 """The organisation title."""
 
 ORGANISATION_URL: Final[str] = "https://www.textualize.io/"

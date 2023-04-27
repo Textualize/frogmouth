@@ -23,7 +23,7 @@ from ..utility.advertising import APPLICATION_TITLE, USER_AGENT
 PLACEHOLDER = f"""\
 # {APPLICATION_TITLE} {__version__}
 
-Welcome to the {APPLICATION_TITLE}!
+Welcome to {APPLICATION_TITLE}!
 """
 
 
