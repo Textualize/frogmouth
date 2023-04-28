@@ -46,14 +46,14 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         border-top: blank;
         border-right: blank;
         border-bottom: blank;
-        border-left: blank;    
+        border-left: blank;
     }
 
     .focusable:focus {
         border-top: heavy $accent !important;
         border-right: heavy $accent !important;
         border-bottom: heavy $accent !important;
-        border-left: heavy $accent !important;  
+        border-left: heavy $accent !important;
     }
 
 
@@ -66,22 +66,22 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         border-top: heavy $secondary !important;
         border-right: heavy $secondary !important;
         border-bottom: heavy $secondary !important;
-        border-left: heavy $secondary !important;  
+        border-left: heavy $secondary !important;
         height: 5;
     }
 
-    Screen TabbedContent TabPane {                
+    Screen TabbedContent TabPane {
         border-top: blank;
         border-right: blank;
         border-bottom: blank;
-        border-left: blank;    
+        border-left: blank;
     }
 
     Screen TabbedContent TabPane:focus-within {
         border-top: heavy $secondary !important;
         border-right: heavy $secondary !important;
         border-bottom: heavy $secondary !important;
-        border-left: heavy $secondary !important;    
+        border-left: heavy $secondary !important;
     }
 
     """
