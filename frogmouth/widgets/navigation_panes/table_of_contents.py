@@ -1,7 +1,7 @@
 """Provides the table of contents navigation pane."""
 
 from textual.app import ComposeResult
-from textual.widgets import Markdown, Tree
+from textual.widgets import Markdown
 from textual.widgets.markdown import MarkdownTableOfContents
 
 from .navigation_pane import NavigationPane
