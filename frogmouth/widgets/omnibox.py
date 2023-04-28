@@ -27,7 +27,7 @@ class Omnibox(Input):
     }
 
     Omnibox .input--placeholder {
-        color: $text 50%;        
+        color: $text 50%;
     }
     """
     """Default styling for the omnibox."""
