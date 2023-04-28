@@ -74,6 +74,9 @@ class LocalFiles(NavigationPane):
         # At the moment Textual's DirectoryTree doesn't support changing
         # directory to a new root, so here we're going to remove it and
         # mount a fresh one with a new root.
+        #
+        # Once https://github.com/Textualize/textual/issues/2056 is taken
+        # care of update this to use whatever new approach is taken.
         await self.query_one(FilteredDirectoryTree).remove()
         await self.mount(FilteredDirectoryTree(path))
 
