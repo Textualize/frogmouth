@@ -7,7 +7,6 @@ from typing import Awaitable, Callable
 from webbrowser import open as open_url
 
 from httpx import URL
-from textual import __version__ as textual_version  # pylint: disable=no-name-in-module
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
