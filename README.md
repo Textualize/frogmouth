@@ -12,6 +12,8 @@
 
 Frogmouth is a terminal-based Markdown viewer / browser, built with [Textual](https://github.com/Textualize/textual).
 
+Frogmouth can view `.*md` locally or via a URL. Links work, and there is familiar browser-like navigation.
+
 <details>  
   <summary> 🎬 Demonstration </summary>
   <hr>
@@ -21,9 +23,33 @@ A quick video tour of Frogmouth.
 https://user-images.githubusercontent.com/554369/235156088-42207539-befb-45a9-850c-cee2466a08f8.mov
 </details>
 
+## Screenshots
 
-<img align="left" width="100%" alt="Screenshot 2023-04-28 at 13 56 51" src="https://user-images.githubusercontent.com/554369/235156195-75a03900-8a17-43a3-82e0-100a694aa6b2.png">
+<table>
 
+<tr>
+<td>
+<img width="100%" align="left" alt="Screenshot 2023-04-28 at 15 14 53" src="https://user-images.githubusercontent.com/554369/235172015-555565a0-3df0-4e5d-b621-23e84fec82a3.png">
+</td>
+
+<td>
+<img width="100%" align="right" alt="Screenshot 2023-04-28 at 15 17 56" src="https://user-images.githubusercontent.com/554369/235172990-54460daf-baf4-4e02-aa22-9cec58d15315.png">
+</td>
+</tr>
+
+<tr>
+
+<td>
+<img width="100%" alt="Screenshot 2023-04-28 at 15 18 36" src="https://user-images.githubusercontent.com/554369/235173115-012e35fa-d737-4794-a696-0d5cb0b68490.png">
+</td>
+
+<td>
+<img width="100%" alt="Screenshot 2023-04-28 at 15 16 39" src="https://user-images.githubusercontent.com/554369/235173418-58c23583-3fb3-4ff1-a723-10fa607cdd48.png">
+</td>
+
+</tr>
+
+</table>
 
 ## Installing
 
