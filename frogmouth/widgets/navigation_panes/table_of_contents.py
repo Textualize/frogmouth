@@ -11,8 +11,8 @@ class TableOfContents(NavigationPane):
     """Markdown document table of contents navigation pane."""
 
     DEFAULT_CSS = """
-    TableOfContents {        
-        height: 100%;        
+    TableOfContents {
+        height: 100%;
     }
 
     TableOfContents > MarkdownTableOfContents {
