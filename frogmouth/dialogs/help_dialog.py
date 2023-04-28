@@ -1,5 +1,7 @@
 """The main help dialog for the application."""
 
+import webbrowser
+
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Center, Vertical, VerticalScroll
@@ -15,9 +17,12 @@ HELP: Final[
 ] = f"""\
 # {APPLICATION_TITLE} v{__version__} Help
 
-## Keys
+Welcome to Frogmouth Help!
 
-### Navigation keys:
+Frogmouth was built with [Textual](https://github.com/Textualize/textual).
+
+
+## Navigation keys
 
 | Key | Command |
 | -- | -- |
@@ -31,8 +36,7 @@ HELP: Final[
 | `Ctrl+left` | Go backward in history |
 | `Ctrl+right` | Go forward in history |
 
-
-### General keys:
+## General keys
 
 | Key | Command |
 | -- | -- |
@@ -43,6 +47,8 @@ HELP: Final[
 | `F10` | Toggle dark/light theme |
 
 ## Commands
+
+Press `/` or click the address bar, then enter any of the following commands:
 
 | Command | Aliases | Arguments | Command |
 | -- | -- | -- | -- |
@@ -131,3 +137,7 @@ class HelpDialog(ModalScreen[None]):
     def on_button_pressed(self) -> None:
         """React to button press."""
         self.dismiss(None)
+
+    def on_markdown_link_clicked(self, event: Markdown.LinkClicked) -> None:
+        """A link was clicked in the help."""
+        webbrowser.open(event.href)
