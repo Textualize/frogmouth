@@ -64,15 +64,11 @@ class History(NavigationPane):
 
     def __init__(self) -> None:
         """Initialise the history navigation pane."""
-        super().__init__("History")
+        super().__init__("History", id="history")
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         yield OptionList()
-
-    def set_focus_within(self) -> None:
-        """Focus the option list."""
-        self.query_one(OptionList).focus()
 
     def update_from(self, locations: list[Path | URL]) -> None:
         """Update the history from the given list of locations.

@@ -34,7 +34,7 @@ class TableOfContents(NavigationPane):
 
     def __init__(self) -> None:
         """Initialise the table of contents navigation pane."""
-        super().__init__("Contents")
+        super().__init__("Contents", id="contents")
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""

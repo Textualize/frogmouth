@@ -63,7 +63,7 @@ class LocalFiles(NavigationPane):
 
     def __init__(self) -> None:
         """Initialise the local files navigation pane."""
-        super().__init__("Local")
+        super().__init__("Local", id="local")
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
@@ -79,10 +79,6 @@ class LocalFiles(NavigationPane):
         # care of update this to use whatever new approach is taken.
         await self.query_one(FilteredDirectoryTree).remove()
         await self.mount(FilteredDirectoryTree(path))
-
-    def set_focus_within(self) -> None:
-        """Focus the directory tree.."""
-        self.query_one(DirectoryTree).focus()
 
     class Goto(Message):
         """Message that requests the viewer goes to a given location."""

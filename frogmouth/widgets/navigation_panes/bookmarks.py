@@ -64,17 +64,13 @@ class Bookmarks(NavigationPane):
 
     def __init__(self) -> None:
         """Initialise the bookmarks navigation pane."""
-        super().__init__("Bookmarks")
+        super().__init__("Bookmarks", id="bookmarks")
         self._bookmarks: list[Bookmark] = load_bookmarks()
         """The internal list of bookmarks."""
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         yield OptionList(*[Entry(bookmark) for bookmark in self._bookmarks])
-
-    def set_focus_within(self) -> None:
-        """Focus the option list."""
-        self.query_one(OptionList).focus()
 
     def _bookmarks_updated(self) -> None:
         """Handle the bookmarks being updated."""

@@ -22,7 +22,7 @@ class Omnibox(Input):
     DEFAULT_CSS = """
     Omnibox {
         dock: top;
-        padding: 1 1;
+        padding: 0;
         height: 3;
     }
 
