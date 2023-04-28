@@ -21,6 +21,8 @@ HELP: Final[
 
 | Key | Command |
 | -- | -- |
+| `/` | Focus the address bar (`ctrl+u` to clear address bar) |
+| `Escape` | Return to address bar / clear address bar / quit |
 | `Ctrl+n` | Show/hide the navigation |
 | `Ctrl+b` | Show the bookmarks |
 | `Ctrl+l` | Show the local file browser |
