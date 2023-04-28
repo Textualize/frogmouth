@@ -103,6 +103,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         if target is not None:
             await self._local_files.chdir(target)
         self._local_files.activate()
+        self._local_files.query_one("DirectoryTree").focus()
         return self
 
     def jump_to_bookmarks(self) -> Self:
@@ -113,6 +114,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """
         self.popped_out = True
         self._bookmarks.activate()
+        self._bookmarks.query_one("OptionList").focus()
         return self
 
     def jump_to_history(self) -> Self:
@@ -123,6 +125,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """
         self.popped_out = True
         self._history.activate()
+        self._history.query_one("OptionList").focus()
         return self
 
     def jump_to_contents(self) -> Self:
@@ -133,6 +136,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """
         self.popped_out = True
         self._contents.activate()
+        self._contents.query_one("MarkdownTableOfContents > Tree").focus()
         return self
 
     def action_previous_tab(self) -> None:

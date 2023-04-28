@@ -10,7 +10,7 @@ class ErrorDialog(TextDialog):
 
     DEFAULT_CSS = """
     ErrorDialog > Vertical {
-        background: $error 70%;
+        background: $error 15%;
         border: thick $error 50%;
     }
 
