@@ -12,7 +12,8 @@
 
 Frogmouth is a terminal-based Markdown viewer / browser, built with [Textual](https://github.com/Textualize/textual).
 
-Frogmouth can view `.*md` locally or via a URL. Links work, and there is familiar browser-like navigation.
+Frogmouth can view `*.md` locally or via a URL.
+Inline links work. There is a familiar browser-like navigation stack, history, bookmarks, and table of contents.
 
 <details>  
   <summary> 🎬 Demonstration </summary>
