@@ -26,6 +26,7 @@ from ..utility import (
     maybe_markdown,
 )
 from ..utility.advertising import (
+    APPLICATION_TITLE,
     ORGANISATION_NAME,
     ORGANISATION_TITLE,
     ORGANISATION_URL,
@@ -40,21 +41,49 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
     DEFAULT_CSS = """
-    /* Lack of highlight for when a major component doesn't have focus. */
-    .highlight {
-        border-top: none !important;
-        border-bottom: none !important;
-        border-left: thick $background !important;
-        border-right: none !important;
+
+    .focusable {
+        border-top: blank;
+        border-right: blank;
+        border-bottom: blank;
+        border-left: blank;    
     }
 
-    /* Highlight for when a major component has focus. */
-    .highlight:focus, .highlight:focus-within {
-        border-top: none !important;
-        border-bottom: none !important;
-        border-left: thick $secondary-darken-3 50% !important;
-        border-right: none !important;
+    .focusable:focus {
+        border-top: heavy $accent !important;
+        border-right: heavy $accent !important;
+        border-bottom: heavy $accent !important;
+        border-left: heavy $accent !important;  
     }
+
+
+    Screen Tabs {
+        border: blank;
+        height: 5;
+    }
+
+    Screen Tabs:focus {
+        border-top: heavy $secondary !important;
+        border-right: heavy $secondary !important;
+        border-bottom: heavy $secondary !important;
+        border-left: heavy $secondary !important;  
+        height: 5;
+    }
+
+    Screen TabbedContent TabPane {                
+        border-top: blank;
+        border-right: blank;
+        border-bottom: blank;
+        border-left: blank;    
+    }
+
+    Screen TabbedContent TabPane:focus-within {
+        border-top: heavy $secondary !important;
+        border-right: heavy $secondary !important;
+        border-bottom: heavy $secondary !important;
+        border-left: heavy $secondary !important;    
+    }
+
     """
 
     BINDINGS = [
@@ -91,10 +120,10 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             The result of composing the screen.
         """
         yield Header()
-        yield Omnibox(classes="highlight")
+        yield Omnibox(classes="focusable")
         with Horizontal():
-            yield Navigation(classes="highlight")
-            yield Viewer(classes="highlight")
+            yield Navigation()
+            yield Viewer(classes="focusable")
         yield Footer()
 
     def visit(self, location: Path | URL, remember: bool = True) -> None:
@@ -435,9 +464,8 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         """Show the about dialog."""
         self.app.push_screen(
             InformationDialog(
-                f"About {PACKAGE_NAME}",
-                f"Version {__version__}.\n\n"
-                f"Built with [@click=app.visit('{TEXTUAL_URL}')]Textual[/] v{textual_version} "
+                f"{APPLICATION_TITLE} [b dim]v{__version__}",
+                f"Built with [@click=app.visit('{TEXTUAL_URL}')]Textual[/] "
                 f"by [@click=app.visit('{ORGANISATION_URL}')]{ORGANISATION_TITLE}[/].\n\n"
                 f"[@click=app.visit('https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}')]"
                 f"https://github.com/{ORGANISATION_NAME}/{PACKAGE_NAME}[/]",

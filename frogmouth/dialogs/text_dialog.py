@@ -25,7 +25,7 @@ class TextDialog(ModalScreen[None]):
         background: $panel;
         min-width: 30%;
         width: auto;
-        height: auto;
+        height: auto;        
         border: round $primary;
     }
 
@@ -34,13 +34,11 @@ class TextDialog(ModalScreen[None]):
     }
 
     TextDialog .spaced {
-        padding: 1;
+        padding: 1 4;
     }
 
     TextDialog #message {
-        min-width: 100%;
-        border-top: solid $primary;
-        border-bottom: solid $primary;
+        min-width: 100%;       
     }
     """
     """Default CSS for the base text modal dialog."""

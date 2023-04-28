@@ -17,7 +17,7 @@ from .navigation_panes.local_files import LocalFiles
 from .navigation_panes.table_of_contents import TableOfContents
 
 
-class Navigation(Vertical):
+class Navigation(Vertical, can_focus=False, can_focus_children=True):
     """A navigation panel widget."""
 
     DEFAULT_CSS = """

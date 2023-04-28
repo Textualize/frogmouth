@@ -87,20 +87,23 @@ class HelpDialog(ModalScreen[None]):
     HelpDialog {
         align: center middle;
     }
-
+    HelpDialog Markdown {
+        
+    }
     HelpDialog > Vertical {
         border: thick $primary 50%;
         width: 80%;
         height: 80%;
-        background: $panel;
+        background: $boost;
     }
 
     HelpDialog > Vertical > VerticalScroll {
         height: 1fr;
+        margin: 1 2;
     }
 
     HelpDialog > Vertical > Center {
-        border-top: solid $primary;
+      
         padding: 1;
         height: auto;
     }

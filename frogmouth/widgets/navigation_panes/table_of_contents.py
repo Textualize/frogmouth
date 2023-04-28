@@ -11,8 +11,8 @@ class TableOfContents(NavigationPane):
     """Markdown document table of contents navigation pane."""
 
     DEFAULT_CSS = """
-    TableOfContents {
-        height: 100%;
+    TableOfContents {        
+        height: 100%;        
     }
 
     TableOfContents > MarkdownTableOfContents {
@@ -21,6 +21,7 @@ class TableOfContents(NavigationPane):
     }
 
     TableOfContents > MarkdownTableOfContents > Tree {
+        width: 1fr;
         background: $panel;
         padding: 0;
     }
@@ -39,9 +40,9 @@ class TableOfContents(NavigationPane):
         """Compose the child widgets."""
         yield MarkdownTableOfContents()
 
-    def set_focus_within(self) -> None:
-        """Ensure the tree in the table of contents is focused."""
-        self.query_one("MarkdownTableOfContents > Tree", Tree).focus()
+    # def set_focus_within(self) -> None:
+    #     """Ensure the tree in the table of contents is focused."""
+    #     self.query_one("MarkdownTableOfContents > Tree", Tree).focus()
 
     def on_table_of_contents_updated(
         self, event: Markdown.TableOfContentsUpdated
