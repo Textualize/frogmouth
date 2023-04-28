@@ -62,10 +62,10 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     }
 
     Screen Tabs:focus {
-        border-top: heavy $secondary !important;
-        border-right: heavy $secondary !important;
-        border-bottom: heavy $secondary !important;
-        border-left: heavy $secondary !important;
+        border-top: heavy $accent !important;
+        border-right: heavy $accent !important;
+        border-bottom: heavy $accent !important;
+        border-left: heavy $accent !important;
         height: 5;
     }
 
@@ -77,10 +77,10 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     }
 
     Screen TabbedContent TabPane:focus-within {
-        border-top: heavy $secondary !important;
-        border-right: heavy $secondary !important;
-        border-bottom: heavy $secondary !important;
-        border-left: heavy $secondary !important;
+        border-top: heavy $accent !important;
+        border-right: heavy $accent !important;
+        border-bottom: heavy $accent !important;
+        border-left: heavy $accent !important;
     }
 
     """
