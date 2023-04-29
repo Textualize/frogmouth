@@ -54,7 +54,7 @@ https://user-images.githubusercontent.com/554369/235156088-42207539-befb-45a9-85
 
 ## Installing
 
-The easiest way to install Frogmouth is probably via [pipx](https://pypa.github.io/pipx/) (particularly if you aren't a Python dev).
+The easiest way to install Frogmouth is probably via [pipx](https://pypa.github.io/pipx/) (particularly if you aren't a Python developer).
 
 ```
 pipx install frogmouth
