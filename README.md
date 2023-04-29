@@ -77,7 +77,7 @@ frogmouth
 ```
 
 You can navigate with the mouse or the keyboard.
-Use **tab** and **shift+tab** to navigate between the various controls on screen.
+Use <kbd>tab</kbd> and <kbd>shift</kbd>+<kbd>tab</kbd> to navigate between the various controls on screen.
 
 ## Features
 
