@@ -33,7 +33,8 @@ class MarkdownViewer(App[None]):
 
     def on_mount(self) -> None:
         """Set up the application after the DOM is ready."""
-        self.push_screen(Main(self._args.file))
+        file_or_command = " ".join(self._args.file)
+        self.push_screen(Main(file_or_command))
 
     def action_visit(self, url: str) -> None:
         """Visit the given URL, via the operating system.
@@ -68,7 +69,7 @@ def get_args() -> Namespace:
     )
 
     # The remainder is the file to view.
-    parser.add_argument("file", help="The Markdown file to view", nargs="?")
+    parser.add_argument("file", help="The Markdown file to view", nargs="*")
 
     # Finally, parse the command line.
     return parser.parse_args()
