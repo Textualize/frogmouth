@@ -61,13 +61,13 @@ https://user-images.githubusercontent.com/554369/235305502-2699a70e-c9a6-495e-99
 
 ## Installing
 
-The easiest way to install Frogmouth is probably via [pipx](https://pypa.github.io/pipx/) (particularly if you aren't a Python developer).
+The easiest way to install Frogmouth is with [pipx](https://pypa.github.io/pipx/) (particularly if you aren't a Python developer).
 
 ```
 pipx install frogmouth
 ```
 
-You can also install it via `pip`:
+You can also install Frogmouth with `pip`:
 
 ```
 pip install frogmouth
@@ -80,7 +80,7 @@ Whichever method you use, you should have a `frogmouth` command on your path.
 Enter `frogmouth` at the prompt to run the app, optionally followed by a path to a Markdown file:
 
 ```
-frogmouth
+frogmouth README.md
 ```
 
 You can navigate with the mouse or the keyboard.
@@ -102,7 +102,7 @@ frogmouth "gh textualize/textual"
 ```
 
 This also works with the address bar in the app.
-See the help (**F1**) in the app for details.
+See the help (<kbd>F1</kbd>) in the app for details.
 
 ## Follow this project
 
