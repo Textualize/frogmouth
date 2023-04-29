@@ -102,8 +102,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         self.popped_out = True
         if target is not None:
             await self._local_files.chdir(target)
-        self._local_files.activate()
-        self.focus_tab()
+        self._local_files.activate().set_focus_within()
         return self
 
     def jump_to_bookmarks(self) -> Self:
@@ -113,8 +112,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
             Self.
         """
         self.popped_out = True
-        self._bookmarks.activate()
-        self.focus_tab()
+        self._bookmarks.activate().set_focus_within()
         return self
 
     def jump_to_history(self) -> Self:
@@ -124,8 +122,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
             Self.
         """
         self.popped_out = True
-        self._history.activate()
-        self.focus_tab()
+        self._history.activate().set_focus_within()
         return self
 
     def jump_to_contents(self) -> Self:
@@ -135,8 +132,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
             Self.
         """
         self.popped_out = True
-        self._contents.activate()
-        self.focus_tab()
+        self._contents.activate().set_focus_within()
         return self
 
     def action_previous_tab(self) -> None:
@@ -153,12 +149,10 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """Focus the currently active tab."""
         active = self.query_one(Tabs).active
         if active == "contents":
-            self._contents.query_one("MarkdownTableOfContents > Tree").focus(
-                scroll_visible=False
-            )
+            self._contents.set_focus_within()
         elif active == "local":
-            self._local_files.query_one("DirectoryTree").focus(scroll_visible=False)
+            self._local_files.set_focus_within()
         elif active == "bookmarks":
-            self._bookmarks.query_one("OptionList").focus(scroll_visible=False)
+            self._bookmarks.set_focus_within()
         elif active == "history":
-            self._history.query_one("OptionList").focus(scroll_visible=False)
+            self._history.set_focus_within()

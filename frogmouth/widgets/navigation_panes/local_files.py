@@ -80,6 +80,10 @@ class LocalFiles(NavigationPane):
         await self.query_one(FilteredDirectoryTree).remove()
         await self.mount(FilteredDirectoryTree(path))
 
+    def set_focus_within(self) -> None:
+        """Focus the directory tree.."""
+        self.query_one(DirectoryTree).focus(scroll_visible=False)
+
     class Goto(Message):
         """Message that requests the viewer goes to a given location."""
 

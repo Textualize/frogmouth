@@ -1,7 +1,7 @@
 """Provides the table of contents navigation pane."""
 
 from textual.app import ComposeResult
-from textual.widgets import Markdown
+from textual.widgets import Markdown, Tree
 from textual.widgets.markdown import MarkdownTableOfContents
 
 from .navigation_pane import NavigationPane
@@ -35,6 +35,12 @@ class TableOfContents(NavigationPane):
     def __init__(self) -> None:
         """Initialise the table of contents navigation pane."""
         super().__init__("Contents", id="contents")
+
+    def set_focus_within(self) -> None:
+        """Ensure the tree in the table of contents is focused."""
+        self.query_one("MarkdownTableOfContents > Tree", Tree).focus(
+            scroll_visible=False
+        )
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""

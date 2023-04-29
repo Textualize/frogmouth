@@ -72,6 +72,10 @@ class Bookmarks(NavigationPane):
         """Compose the child widgets."""
         yield OptionList(*[Entry(bookmark) for bookmark in self._bookmarks])
 
+    def set_focus_within(self) -> None:
+        """Focus the option list."""
+        self.query_one(OptionList).focus(scroll_visible=False)
+
     def _bookmarks_updated(self) -> None:
         """Handle the bookmarks being updated."""
         # It's slightly costly, but currently there's no easier way to do
