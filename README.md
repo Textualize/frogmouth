@@ -59,6 +59,12 @@ https://user-images.githubusercontent.com/554369/235305502-2699a70e-c9a6-495e-99
 
 </table>
 
+
+## Compatibility
+
+Frogmouth runs on Linux, macOS, and Windows. Frogmouth requires Python **3.8** or above.
+
+
 ## Installing
 
 The easiest way to install Frogmouth is with [pipx](https://pypa.github.io/pipx/) (particularly if you aren't a Python developer).
