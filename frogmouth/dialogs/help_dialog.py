@@ -139,5 +139,9 @@ class HelpDialog(ModalScreen[None]):
         self.dismiss(None)
 
     def on_markdown_link_clicked(self, event: Markdown.LinkClicked) -> None:
-        """A link was clicked in the help."""
+        """A link was clicked in the help.
+
+        Args:
+            event: The link click event to handle.
+        """
         webbrowser.open(event.href)
