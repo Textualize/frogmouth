@@ -21,7 +21,14 @@ There is a familiar browser-like navigation stack, history, bookmarks, and table
 
 A quick video tour of Frogmouth.
 
-https://user-images.githubusercontent.com/554369/235156088-42207539-befb-45a9-850c-cee2466a08f8.mov
+
+
+
+https://user-images.githubusercontent.com/554369/235305502-2699a70e-c9a6-495e-990e-67606d84bbfa.mp4
+
+(thanks [Screen Studio](https://www.screen.studio/))
+
+
 </details>
 
 ## Screenshots
