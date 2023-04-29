@@ -17,9 +17,9 @@ HELP: Final[
 ] = f"""\
 # {APPLICATION_TITLE} v{__version__} Help
 
-Welcome to Frogmouth Help!
+Welcome to {APPLICATION_TITLE} Help!
 
-Frogmouth was built with [Textual](https://github.com/Textualize/textual).
+{APPLICATION_TITLE} was built with [Textual](https://github.com/Textualize/textual).
 
 
 ## Navigation keys
