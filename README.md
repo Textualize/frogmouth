@@ -8,7 +8,7 @@
 
 
 # Frogmouth
- 
+
 
 Frogmouth is a terminal-based Markdown viewer / browser, built with [Textual](https://github.com/Textualize/textual).
 
@@ -18,9 +18,9 @@ There is a familiar browser-like navigation stack, history, bookmarks, and table
 <details>  
   <summary> 🎬 Demonstration </summary>
   <hr>
-  
+
 A quick video tour of Frogmouth.
-  
+
 https://user-images.githubusercontent.com/554369/235156088-42207539-befb-45a9-850c-cee2466a08f8.mov
 </details>
 
