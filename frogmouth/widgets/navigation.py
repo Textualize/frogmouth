@@ -11,6 +11,7 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
+from .navigation_panes.navigation_pane import NavigationPane
 from .navigation_panes.bookmarks import Bookmarks
 from .navigation_panes.history import History
 from .navigation_panes.local_files import LocalFiles
@@ -147,12 +148,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
 
     def focus_tab(self) -> None:
         """Focus the currently active tab."""
-        active = self.query_one(Tabs).active
-        if active == "contents":
-            self._contents.set_focus_within()
-        elif active == "local":
-            self._local_files.set_focus_within()
-        elif active == "bookmarks":
-            self._bookmarks.set_focus_within()
-        elif active == "history":
-            self._history.set_focus_within()
+        if active := self.query_one(Tabs).active:
+            self.query_one(
+                f"NavigationPane#{active}", NavigationPane
+            ).set_focus_within()

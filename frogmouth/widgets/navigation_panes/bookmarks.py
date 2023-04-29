@@ -64,7 +64,7 @@ class Bookmarks(NavigationPane):
 
     def __init__(self) -> None:
         """Initialise the bookmarks navigation pane."""
-        super().__init__("Bookmarks", id="bookmarks")
+        super().__init__("Bookmarks")
         self._bookmarks: list[Bookmark] = load_bookmarks()
         """The internal list of bookmarks."""
 
