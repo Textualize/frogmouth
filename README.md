@@ -98,7 +98,7 @@ You can load README files direct from GitHub repositories with the `gh` command.
 Use the following syntax:
 
 ```
-frogmouth "gh textualize/textual"
+frogmouth gh textualize/textual
 ```
 
 This also works with the address bar in the app.
