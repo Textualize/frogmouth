@@ -22,7 +22,7 @@ class TextDialog(ModalScreen[None]):
     }
 
     TextDialog > Vertical {
-        background: $panel;
+        background: $boost;
         min-width: 30%;
         width: auto;
         height: auto;
