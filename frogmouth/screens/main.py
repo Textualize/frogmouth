@@ -70,6 +70,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     }
 
     Screen TabbedContent TabPane {
+        padding: 0 1;
         border-top: blank;
         border-right: blank;
         border-bottom: blank;
