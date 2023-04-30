@@ -107,6 +107,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         Binding("w,k", "scroll_up", "", show=False),
         Binding("s,j", "scroll_down", "", show=False),
         Binding("space", "page_down", "", show=False),
+        Binding("b", "page_up", "", show=False),
     ]
     """Bindings for the Markdown viewer widget."""
 
