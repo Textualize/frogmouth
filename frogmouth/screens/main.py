@@ -87,7 +87,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     """
 
     BINDINGS = [
-        Binding("/", "omnibox", "Omnibox", show=False),
+        Binding("/,:", "omnibox", "Omnibox", show=False),
         Binding("ctrl+b", "bookmarks", "", show=False),
         Binding("ctrl+d", "bookmark_this", "", show=False),
         Binding("ctrl+l", "local_files", "", show=False),
