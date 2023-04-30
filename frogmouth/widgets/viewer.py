@@ -10,6 +10,7 @@ from webbrowser import open as open_url
 from httpx import URL, AsyncClient, HTTPStatusError, RequestError
 from textual import work
 from textual.app import ComposeResult
+from textual.binding import Binding
 from textual.containers import VerticalScroll
 from textual.message import Message
 from textual.reactive import var
@@ -101,6 +102,12 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         scrollbar-gutter: stable;
     }
     """
+
+    BINDINGS = [
+        Binding("w,j", "scroll_up", "", show=False),
+        Binding("s,k", "scroll_down", "", show=False),
+    ]
+    """Bindings for the Markdown viewer widget."""
 
     history: var[History] = var(History)
     """The browsing history."""
