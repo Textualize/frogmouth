@@ -33,8 +33,7 @@ class MarkdownViewer(App[None]):
 
     def on_mount(self) -> None:
         """Set up the application after the DOM is ready."""
-        file_or_command = " ".join(self._args.file)
-        self.push_screen(Main(file_or_command))
+        self.push_screen(Main(" ".join(self._args.file) if self._args.file else None))
 
     def action_visit(self, url: str) -> None:
         """Visit the given URL, via the operating system.
