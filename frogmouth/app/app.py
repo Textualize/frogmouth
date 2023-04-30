@@ -18,9 +18,6 @@ class MarkdownViewer(App[None]):
     TITLE = APPLICATION_TITLE
     """The main title for the application."""
 
-    SUB_TITLE = f"{__version__}"
-    """The sub-title for the application."""
-
     def __init__(self, cli_args: Namespace) -> None:
         """Initialise the application.
 

@@ -12,7 +12,7 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.events import Paste
 from textual.screen import Screen
-from textual.widgets import Footer, Header, Markdown
+from textual.widgets import Footer, Markdown
 
 from .. import __version__
 from ..data import load_config, load_history, save_config, save_history
@@ -119,7 +119,6 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         Returns:
             The result of composing the screen.
         """
-        yield Header()
         yield Omnibox(classes="focusable")
         with Horizontal():
             yield Navigation()
