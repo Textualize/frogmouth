@@ -106,7 +106,8 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     BINDINGS = [
         Binding("w,k", "scroll_up", "", show=False),
         Binding("s,j", "scroll_down", "", show=False),
-        Binding("space", "scroll_page_down", "", show=False),
+        Binding("space", "page_down", "", show=False),
+        Binding("b", "page_up", "", show=False),
     ]
     """Bindings for the Markdown viewer widget."""
 
@@ -295,7 +296,3 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.history = History(history)
         self.post_message(self.HistoryUpdated(self))
-
-    def action_scroll_page_down(self) -> None:
-        """Action wrapper for scrolling down."""
-        self.scroll_page_down()
