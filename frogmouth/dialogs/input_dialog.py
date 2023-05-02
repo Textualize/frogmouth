@@ -6,7 +6,6 @@ from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
-from textual.widget import Widget
 from textual.widgets import Button, Input, Label
 
 
@@ -56,25 +55,14 @@ class InputDialog(ModalScreen[str]):
     ]
     """Bindings for the dialog."""
 
-    def __init__(  # pylint:disable=redefined-builtin
-        self,
-        requester: Widget,
-        prompt: str,
-        initial: str | None = None,
-        id: str | None = None,
-    ) -> None:
+    def __init__(self, prompt: str, initial: str | None = None) -> None:
         """Initialise the input dialog.
 
         Args:
-            requester: The widget requesting the input.
             prompt: The prompt for the input.
             initial: The initial value for the input.
-            cargo: Any cargo value for the input.
-            id: The ID for the dialog.
         """
-        super().__init__(id=id)
-        self._requester = requester
-        """A reference to the widget requesting the input."""
+        super().__init__()
         self._prompt = prompt
         """The prompt to display for the input."""
         self._initial = initial

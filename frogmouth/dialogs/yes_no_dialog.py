@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Center, Horizontal, Vertical
 from textual.screen import ModalScreen
-from textual.widget import Widget
 from textual.widgets import Button, Static
 
 
@@ -65,16 +62,13 @@ class YesNoDialog(ModalScreen[bool]):
     ]
     """Bindings for the yes/no dialog."""
 
-    def __init__(  # pylint:disable=redefined-builtin,too-many-arguments
+    def __init__(  # pylint:disable=too-many-arguments
         self,
-        requester: Widget,
         title: str,
         question: str,
         yes_label: str = "Yes",
         no_label: str = "No",
         yes_first: bool = True,
-        cargo: Any = None,
-        id: str | None = None,
     ) -> None:
         """Initialise the yes/no dialog.
 
@@ -88,9 +82,7 @@ class YesNoDialog(ModalScreen[bool]):
             cargo: Any cargo value for the question.
             id: The ID for the dialog.
         """
-        super().__init__(id=id)
-        self._requester = requester
-        """A reference to the widget asking the question."""
+        super().__init__()
         self._title = title
         """The title for the dialog."""
         self._question = question
@@ -101,8 +93,6 @@ class YesNoDialog(ModalScreen[bool]):
         """The label for the no button."""
         self._aye_first = yes_first
         """Should the positive button come first?"""
-        self._cargo = cargo
-        """Any cargo data for the reply."""
 
     def compose(self) -> ComposeResult:
         """Compose the content of the dialog."""

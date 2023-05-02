@@ -503,7 +503,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
 
         # Give the user a chance to edit the title.
         self.app.push_screen(
-            InputDialog(self, "Bookmark title:", title),
+            InputDialog("Bookmark title:", title),
             partial(self.add_bookmark, location),
         )
 

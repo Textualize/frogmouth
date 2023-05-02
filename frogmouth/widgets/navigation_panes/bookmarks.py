@@ -140,10 +140,8 @@ class Bookmarks(NavigationPane):
         if (bookmark := self.query_one(OptionList).highlighted) is not None:
             self.app.push_screen(
                 YesNoDialog(
-                    self,
                     "Delete bookmark",
                     "Are you sure you want to delete the bookmark?",
-                    id="delete",
                 ),
                 partial(self.delete_bookmark, bookmark),
             )
@@ -165,7 +163,6 @@ class Bookmarks(NavigationPane):
         if (bookmark := self.query_one(OptionList).highlighted) is not None:
             self.app.push_screen(
                 InputDialog(
-                    self,
                     "Bookmark title:",
                     self._bookmarks[bookmark].title,
                 ),
