@@ -17,13 +17,7 @@ from textual.widgets import Footer, Markdown
 
 from .. import __version__
 from ..data import load_config, load_history, save_config, save_history
-from ..dialogs import (
-    ErrorDialog,
-    HelpDialog,
-    InformationDialog,
-    InputDialog,
-    InputDialogResult,
-)
+from ..dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
 from ..utility import (
     build_raw_bitbucket_url,
     build_raw_github_url,
@@ -478,14 +472,14 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             )
         )
 
-    def add_bookmark(self, location: Path | URL, bookmark: InputDialogResult) -> None:
+    def add_bookmark(self, location: Path | URL, bookmark: str) -> None:
         """Handle adding the bookmark.
 
         Args:
             location: The location to bookmark.
             bookmark: The bookmark to add.
         """
-        self.query_one(Navigation).bookmarks.add_bookmark(bookmark.value, location)
+        self.query_one(Navigation).bookmarks.add_bookmark(bookmark, location)
 
     def action_bookmark_this(self) -> None:
         """Add a bookmark for the currently-viewed file."""

@@ -14,7 +14,7 @@ from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
 from ...data import Bookmark, load_bookmarks, save_bookmarks
-from ...dialogs import InputDialog, InputDialogResult, YesNoDialog
+from ...dialogs import InputDialog, YesNoDialog
 from .navigation_pane import NavigationPane
 
 
@@ -148,7 +148,7 @@ class Bookmarks(NavigationPane):
                 partial(self.delete_bookmark, bookmark),
             )
 
-    def rename_bookmark(self, bookmark: int, new_name: InputDialogResult) -> None:
+    def rename_bookmark(self, bookmark: int, new_name: str) -> None:
         """Rename the current bookmark.
 
         Args:
@@ -156,7 +156,7 @@ class Bookmarks(NavigationPane):
             new_name: The input dialog result that is the new name.
         """
         self._bookmarks[bookmark] = Bookmark(
-            new_name.value, self._bookmarks[bookmark].location
+            new_name, self._bookmarks[bookmark].location
         )
         self._bookmarks_updated()
 

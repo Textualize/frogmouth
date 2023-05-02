@@ -12,17 +12,7 @@ from textual.widget import Widget
 from textual.widgets import Button, Input, Label
 
 
-class InputDialogResult(NamedTuple):
-    """The result of input with an `InputDialog`."""
-
-    dialog_id: str | None
-    """The ID of the dialog returning the result."""
-
-    value: str
-    """The input value."""
-
-
-class InputDialog(ModalScreen[InputDialogResult]):
+class InputDialog(ModalScreen[str]):
     """A modal dialog for getting a single input from the user."""
 
     DEFAULT_CSS = """
@@ -115,7 +105,7 @@ class InputDialog(ModalScreen[InputDialogResult]):
         if event.button.id == "cancel":
             self.app.pop_screen()
         elif event.button.id == "ok" and self.query_one(Input).value.strip():
-            self.dismiss(InputDialogResult(self.id, self.query_one(Input).value))
+            self.dismiss(self.query_one(Input).value)
 
     def on_input_submitted(self) -> None:
         """Do default processing when the user hits enter in the input."""
