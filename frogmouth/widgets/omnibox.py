@@ -256,7 +256,7 @@ class Omnibox(Input):
     """Regular expression for matching a repo and file where the branch is also given."""
 
     class ForgeCommand(Message):
-        """The base git force quick load command."""
+        """The base git forge quick load command."""
 
         def __init__(
             self,
