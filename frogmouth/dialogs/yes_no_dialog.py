@@ -7,13 +7,12 @@ from typing import Any
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Center, Horizontal, Vertical
-from textual.message import Message
 from textual.screen import ModalScreen
 from textual.widget import Widget
 from textual.widgets import Button, Static
 
 
-class YesNoDialog(ModalScreen[None]):
+class YesNoDialog(ModalScreen[bool]):
     """A dialog for asking a user a yes/no question."""
 
     DEFAULT_CSS = """
@@ -127,37 +126,10 @@ class YesNoDialog(ModalScreen[None]):
         """Configure the dialog once the DOM is ready."""
         self.query(Button).first().focus()
 
-    class Reply(Message):
-        """Base class for replies from the yes/no dialog."""
-
-        def __init__(self, sender_id: str | None, cargo: Any = None) -> None:
-            """Initialise the reply message.
-
-            Args:
-                sender_id: The ID of the dialog sending the message.
-                cargo: Any cargo data for the result.
-            """
-            super().__init__()
-            self.sender_id: str | None = sender_id
-            """The ID of the sending dialog."""
-            self.cargo: Any = cargo
-            """Cargo data for the result."""
-
-    class PositiveReply(Reply):
-        """A positive reply from the yes/no dialog."""
-
-    class NegativeReply(Reply):
-        """A negative reply from the yes/no dialog."""
-
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle a button being pressed on the dialog.
 
         Args:
             event: The event to handle.
         """
-        self._requester.post_message(
-            (self.PositiveReply if event.button.id == "yes" else self.NegativeReply)(
-                self.id, self._cargo
-            )
-        )
-        self.app.pop_screen()
+        self.dismiss(event.button.id == "yes")

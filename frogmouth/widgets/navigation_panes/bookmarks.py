@@ -124,28 +124,29 @@ class Bookmarks(NavigationPane):
         assert isinstance(event.option, Entry)
         self.post_message(self.Goto(event.option.bookmark))
 
+    def delete_bookmark(self, bookmark: int, delete_it: bool) -> None:
+        """Delete a given bookmark.
+
+        Args:
+            bookmark: The bookmark to delete.
+            delete_it: Should it be deleted?
+        """
+        if delete_it:
+            del self._bookmarks[bookmark]
+            self._bookmarks_updated()
+
     def action_delete(self) -> None:
         """Delete the highlighted bookmark."""
-        if self.query_one(OptionList).highlighted is not None:
+        if (bookmark := self.query_one(OptionList).highlighted) is not None:
             self.app.push_screen(
                 YesNoDialog(
                     self,
                     "Delete bookmark",
                     "Are you sure you want to delete the bookmark?",
                     id="delete",
-                )
+                ),
+                partial(self.delete_bookmark, bookmark),
             )
-
-    def on_yes_no_dialog_positive_reply(self, event: YesNoDialog.PositiveReply) -> None:
-        """Handle a yes/no dialog giving a positive reply.
-
-        Args:
-            event: The event to handle.
-        """
-        bookmarks = self.query_one(OptionList)
-        if event.sender_id == "delete" and bookmarks.highlighted is not None:
-            del self._bookmarks[bookmarks.highlighted]
-            self._bookmarks_updated()
 
     def rename_bookmark(self, bookmark: int, new_name: InputDialogResult) -> None:
         """Rename the current bookmark.
