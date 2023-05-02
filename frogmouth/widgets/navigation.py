@@ -11,10 +11,10 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
-from .navigation_panes.navigation_pane import NavigationPane
 from .navigation_panes.bookmarks import Bookmarks
 from .navigation_panes.history import History
 from .navigation_panes.local_files import LocalFiles
+from .navigation_panes.navigation_pane import NavigationPane
 from .navigation_panes.table_of_contents import TableOfContents
 
 
