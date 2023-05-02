@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import partial
 from pathlib import Path
 
 from httpx import URL
@@ -13,7 +14,7 @@ from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
 from ...data import Bookmark, load_bookmarks, save_bookmarks
-from ...dialogs import InputDialog, YesNoDialog
+from ...dialogs import InputDialog, InputDialogResult, YesNoDialog
 from .navigation_pane import NavigationPane
 
 
@@ -146,6 +147,18 @@ class Bookmarks(NavigationPane):
             del self._bookmarks[bookmarks.highlighted]
             self._bookmarks_updated()
 
+    def rename_bookmark(self, bookmark: int, new_name: InputDialogResult) -> None:
+        """Rename the current bookmark.
+
+        Args:
+            bookmark: The location of the bookmark to rename.
+            new_name: The input dialog result that is the new name.
+        """
+        self._bookmarks[bookmark] = Bookmark(
+            new_name.value, self._bookmarks[bookmark].location
+        )
+        self._bookmarks_updated()
+
     def action_rename(self) -> None:
         """Rename the highlighted bookmark."""
         if (bookmark := self.query_one(OptionList).highlighted) is not None:
@@ -154,19 +167,6 @@ class Bookmarks(NavigationPane):
                     self,
                     "Bookmark title:",
                     self._bookmarks[bookmark].title,
-                    bookmark,
-                    id="edit_title",
-                )
+                ),
+                partial(self.rename_bookmark, bookmark),
             )
-
-    def on_input_dialog_result(self, event: InputDialog.Result) -> None:
-        """Handle an input dialog result being passed to us."""
-        if event.sender_id == "edit_title":
-            # The cargo value for the result should be the index of the
-            # bookmark we're changing.
-            assert isinstance(event.cargo, int)
-            # Everything looks good, update the bookmarks.
-            self._bookmarks[event.cargo] = Bookmark(
-                event.value, self._bookmarks[event.cargo].location
-            )
-            self._bookmarks_updated()

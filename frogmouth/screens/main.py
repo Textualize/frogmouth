@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import partial
 from pathlib import Path
 from typing import Awaitable, Callable
 from webbrowser import open as open_url
@@ -16,7 +17,13 @@ from textual.widgets import Footer, Markdown
 
 from .. import __version__
 from ..data import load_config, load_history, save_config, save_history
-from ..dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
+from ..dialogs import (
+    ErrorDialog,
+    HelpDialog,
+    InformationDialog,
+    InputDialog,
+    InputDialogResult,
+)
 from ..utility import (
     build_raw_bitbucket_url,
     build_raw_github_url,
@@ -471,6 +478,15 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             )
         )
 
+    def add_bookmark(self, location: Path | URL, bookmark: InputDialogResult) -> None:
+        """Handle adding the bookmark.
+
+        Args:
+            location: The location to bookmark.
+            bookmark: The bookmark to add.
+        """
+        self.query_one(Navigation).bookmarks.add_bookmark(bookmark.value, location)
+
     def action_bookmark_this(self) -> None:
         """Add a bookmark for the currently-viewed file."""
 
@@ -493,22 +509,9 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
 
         # Give the user a chance to edit the title.
         self.app.push_screen(
-            InputDialog(self, "Bookmark title:", title, location, id="add_bookmark")
+            InputDialog(self, "Bookmark title:", title),
+            partial(self.add_bookmark, location),
         )
-
-    def on_input_dialog_result(self, event: InputDialog.Result) -> None:
-        """Handle a result coming back from an input dialog.
-
-        Args:
-            event: The input dialog result event.
-        """
-        # Handle the correct source dialog.
-        if event.sender_id == "add_bookmark":
-            # The cargo value for the result should be the location, which
-            # should be a path or a URL.
-            assert isinstance(event.cargo, (Path, URL))
-            # Save the bookmark.
-            self.query_one(Navigation).bookmarks.add_bookmark(event.value, event.cargo)
 
     def action_toggle_theme(self) -> None:
         """Toggle the light/dark mode theme."""
