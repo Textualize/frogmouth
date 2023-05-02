@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import partial
 from pathlib import Path
 
 from httpx import URL
@@ -123,50 +124,47 @@ class Bookmarks(NavigationPane):
         assert isinstance(event.option, Entry)
         self.post_message(self.Goto(event.option.bookmark))
 
-    def action_delete(self) -> None:
-        """Delete the highlighted bookmark."""
-        if self.query_one(OptionList).highlighted is not None:
-            self.app.push_screen(
-                YesNoDialog(
-                    self,
-                    "Delete bookmark",
-                    "Are you sure you want to delete the bookmark?",
-                    id="delete",
-                )
-            )
-
-    def on_yes_no_dialog_positive_reply(self, event: YesNoDialog.PositiveReply) -> None:
-        """Handle a yes/no dialog giving a positive reply.
+    def delete_bookmark(self, bookmark: int, delete_it: bool) -> None:
+        """Delete a given bookmark.
 
         Args:
-            event: The event to handle.
+            bookmark: The bookmark to delete.
+            delete_it: Should it be deleted?
         """
-        bookmarks = self.query_one(OptionList)
-        if event.sender_id == "delete" and bookmarks.highlighted is not None:
-            del self._bookmarks[bookmarks.highlighted]
+        if delete_it:
+            del self._bookmarks[bookmark]
             self._bookmarks_updated()
+
+    def action_delete(self) -> None:
+        """Delete the highlighted bookmark."""
+        if (bookmark := self.query_one(OptionList).highlighted) is not None:
+            self.app.push_screen(
+                YesNoDialog(
+                    "Delete bookmark",
+                    "Are you sure you want to delete the bookmark?",
+                ),
+                partial(self.delete_bookmark, bookmark),
+            )
+
+    def rename_bookmark(self, bookmark: int, new_name: str) -> None:
+        """Rename the current bookmark.
+
+        Args:
+            bookmark: The location of the bookmark to rename.
+            new_name: The input dialog result that is the new name.
+        """
+        self._bookmarks[bookmark] = Bookmark(
+            new_name, self._bookmarks[bookmark].location
+        )
+        self._bookmarks_updated()
 
     def action_rename(self) -> None:
         """Rename the highlighted bookmark."""
         if (bookmark := self.query_one(OptionList).highlighted) is not None:
             self.app.push_screen(
                 InputDialog(
-                    self,
                     "Bookmark title:",
                     self._bookmarks[bookmark].title,
-                    bookmark,
-                    id="edit_title",
-                )
+                ),
+                partial(self.rename_bookmark, bookmark),
             )
-
-    def on_input_dialog_result(self, event: InputDialog.Result) -> None:
-        """Handle an input dialog result being passed to us."""
-        if event.sender_id == "edit_title":
-            # The cargo value for the result should be the index of the
-            # bookmark we're changing.
-            assert isinstance(event.cargo, int)
-            # Everything looks good, update the bookmarks.
-            self._bookmarks[event.cargo] = Bookmark(
-                event.value, self._bookmarks[event.cargo].location
-            )
-            self._bookmarks_updated()

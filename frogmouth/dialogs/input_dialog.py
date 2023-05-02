@@ -2,18 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
-from textual.message import Message
 from textual.screen import ModalScreen
-from textual.widget import Widget
 from textual.widgets import Button, Input, Label
 
 
-class InputDialog(ModalScreen[None]):
+class InputDialog(ModalScreen[str]):
     """A modal dialog for getting a single input from the user."""
 
     DEFAULT_CSS = """
@@ -59,32 +55,18 @@ class InputDialog(ModalScreen[None]):
     ]
     """Bindings for the dialog."""
 
-    def __init__(  # pylint:disable=redefined-builtin,too-many-arguments
-        self,
-        requester: Widget,
-        prompt: str,
-        initial: str | None = None,
-        cargo: Any = None,
-        id: str | None = None,
-    ) -> None:
+    def __init__(self, prompt: str, initial: str | None = None) -> None:
         """Initialise the input dialog.
 
         Args:
-            requester: The widget requesting the input.
             prompt: The prompt for the input.
             initial: The initial value for the input.
-            cargo: Any cargo value for the input.
-            id: The ID for the dialog.
         """
-        super().__init__(id=id)
-        self._requester = requester
-        """A reference to the widget requesting the input."""
+        super().__init__()
         self._prompt = prompt
         """The prompt to display for the input."""
         self._initial = initial
         """The initial value to use for the input."""
-        self._cargo = cargo
-        """Any cargo data for the input dialog."""
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
@@ -100,33 +82,6 @@ class InputDialog(ModalScreen[None]):
         """Set up the dialog once the DOM is ready."""
         self.query_one(Input).focus()
 
-    class Result(Message):
-        """The input dialog result message."""
-
-        def __init__(
-            self, sender_id: str | None, value: str, cargo: Any = None
-        ) -> None:
-            """Initialise the result message.
-
-            Args:
-                sender_id: The ID of the dialog sending the message.
-                value: The value to attach as the result.
-                cargo: Any cargo data for the result.
-            """
-            super().__init__()
-            self.sender_id: str | None = sender_id
-            """The ID of the sending dialog."""
-            self.value: str = value
-            """The value of the result."""
-            self.cargo: Any = cargo
-            """Cargo data for the result."""
-
-    def _return_input(self) -> None:
-        """Return the input value from the dialog."""
-        self._requester.post_message(
-            self.Result(self.id, self.query_one(Input).value, self._cargo)
-        )
-
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle one of the dialog's buttons been pressed.
 
@@ -136,8 +91,7 @@ class InputDialog(ModalScreen[None]):
         if event.button.id == "cancel":
             self.app.pop_screen()
         elif event.button.id == "ok" and self.query_one(Input).value.strip():
-            self._return_input()
-            self.app.pop_screen()
+            self.dismiss(self.query_one(Input).value)
 
     def on_input_submitted(self) -> None:
         """Do default processing when the user hits enter in the input."""

@@ -2,18 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Center, Horizontal, Vertical
-from textual.message import Message
 from textual.screen import ModalScreen
-from textual.widget import Widget
 from textual.widgets import Button, Static
 
 
-class YesNoDialog(ModalScreen[None]):
+class YesNoDialog(ModalScreen[bool]):
     """A dialog for asking a user a yes/no question."""
 
     DEFAULT_CSS = """
@@ -66,16 +62,13 @@ class YesNoDialog(ModalScreen[None]):
     ]
     """Bindings for the yes/no dialog."""
 
-    def __init__(  # pylint:disable=redefined-builtin,too-many-arguments
+    def __init__(  # pylint:disable=too-many-arguments
         self,
-        requester: Widget,
         title: str,
         question: str,
         yes_label: str = "Yes",
         no_label: str = "No",
         yes_first: bool = True,
-        cargo: Any = None,
-        id: str | None = None,
     ) -> None:
         """Initialise the yes/no dialog.
 
@@ -89,9 +82,7 @@ class YesNoDialog(ModalScreen[None]):
             cargo: Any cargo value for the question.
             id: The ID for the dialog.
         """
-        super().__init__(id=id)
-        self._requester = requester
-        """A reference to the widget asking the question."""
+        super().__init__()
         self._title = title
         """The title for the dialog."""
         self._question = question
@@ -102,8 +93,6 @@ class YesNoDialog(ModalScreen[None]):
         """The label for the no button."""
         self._aye_first = yes_first
         """Should the positive button come first?"""
-        self._cargo = cargo
-        """Any cargo data for the reply."""
 
     def compose(self) -> ComposeResult:
         """Compose the content of the dialog."""
@@ -127,37 +116,10 @@ class YesNoDialog(ModalScreen[None]):
         """Configure the dialog once the DOM is ready."""
         self.query(Button).first().focus()
 
-    class Reply(Message):
-        """Base class for replies from the yes/no dialog."""
-
-        def __init__(self, sender_id: str | None, cargo: Any = None) -> None:
-            """Initialise the reply message.
-
-            Args:
-                sender_id: The ID of the dialog sending the message.
-                cargo: Any cargo data for the result.
-            """
-            super().__init__()
-            self.sender_id: str | None = sender_id
-            """The ID of the sending dialog."""
-            self.cargo: Any = cargo
-            """Cargo data for the result."""
-
-    class PositiveReply(Reply):
-        """A positive reply from the yes/no dialog."""
-
-    class NegativeReply(Reply):
-        """A negative reply from the yes/no dialog."""
-
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle a button being pressed on the dialog.
 
         Args:
             event: The event to handle.
         """
-        self._requester.post_message(
-            (self.PositiveReply if event.button.id == "yes" else self.NegativeReply)(
-                self.id, self._cargo
-            )
-        )
-        self.app.pop_screen()
+        self.dismiss(event.button.id == "yes")
