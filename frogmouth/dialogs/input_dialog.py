@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import NamedTuple
-
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
