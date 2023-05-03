@@ -13,7 +13,7 @@ from textual.reactive import var
 from textual.widgets import Input
 
 from ..utility import is_likely_url
-from ..utility.advertising import DISCORD
+from ..utility.advertising import DISCORD, ORGANISATION_NAME, PACKAGE_NAME
 
 
 class Omnibox(Input):
@@ -48,6 +48,7 @@ class Omnibox(Input):
         "bb": "bitbucket",
         "c": "contents",
         "cd": "chdir",
+        "cl": "changelog",
         "gh": "github",
         "gl": "gitlab",
         "h": "history",
@@ -334,6 +335,10 @@ class Omnibox(Input):
     def command_discord(self, _: str) -> None:
         """The command to visit the Textualize discord server."""
         open_url(DISCORD)
+
+    def command_changelog(self, _: str) -> None:
+        """The command to show the application's own ChangeLog"""
+        self.command_github(f"{ORGANISATION_NAME}/{PACKAGE_NAME} ChangeLog.md")
 
     def command_obsidian(self, vault: str) -> None:
         """The command to visit an obsidian vault, if one can be seen.

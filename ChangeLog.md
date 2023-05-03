@@ -1,5 +1,12 @@
 # Frogmouth ChangeLog
 
+## Unreleased
+
+### Added
+
+- Added a `changelog` command -- loads the Frogmouth ChangeLog from the
+  repository for viewing.
+
 ## [0.4.0] - 2023-05-03
 
 ### Added
