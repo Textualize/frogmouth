@@ -6,6 +6,11 @@
 
 - Updated to work with [Textual](https://github.com/Textualize/textual) v0.23.0.
 
+### Added
+
+- Added a `changelog` command -- loads the Frogmouth ChangeLog from the
+  repository for viewing.
+
 ## [0.4.0] - 2023-05-03
 
 ### Added

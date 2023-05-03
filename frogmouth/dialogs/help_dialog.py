@@ -55,6 +55,7 @@ Press `/` or click the address bar, then enter any of the following commands:
 | `about` | `a` | | Show details about the application |
 | `bookmarks` | `b`, `bm` | | Show the bookmarks list |
 | `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below) |
+| `changelog` | `cl` | | View the Frogmouth ChangeLog |
 | `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
 | `discord` | | | Visit the Textualize Discord server |
