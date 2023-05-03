@@ -94,7 +94,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """The history widget."""
         return self._history
 
-    async def jump_to_local_files(self, target: Path | None = None) -> Self:
+    def jump_to_local_files(self, target: Path | None = None) -> Self:
         """Switch to and focus the local files pane.
 
         Returns:
@@ -102,7 +102,7 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """
         self.popped_out = True
         if target is not None:
-            await self._local_files.chdir(target)
+            self._local_files.chdir(target)
         self._local_files.activate().set_focus_within()
         return self
 

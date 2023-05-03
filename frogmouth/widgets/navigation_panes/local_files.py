@@ -67,18 +67,16 @@ class LocalFiles(NavigationPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield FilteredDirectoryTree(Path("~").expanduser())
+        # TODO: Until https://github.com/Textualize/textual/pull/2473 goes out.
+        yield FilteredDirectoryTree(Path("."))  # Path("~").expanduser())
 
-    async def chdir(self, path: Path) -> None:
-        """Change the filesystem view to the given directory."""
-        # At the moment Textual's DirectoryTree doesn't support changing
-        # directory to a new root, so here we're going to remove it and
-        # mount a fresh one with a new root.
-        #
-        # Once https://github.com/Textualize/textual/issues/2056 is taken
-        # care of update this to use whatever new approach is taken.
-        await self.query_one(FilteredDirectoryTree).remove()
-        await self.mount(FilteredDirectoryTree(path))
+    def chdir(self, path: Path) -> None:
+        """Change the filesystem view to the given directory.
+
+        Args:
+            path: The path to change to.
+        """
+        self.query_one(FilteredDirectoryTree).path = path
 
     def set_focus_within(self) -> None:
         """Focus the directory tree.."""
