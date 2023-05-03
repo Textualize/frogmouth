@@ -28,14 +28,14 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-textual = {version = "^0.22.2"}
+textual = {version = "^0.23.0"}
 typing-extensions = "^4.5.0"
 httpx = "^0.23.3"
 xdg = "^6.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
-textual = {extras = ["dev"], version = "^0.22.2"}
+textual = {extras = ["dev"], version = "^0.23.0"}
 mypy = "^1.1.1"
 pylint = "^2.17.1"
 pre-commit = "^3.2.1"
