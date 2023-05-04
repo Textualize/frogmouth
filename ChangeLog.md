@@ -6,6 +6,8 @@
 
 - Added a `changelog` command -- loads the Frogmouth ChangeLog from the
   repository for viewing.
+- Added the ability to delete a single item of history from the history
+  list.
 
 ## [0.4.0] - 2023-05-03
 
