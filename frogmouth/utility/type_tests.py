@@ -42,7 +42,7 @@ def is_likely_url(candidate: str) -> bool:
     """Does the given value look something like a URL?
 
     Args:
-        candiate: The candidate to check.
+        candidate: The candidate to check.
 
     Returns:
         `True` if the string is likely a URL, `False` if not.
