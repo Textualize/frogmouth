@@ -41,19 +41,12 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     """The main screen for the application."""
 
     DEFAULT_CSS = """
-
     .focusable {
-        border-top: blank;
-        border-right: blank;
-        border-bottom: blank;
-        border-left: blank;
+        border: blank;
     }
 
     .focusable:focus {
-        border-top: heavy $accent !important;
-        border-right: heavy $accent !important;
-        border-bottom: heavy $accent !important;
-        border-left: heavy $accent !important;
+        border: heavy $accent !important;
     }
 
 
@@ -63,28 +56,18 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
     }
 
     Screen Tabs:focus {
-        border-top: heavy $accent !important;
-        border-right: heavy $accent !important;
-        border-bottom: heavy $accent !important;
-        border-left: heavy $accent !important;
+        border: heavy $accent !important;
         height: 5;
     }
 
     Screen TabbedContent TabPane {
         padding: 0 1;
-        border-top: blank;
-        border-right: blank;
-        border-bottom: blank;
-        border-left: blank;
+        border: blank;
     }
 
     Screen TabbedContent TabPane:focus-within {
-        border-top: heavy $accent !important;
-        border-right: heavy $accent !important;
-        border-bottom: heavy $accent !important;
-        border-left: heavy $accent !important;
+        border: heavy $accent !important;
     }
-
     """
 
     BINDINGS = [
