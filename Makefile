@@ -17,7 +17,7 @@ run:				# Run the application
 
 .PHONY: debug
 debug:				# Run the application in debug mode
-	TEXTUAL=devtools TEXTUAL_DEBUG=1 make run
+	TEXTUAL=devtools make run
 
 ##############################################################################
 # Setup/update packages the system requires.
