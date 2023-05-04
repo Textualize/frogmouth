@@ -7,6 +7,7 @@ from pathlib import Path
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
+from textual.messages import Message
 from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
@@ -66,9 +67,14 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
             yield self._bookmarks
             yield self._history
 
+    class Hidden(Message):
+        """Message sent when the navigation is hidden."""
+
     def watch_popped_out(self) -> None:
         """Watch for changes to the popped out state."""
         self.set_class(not self.popped_out, "hidden")
+        if not self.popped_out:
+            self.post_message(self.Hidden())
 
     def toggle(self) -> None:
         """Toggle the popped/unpopped state."""
