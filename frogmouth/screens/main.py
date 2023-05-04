@@ -170,6 +170,10 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             (omnibox := self.query_one(Omnibox)).value = self._initial_location
             await omnibox.action_submit()
 
+    def on_navigation_hidden(self) -> None:
+        """React to the navigation sidebar being hidden."""
+        self.query_one(Viewer).focus()
+
     def on_omnibox_local_view_command(self, event: Omnibox.LocalViewCommand) -> None:
         """Handle the omnibox asking us to view a particular file.
 
