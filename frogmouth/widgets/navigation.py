@@ -100,10 +100,17 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         Returns:
             Self.
         """
-        self.popped_out = True
-        if target is not None:
-            self._local_files.chdir(target)
-        self._local_files.activate().set_focus_within()
+        if (
+            self.popped_out
+            and target is None
+            and self.query_one(Tabs).active == self._local_files.id
+        ):
+            self.popped_out = False
+        else:
+            self.popped_out = True
+            if target is not None:
+                self._local_files.chdir(target)
+            self._local_files.activate().set_focus_within()
         return self
 
     def jump_to_bookmarks(self) -> Self:
@@ -112,8 +119,11 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         Returns:
             Self.
         """
-        self.popped_out = True
-        self._bookmarks.activate().set_focus_within()
+        if self.popped_out and self.query_one(Tabs).active == self._bookmarks.id:
+            self.popped_out = False
+        else:
+            self.popped_out = True
+            self._bookmarks.activate().set_focus_within()
         return self
 
     def jump_to_history(self) -> Self:
@@ -122,8 +132,11 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         Returns:
             Self.
         """
-        self.popped_out = True
-        self._history.activate().set_focus_within()
+        if self.popped_out and self.query_one(Tabs).active == self._history.id:
+            self.popped_out = False
+        else:
+            self.popped_out = True
+            self._history.activate().set_focus_within()
         return self
 
     def jump_to_contents(self) -> Self:
@@ -132,8 +145,11 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         Returns:
             Self.
         """
-        self.popped_out = True
-        self._contents.activate().set_focus_within()
+        if self.popped_out and self.query_one(Tabs).active == self._contents.id:
+            self.popped_out = False
+        else:
+            self.popped_out = True
+            self._contents.activate().set_focus_within()
         return self
 
     def action_previous_tab(self) -> None:
