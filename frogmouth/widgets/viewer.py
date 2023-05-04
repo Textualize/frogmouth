@@ -92,6 +92,10 @@ class History:
             return True
         return False
 
+    def __delitem__(self, index: int) -> None:
+        del self._history[index]
+        self._current = max(len(self._history) - 1, self._current)
+
 
 class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
     """The markdown viewer class."""
@@ -296,3 +300,20 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         self.history = History(history)
         self.post_message(self.HistoryUpdated(self))
+
+    def delete_history(self, history_id: int) -> None:
+        """Delete an item from the history.
+
+        Args:
+            history_id: The ID of the history item to delete.
+        """
+        try:
+            del self.history[history_id]
+        except IndexError:
+            pass
+        else:
+            self.post_message(self.HistoryUpdated(self))
+
+    def clear_history(self) -> None:
+        """Clear down the whole of history."""
+        self.load_history([])

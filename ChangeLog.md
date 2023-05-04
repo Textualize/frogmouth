@@ -10,6 +10,10 @@
 
 - Added a `changelog` command -- loads the Frogmouth ChangeLog from the
   repository for viewing.
+- Added the ability to delete a single item of history from the history
+  list. ([#34](https://github.com/Textualize/frogmouth/pull/34))
+- Added the ability to clear down the whole of history.
+  ([#34](https://github.com/Textualize/frogmouth/pull/34))
 
 ## [0.4.0] - 2023-05-03
 
