@@ -146,8 +146,7 @@ class History(NavigationPane):
         """Delete the highlighted item from history."""
         history = self.query_one(OptionList)
         if (item := history.highlighted) is not None:
-            entry = history.get_option_at_index(item)
-            assert isinstance(entry, Entry)
+            assert isinstance(entry := history.get_option_at_index(item), Entry)
             self.app.push_screen(
                 YesNoDialog(
                     "Delete history entry?",
