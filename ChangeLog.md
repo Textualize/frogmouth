@@ -11,6 +11,12 @@
 - Added the ability to clear down the whole of history.
   ([#34](https://github.com/Textualize/frogmouth/pull/34))
 
+### Changed
+
+- Calling any navigation pane is now a toggle operation. If it isn't
+  visible, it's made visible; if it's visible, the navigation sidebar is
+  closed.
+
 ## [0.4.0] - 2023-05-03
 
 ### Added
