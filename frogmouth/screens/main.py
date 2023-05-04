@@ -328,6 +328,10 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         """
         self.query_one(Viewer).delete_history(event.history_id)
 
+    def on_history_clear(self) -> None:
+        """handle a request to clear down all of history."""
+        self.query_one(Viewer).clear_history()
+
     def on_bookmarks_goto(self, event: Bookmarks.Goto) -> None:
         """Handle a request to go to a bookmark.
 

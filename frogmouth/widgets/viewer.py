@@ -313,3 +313,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             pass
         else:
             self.post_message(self.HistoryUpdated(self))
+
+    def clear_history(self) -> None:
+        """Clear down the whole of history."""
+        self.load_history([])

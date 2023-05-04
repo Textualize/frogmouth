@@ -68,7 +68,10 @@ class History(NavigationPane):
     }
     """
 
-    BINDINGS = [Binding("delete", "delete", "Delete the history item")]
+    BINDINGS = [
+        Binding("delete", "delete", "Delete the history item"),
+        Binding("backspace", "clear", "Clean the history"),
+    ]
     """The bindings for the history navigation pane."""
 
     def __init__(self) -> None:
@@ -154,3 +157,25 @@ class History(NavigationPane):
                 ),
                 partial(self.delete_history, entry.history_id),
             )
+
+    class Clear(Message):
+        """Message that requests that the history be cleared."""
+
+    def clear_history(self, clear_it: bool) -> None:
+        """Perform a history clear.
+
+        Args:
+            clear_it: Should it be cleared?
+        """
+        if clear_it:
+            self.post_message(self.Clear())
+
+    def action_clear(self) -> None:
+        """Clear out the whole history."""
+        self.app.push_screen(
+            YesNoDialog(
+                "Clear history?",
+                "Are you sure you want to clear everything out of history?",
+            ),
+            self.clear_history,
+        )
