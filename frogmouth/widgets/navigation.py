@@ -12,6 +12,7 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
+from ..data import load_config, save_config
 from .navigation_panes.bookmarks import Bookmarks
 from .navigation_panes.history import History
 from .navigation_panes.local_files import LocalFiles
@@ -46,11 +47,15 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
     BINDINGS = [
         Binding("comma,a,ctrl+left,shift+left,h", "previous_tab", "", show=False),
         Binding("full_stop,d,ctrl+right,shift+right,l", "next_tab", "", show=False),
+        Binding("\\", "toggle_dock", "Dock left/right"),
     ]
     """Bindings local to the navigation pane."""
 
     popped_out: var[bool] = var(False)
     """Is the navigation popped out?"""
+
+    docked_left: var[bool] = var(True)
+    """Should navigation be docked to the left side of the screen?"""
 
     def compose(self) -> ComposeResult:
         """Compose the content of the navigation pane."""
@@ -67,6 +72,10 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
             yield self._bookmarks
             yield self._history
 
+    def on_mount(self) -> None:
+        """Configure navigation once the DOM is set up."""
+        self.docked_left = load_config().navigation_left
+
     class Hidden(Message):
         """Message sent when the navigation is hidden."""
 
@@ -79,6 +88,10 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
     def toggle(self) -> None:
         """Toggle the popped/unpopped state."""
         self.popped_out = not self.popped_out
+
+    def watch_docked_left(self) -> None:
+        """Watch for changes to the left-docking status."""
+        self.styles.dock = "left" if self.docked_left else "right"
 
     @property
     def table_of_contents(self) -> TableOfContents:
@@ -167,6 +180,13 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
         """Switch to the next tab in the navigation pane."""
         self.query_one(Tabs).action_next_tab()
         self.focus_tab()
+
+    def action_toggle_dock(self) -> None:
+        """Toggle the dock side for the navigation."""
+        config = load_config()
+        config.navigation_left = not config.navigation_left
+        save_config(config)
+        self.docked_left = config.navigation_left
 
     def focus_tab(self) -> None:
         """Focus the currently active tab."""
