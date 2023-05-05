@@ -7,7 +7,7 @@ from pathlib import Path
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
-from textual.messages import Message
+from textual.message import Message
 from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
