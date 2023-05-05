@@ -10,7 +10,8 @@
   list. ([#34](https://github.com/Textualize/frogmouth/pull/34))
 - Added the ability to clear down the whole of history.
   ([#34](https://github.com/Textualize/frogmouth/pull/34))
-- Added toggling the navigation sidebar between left or right dock
+- Added toggling the navigation sidebar between left or right dock.
+  ([#37](https://github.com/Textualize/frogmouth/pull/37))
 
 ### Changed
 
