@@ -22,6 +22,9 @@ class Config:
     markdown_extensions: list[str] = field(default_factory=lambda: [".md", ".markdown"])
     """What Markdown extensions will we look for?"""
 
+    navigation_left: bool = True
+    """Should navigation be docked to the left side of the screen?"""
+
 
 def config_file() -> Path:
     """Get the path to the configuration file.
