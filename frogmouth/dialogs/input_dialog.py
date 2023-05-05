@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from textual import on
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
@@ -82,17 +83,14 @@ class InputDialog(ModalScreen[str]):
         """Set up the dialog once the DOM is ready."""
         self.query_one(Input).focus()
 
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        """Handle one of the dialog's buttons been pressed.
+    @on(Button.Pressed, "#cancel")
+    def cancel_input(self) -> None:
+        """Cancel the input operation."""
+        self.app.pop_screen()
 
-        Args:
-            event: The button press event.
-        """
-        if event.button.id == "cancel":
-            self.app.pop_screen()
-        elif event.button.id == "ok" and self.query_one(Input).value.strip():
-            self.dismiss(self.query_one(Input).value)
-
-    def on_input_submitted(self) -> None:
-        """Do default processing when the user hits enter in the input."""
-        self.query_one("#ok", Button).press()
+    @on(Input.Submitted)
+    @on(Button.Pressed, "#ok")
+    def accept_input(self) -> None:
+        """Accept and return the input."""
+        if value := self.query_one(Input).value.strip():
+            self.dismiss(value)
