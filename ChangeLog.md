@@ -1,10 +1,10 @@
 # Frogmouth ChangeLog
 
-## Unreleased
+## [0.5.0] - 2023-05-08
 
 ### Changed
 
-- Updated to work with [Textual](https://github.com/Textualize/textual) v0.23.0.
+- Updated to work with [Textual](https://github.com/Textualize/textual) v0.24.0.
 
 ### Added
 
