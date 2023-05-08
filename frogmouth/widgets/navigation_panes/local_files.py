@@ -67,8 +67,7 @@ class LocalFiles(NavigationPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        # TODO: Until https://github.com/Textualize/textual/pull/2473 goes out.
-        yield FilteredDirectoryTree(Path("."))  # Path("~").expanduser())
+        yield FilteredDirectoryTree(Path("~").expanduser())
 
     def chdir(self, path: Path) -> None:
         """Change the filesystem view to the given directory.
