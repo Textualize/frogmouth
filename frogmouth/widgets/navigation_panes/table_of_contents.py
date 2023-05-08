@@ -2,7 +2,7 @@
 
 from textual.app import ComposeResult
 from textual.widgets import Markdown, Tree
-from textual.widgets.markdown import MarkdownTableOfContents
+from textual.widgets.markdown import Markdown, MarkdownTableOfContents
 
 from .navigation_pane import NavigationPane
 
@@ -44,7 +44,17 @@ class TableOfContents(NavigationPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield MarkdownTableOfContents()
+        # Note the use of a throwaway Markdown object. Textual 0.24
+        # introduced a requirement for MarkdownTableOfContents to take a
+        # reference to a Markdown document; this is a problem if you're
+        # composing the ToC in a location somewhere unrelated to the
+        # document itself, such that you can't guarantee the order in which
+        # they're compose. I'm not using the ToC in a way that's
+        # tightly-coupled to the document, neither am I using multiple ToCs
+        # and documents. So... we make one and ignore it.
+        #
+        # I think I'll issue this.
+        yield MarkdownTableOfContents(Markdown())
 
     def on_table_of_contents_updated(
         self, event: Markdown.TableOfContentsUpdated
