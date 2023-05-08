@@ -2,7 +2,7 @@
 
 from textual.app import ComposeResult
 from textual.widgets import Markdown, Tree
-from textual.widgets.markdown import Markdown, MarkdownTableOfContents
+from textual.widgets.markdown import MarkdownTableOfContents
 
 from .navigation_pane import NavigationPane
 
