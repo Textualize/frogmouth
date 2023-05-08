@@ -53,7 +53,7 @@ class TableOfContents(NavigationPane):
         # tightly-coupled to the document, neither am I using multiple ToCs
         # and documents. So... we make one and ignore it.
         #
-        # I think I'll issue this.
+        # https://github.com/Textualize/textual/issues/2516
         yield MarkdownTableOfContents(Markdown())
 
     def on_table_of_contents_updated(
