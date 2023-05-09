@@ -1,5 +1,11 @@
 # Frogmouth ChangeLog
 
+## Unreleased
+
+### Added
+
+- Added Codeberg as a recognised forge for the "forge quick view".
+
 ## [0.5.0] - 2023-05-08
 
 ### Changed
