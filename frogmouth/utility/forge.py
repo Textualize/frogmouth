@@ -143,3 +143,34 @@ async def build_raw_bitbucket_url(
         branch,
         desired_file,
     )
+
+
+async def build_raw_codeberg_url(
+    owner: str,
+    repository: str,
+    branch: str | None = None,
+    desired_file: str | None = None,
+) -> URL | None:
+    """Attempt to get the Codeberg raw URL for the given file.
+
+    Args:
+        owner: The owner of the repository to look in.
+        repository: The repository to look in.
+        branch: The optional branch to look in.
+        desired_file: Optional name of the file to go looking for.
+
+    Returns:
+        The URL for the file, or `None` if none could be guessed.
+
+    If the branch isn't supplied then `main` and `master` will be tested.
+
+    If the target file isn't supplied it's assumed that `README.md` is the
+    target.
+    """
+    return await build_raw_forge_url(
+        "https://codeberg.org/{owner}/{repository}/raw//branch/{branch}/{file}",
+        owner,
+        repository,
+        branch,
+        desired_file,
+    )
