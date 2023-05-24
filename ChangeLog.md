@@ -1,5 +1,10 @@
 # Frogmouth ChangeLog
 
+## [0.6.0] - 2023-05-24
+
+- Relaxed the required [Textual](https://github.com/Textualize/textual)
+  dependency version requirement.
+
 ## [0.5.0] - 2023-05-08
 
 ### Changed
