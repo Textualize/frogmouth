@@ -1,10 +1,15 @@
 # Frogmouth ChangeLog
 
-## Unreleased
+## [0.6.0] - 2023-05-24
 
 ### Added
 
 - Added Codeberg as a recognised forge for the "forge quick view".
+
+### Changed
+
+- Relaxed the required [Textual](https://github.com/Textualize/textual)
+  dependency version requirement.
 
 ## [0.5.0] - 2023-05-08
 
