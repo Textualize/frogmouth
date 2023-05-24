@@ -20,6 +20,7 @@ from ..data import load_config, load_history, save_config, save_history
 from ..dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
 from ..utility import (
     build_raw_bitbucket_url,
+    build_raw_codeberg_url,
     build_raw_github_url,
     build_raw_gitlab_url,
     is_likely_url,
@@ -274,6 +275,14 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             event: The BitBucket shortcut command event to handle.
         """
         await self._from_forge("BitBucket", event, build_raw_bitbucket_url)
+
+    async def on_omnibox_codeberg_command(self, event: Omnibox.CodebergCommand) -> None:
+        """Handle a Codeberg shortcut command.
+
+        Args:
+            event: The Codeberg shortcut command event to handle.
+        """
+        await self._from_forge("Codeberg", event, build_raw_codeberg_url)
 
     def on_omnibox_about_command(self) -> None:
         """Handle being asked to show the about dialog."""

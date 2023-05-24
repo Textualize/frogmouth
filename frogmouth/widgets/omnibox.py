@@ -47,6 +47,7 @@ class Omnibox(Input):
         "bm": "bookmarks",
         "bb": "bitbucket",
         "c": "contents",
+        "cb": "codeberg",
         "cd": "chdir",
         "cl": "changelog",
         "gh": "github",
@@ -331,6 +332,17 @@ class Omnibox(Input):
             tail: The tail of the command.
         """
         self._forge_quick_look(self.BitBucketCommand, tail)
+
+    class CodebergCommand(ForgeCommand):
+        """The Codeberg quick load command."""
+
+    def command_codeberg(self, tail: str) -> None:
+        """The Codeberg command.
+
+        Args:
+            tail: The tail of the command.
+        """
+        self._forge_quick_look(self.CodebergCommand, tail)
 
     def command_discord(self, _: str) -> None:
         """The command to visit the Textualize discord server."""
