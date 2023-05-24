@@ -55,7 +55,7 @@ Press `/` or click the address bar, then enter any of the following commands:
 | `about` | `a` | | Show details about the application |
 | `bookmarks` | `b`, `bm` | | Show the bookmarks list |
 | `bitbucket` | `bb` | `<repo-info>` | View a file on BitBucket (see below) |
-| `codeberg` | `cb` | `<repo-info>` | View a file on Codceberg (see below) |
+| `codeberg` | `cb` | `<repo-info>` | View a file on Codeberg (see below) |
 | `changelog` | `cl` | | View the Frogmouth ChangeLog |
 | `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
 | `contents` | `c`, `toc` | | Show the table of contents for the document |
