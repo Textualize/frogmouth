@@ -385,19 +385,40 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         Args:
             event: The Markdown link click event to handle.
         """
+        # We'll be using the current location to help work out some relative
+        # things.
+        current_location = self.query_one(Viewer).location
         # If the link we're to handle obviously looks like URL...
         if is_likely_url(event.href):
-            # ...handle it as such. No point in truing trying to do anything
-            # else.
+            # ...handle it as such. No point in trying to do anything else.
             self.visit(URL(event.href))
-        elif isinstance(current_location := self.query_one(Viewer).location, URL):
+        elif isinstance(current_location, URL):
             # Seems we're currently visiting a remote location, and the href
             # looks like a simple file path, so let's make a best effort to
             # visit the file at the remote location.
             self.visit(current_location.copy_with().join(event.href))
+        elif (local_file := Path(event.href)).exists():
+            # It looks like a local file and it exists...
+            self.visit(local_file)
+        elif (
+            isinstance(current_location, Path)
+            and (local_file := (current_location.parent / Path(event.href)))
+            .absolute()
+            .exists()
+        ):
+            # It looks like a local file, and tested relative to the
+            # document we found it in it exists, so let's assume that's what
+            # we're supposed to handle.
+            self.visit(local_file)
         else:
-            # Final option is that it's a local path.
-            self.visit(Path(event.href))
+            # Yeah, not sure *what* this link is. Rather than silently fail,
+            # let's let the user know we don't know how to process this.
+            self.app.push_screen(
+                ErrorDialog(
+                    "Unable to handle link",
+                    f"Unable to work out how to handle this link:\n\n{event.href}",
+                )
+            )
 
     def on_paste(self, event: Paste) -> None:
         """Handle a paste event.
