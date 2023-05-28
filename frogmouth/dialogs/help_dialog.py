@@ -41,6 +41,7 @@ Welcome to {APPLICATION_TITLE} Help!
 | Key | Command |
 | -- | -- |
 | `Ctrl+d` | Add the current document to the bookmarks |
+| `Ctrl+r` | Reload the current document |
 | `Ctrl+q` | Quit the application |
 | `F1` | This help |
 | `F2` | Details about {APPLICATION_TITLE} |

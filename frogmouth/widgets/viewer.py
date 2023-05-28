@@ -264,6 +264,11 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         else:
             raise ValueError("Unknown location type passed to the Markdown viewer")
 
+    def reload(self) -> None:
+        """Reload the current location."""
+        if self.location is not None:
+            self.visit(self.location, False)
+
     def show(self, content: str) -> None:
         """Show some direct text in the viewer.
 

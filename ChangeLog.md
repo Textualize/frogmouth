@@ -2,6 +2,11 @@
 
 ## [0.7.0] - Unreleased
 
+### Added
+
+- Added support for using <kbd>Ctrl</kbd>+<kbd>r</kbd> to reload the current
+  document.
+
 ### Fixed
 
 - Added some extra error capture when attempting to build a forge URL while
