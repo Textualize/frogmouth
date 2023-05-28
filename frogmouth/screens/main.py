@@ -78,6 +78,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         Binding("ctrl+l", "local_files", "", show=False),
         Binding("ctrl+left", "backward", "", show=False),
         Binding("ctrl+right", "forward", "", show=False),
+        Binding("ctrl+r", "reload", "", show=False),
         Binding("ctrl+t", "table_of_contents", "", show=False),
         Binding("ctrl+y", "history", "", show=False),
         Binding("escape", "escape", "", show=False),
@@ -541,3 +542,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         save_config(config)
         # pylint:disable=attribute-defined-outside-init
         self.app.dark = not config.light_mode
+
+    def action_reload(self) -> None:
+        """Reload the current document."""
+        self.query_one(Viewer).reload()
