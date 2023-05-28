@@ -6,6 +6,9 @@
 
 - Added some extra error capture when attempting to build a forge URL while
   inferring the main branch name.
+- Fixed following local file links where the file is document-relative and
+  you're visiting with a CWD other than the document's.
+  [#52](https://github.com/Textualize/frogmouth/issues/52)
 
 ## [0.6.0] - 2023-05-24
 
