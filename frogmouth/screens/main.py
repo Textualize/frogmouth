@@ -127,7 +127,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             # resource seems to exist...
             if location.exists():
                 # ...ask the OS to open it.
-                open_url(str(location))
+                open_url(f"file:///{location.absolute()}")
             else:
                 # It's a Path but it doesn't exist, there's not much else we
                 # can do with it.
