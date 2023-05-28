@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from httpx import URL, AsyncClient, HTTPStatusError
+from httpx import URL, AsyncClient, HTTPStatusError, RequestError
 
 from .advertising import USER_AGENT
 
@@ -39,11 +39,16 @@ async def build_raw_forge_url(
                 branch=test_branch,
                 file=desired_file,
             )
-            response = await client.head(
-                url,
-                follow_redirects=True,
-                headers={"user-agent": USER_AGENT},
-            )
+            try:
+                response = await client.head(
+                    url,
+                    follow_redirects=True,
+                    headers={"user-agent": USER_AGENT},
+                )
+            except RequestError:
+                # We've failed to even make the request, there's no point in
+                # trying to build anything here.
+                return None
             try:
                 response.raise_for_status()
                 return URL(url)

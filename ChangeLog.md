@@ -1,5 +1,12 @@
 # Frogmouth ChangeLog
 
+## [0.7.0] - Unreleased
+
+### Fixed
+
+- Added some extra error capture when attempting to build a forge URL while
+  inferring the main branch name.
+
 ## [0.6.0] - 2023-05-24
 
 ### Added
