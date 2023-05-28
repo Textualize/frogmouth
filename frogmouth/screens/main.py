@@ -407,8 +407,8 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             .exists()
         ):
             # It looks like a local file, and tested relative to the
-            # document we found it in it exists, so let's assume that's what
-            # we're supposed to handle.
+            # document we found it exists in the local filesystem, so let's
+            # assume that's what we're supposed to handle.
             self.visit(local_file)
         else:
             # Yeah, not sure *what* this link is. Rather than silently fail,
