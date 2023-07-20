@@ -1,5 +1,16 @@
 # Frogmouth ChangeLog
 
+## [0.8.0] - Unreleased
+
+### Fixed
+
+- Fixed the look and scrolling of the history navigation pane after recent
+  changes to base Textual styling broke it.
+  [#66](https://github.com/Textualize/frogmouth/issues/66)
+- Fixed the look and scrolling of the bookmark navigation pane after recent
+  changes to base Textual styling broke it.
+  [#66](https://github.com/Textualize/frogmouth/issues/66)
+
 ## [0.7.0] - 2023-06-27
 
 ### Added

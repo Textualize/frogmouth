@@ -65,6 +65,12 @@ class History(NavigationPane):
 
     History > OptionList {
         background: $panel;
+        border: none;
+        height: 1fr;
+    }
+
+    History > OptionList:focus {
+        border: none;
     }
     """
 
