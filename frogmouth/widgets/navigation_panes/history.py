@@ -66,6 +66,10 @@ class History(NavigationPane):
     History > OptionList {
         background: $panel;
     }
+
+    History > OptionList:focus {
+        border: blank;
+    }
     """
 
     BINDINGS = [
