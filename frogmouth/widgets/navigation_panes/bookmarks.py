@@ -54,6 +54,7 @@ class Bookmarks(NavigationPane):
     Bookmarks > OptionList {
         background: $panel;
         border: none;
+        height: 1fr;
     }
 
     Bookmarks > OptionList:focus {
