@@ -5,5 +5,5 @@ __copyright__ = "Copyright Textualize, Inc"
 __credits__ = ["Dave Pearson"]
 __maintainer__ = "Dave Pearson"
 __email__ = "dave@textualize.io"
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 __licence__ = "MIT"
