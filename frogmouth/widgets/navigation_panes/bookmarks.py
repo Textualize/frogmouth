@@ -53,6 +53,11 @@ class Bookmarks(NavigationPane):
 
     Bookmarks > OptionList {
         background: $panel;
+        border: none;
+    }
+
+    Bookmarks > OptionList:focus {
+        border: none;
     }
     """
     """The default CSS for the bookmarks navigation pane."""
