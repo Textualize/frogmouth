@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from httpx import URL, AsyncClient, HTTPStatusError, RequestError
 
 from .advertising import USER_AGENT
@@ -31,7 +32,9 @@ async def build_raw_forge_url(
     target.
     """
     desired_file = desired_file or "README.md"
-    async with AsyncClient() as client:
+    verify = os.getenv("REQUESTS_CA_BUNDLE", True)
+
+    async with AsyncClient(verify=verify) as client:
         for test_branch in (branch,) if branch else ("main", "master"):
             url = url_format.format(
                 owner=owner,
