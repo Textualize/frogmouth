@@ -1,5 +1,12 @@
 # Frogmouth ChangeLog
 
+## [0.9.0] - 2023-08-07
+
+### Fixed
+
+- Fixed local documents no longer loading.
+  [#74](https://github.com/Textualize/frogmouth/issues/74)
+
 ## [0.8.0] - 2023-07-20
 
 ### Changed
