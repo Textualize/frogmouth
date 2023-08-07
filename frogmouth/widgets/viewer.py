@@ -188,19 +188,17 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             location: The location to load from.
             remember: Should we remember the location in th ehistory?
         """
-        # At the moment Textual's Markdown widget's load method captures
-        # *all* exceptions and just returns a true/false. It would be
-        # better to get an exception here and be able to properly report
-        # the problem. Alas, right now, we can't.
-        if await self.document.load(location):
-            self._post_load(location, remember)
-        else:
+        try:
+            await self.document.load(location)
+        except OSError as error:
             self.app.push_screen(
                 ErrorDialog(
                     "Error loading local document",
-                    f"{location}\n\nThere was an error loading the document.",
+                    f"{location}\n\n{error}.",
                 )
             )
+        else:
+            self._post_load(location, remember)
 
     @work(exclusive=True)
     async def _remote_load(self, location: URL, remember: bool = True) -> None:
