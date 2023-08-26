@@ -1,11 +1,14 @@
 """Support code for testing files for their potential type."""
 
+from __future__ import annotations
+
 from functools import singledispatch
 from pathlib import Path
 from typing import Any
 
-from httpx import URL
+from httpx import URL, AsyncClient, HTTPStatusError, RequestError
 
+from ..utility.advertising import USER_AGENT
 from ..data.config import load_config
 
 
@@ -34,8 +37,23 @@ def _(resource: str) -> bool:
 
 
 @maybe_markdown.register
-def _(resource: URL) -> bool:
-    return maybe_markdown(resource.path)
+async def _(resource: URL) -> bool:
+    async with AsyncClient() as client:
+        try:
+            response = await client.head(
+                resource,
+                follow_redirects=True,
+                headers={"user-agent": USER_AGENT},
+            )
+        except RequestError:
+            # We've failed to even make the request, there's no point in
+            # trying to build anything here.
+            return False
+        try:
+            response.raise_for_status()
+        except HTTPStatusError:
+            return False
+    return maybe_markdown(response.url.path)
 
 
 def is_likely_url(candidate: str) -> bool:
