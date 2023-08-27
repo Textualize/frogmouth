@@ -45,13 +45,10 @@ async def _(resource: URL) -> bool:
                 follow_redirects=True,
                 headers={"user-agent": USER_AGENT},
             )
-        except RequestError:
+            response.raise_for_status()
+        except (RequestError, HTTPStatusError) as error:
             # We've failed to even make the request, there's no point in
             # trying to build anything here.
-            return False
-        try:
-            response.raise_for_status()
-        except HTTPStatusError:
             return False
     return maybe_markdown(response.url.path)
 
