@@ -42,8 +42,7 @@ def config_file() -> Path:
     """
 
     if cfg_file := os.getenv("FROGMOUTH_CFG_FILE"):
-        configfile = Path(cfg_file)
-        return configfile
+        return Path(cfg_file)
 
     (config_dir := xdg_config_home() / ORGANISATION_NAME / PACKAGE_NAME).mkdir(
         parents=True, exist_ok=True
