@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from xdg import xdg_data_home
+from xdg_base_dirs import xdg_data_home
 
 from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
 

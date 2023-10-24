@@ -20,18 +20,16 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Topic :: Software Development :: Documentation",
     "Topic :: Text Processing :: Markup :: Markdown",
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 textual = {version = "^0.32"}
 typing-extensions = "^4.5.0"
 httpx = "^0.24.1"
-xdg = "^6.0.0"
+xdg-base-dirs = "^6.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
