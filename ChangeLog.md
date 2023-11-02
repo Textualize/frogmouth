@@ -1,5 +1,11 @@
 # Frogmouth ChangeLog
 
+## [0.9.1] - 2023-11-02
+
+### Changed
+
+- Bumped to Textual v0.41.0.
+
 ## [0.9.0] - 2023-08-07
 
 ### Fixed
