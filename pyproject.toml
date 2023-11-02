@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "frogmouth"
 homepage = "https://github.com/Textualize/frogmouth"
-version = "0.9.0"
+version = "0.9.1"
 description = "A Markdown document viewer for the terminal"
 authors = ["Dave Pearson <dave@textualize.io>"]
 license = "MIT"
@@ -28,7 +28,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-textual = {version = "^0.32"}
+textual = "^0.41.0"
 typing-extensions = "^4.5.0"
 httpx = "^0.24.1"
 xdg = "^6.0.0"
