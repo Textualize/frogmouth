@@ -79,6 +79,13 @@ You can also install Frogmouth with `pip`:
 pip install frogmouth
 ```
 
+On systems using Homebrew, you can tap into the Textualize tap and install Frogmouth with `brew`:
+
+```
+brew tap textualize/homebrew
+brew install frogmouth
+```
+
 Whichever method you use, you should have a `frogmouth` command on your path.
 
 ## Running
