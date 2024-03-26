@@ -1,7 +1,7 @@
 """Provides code for loading/saving configuration."""
-
 from __future__ import annotations
 
+import os
 from dataclasses import asdict, dataclass, field
 from functools import lru_cache
 from json import dumps, loads
@@ -29,13 +29,21 @@ class Config:
 def config_file() -> Path:
     """Get the path to the configuration file.
 
+    The location of the configfile can be explicitly set by the
+    environment variable ``FROGMOUTH_CFG_FILE``.
+    When this env-var is not set, we default to XDG-directories.
+
     Returns:
         The path to the configuration file.
 
     Note:
-        As a side-effect, the configuration directory will be created if it
+        As a side-effect, the default configuration xdg-directory will be created if it
         does not exist.
     """
+
+    if cfg_file := os.getenv("FROGMOUTH_CFG_FILE"):
+        return Path(cfg_file)
+
     (config_dir := xdg_config_home() / ORGANISATION_NAME / PACKAGE_NAME).mkdir(
         parents=True, exist_ok=True
     )
