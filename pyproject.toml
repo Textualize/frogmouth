@@ -28,7 +28,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-textual = "^0.43.0"
+textual = ">=0.54.0"
 typing-extensions = "^4.5.0"
 httpx = "^0.24.1"
 xdg = "^6.0.0"
