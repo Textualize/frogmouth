@@ -1,5 +1,11 @@
 # Frogmouth ChangeLog
 
+## Unreleased
+
+### Added
+
+- Front matter is now ignored when viewing a file.
+  [#15](https://github.com/Textualize/frogmouth/issues/15)
 
 ## [0.9.2] - 2023-11-28
 
