@@ -18,6 +18,8 @@ class MarkdownViewer(App[None]):
     TITLE = APPLICATION_TITLE
     """The main title for the application."""
 
+    ENABLE_COMMAND_PALETTE = False
+
     def __init__(self, cli_args: Namespace) -> None:
         """Initialise the application.
 
