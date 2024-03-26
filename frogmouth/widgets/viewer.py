@@ -8,6 +8,8 @@ from typing import Callable
 from webbrowser import open as open_url
 
 from httpx import URL, AsyncClient, HTTPStatusError, RequestError
+from markdown_it import MarkdownIt
+from mdit_py_plugins import front_matter
 from textual import work
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -142,7 +144,12 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
 
     def compose(self) -> ComposeResult:
         """Compose the markdown viewer."""
-        yield Markdown(PLACEHOLDER)
+        yield Markdown(
+            PLACEHOLDER,
+            parser_factory=lambda: MarkdownIt("gfm-like").use(
+                front_matter.front_matter_plugin
+            ),
+        )
 
     @property
     def document(self) -> Markdown:
