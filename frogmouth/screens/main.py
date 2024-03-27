@@ -411,6 +411,12 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             # document we found it exists in the local filesystem, so let's
             # assume that's what we're supposed to handle.
             self.visit(local_file)
+        elif event.href.startswith("#") and event.markdown.goto_anchor(event.href[1:]):
+            # The href started with a # and the remains of it were satisfied
+            # as an anchor within the document of the Markdown. We should
+            # have scrolled to about the right spot in the document so we
+            # don't need to do anything else.
+            pass
         else:
             # Yeah, not sure *what* this link is. Rather than silently fail,
             # let's let the user know we don't know how to process this.
