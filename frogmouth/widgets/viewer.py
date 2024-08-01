@@ -176,8 +176,9 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             location: The location that has been loaded.
             remember: Should we remember the location in the history?
         """
-        # We've loaded something fresh, ensure we're at the top.
-        self.scroll_home(animate=False)
+        if self.location != location:
+            # We've loaded something fresh, ensure we're at the top.
+            self.scroll_home(animate=False)
         # If we've made it in here we are viewing an actual location.
         self.viewing_location = True
         # Remember the location in the history if we're supposed to.
