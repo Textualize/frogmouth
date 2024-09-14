@@ -111,7 +111,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
             yield Viewer(classes="focusable")
         yield Footer()
 
-    def visit(self, location: Path | URL, remember: bool = True) -> None:
+    def visit(self, location: Path | URL, remember: bool = True, focus:bool = True) -> None:
         """Visit the given location.
 
         Args:
@@ -122,7 +122,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         # locally in the filesystem or out on the web...
         if maybe_markdown(location):
             # ...attempt to visit it in the viewer.
-            self.query_one(Viewer).visit(location, remember)
+            self.query_one(Viewer).visit(location, remember, focus)
         elif isinstance(location, Path):
             # So, it's not Markdown, but it *is* a Path of some sort. If the
             # resource seems to exist...
@@ -303,7 +303,7 @@ class Main(Screen[None]):  # pylint:disable=too-many-public-methods
         Args:
             event: The local file visit request event.
         """
-        self.visit(event.location)
+        self.visit(event.location , focus=event.focus_viewer)
 
     def on_history_goto(self, event: History.Goto) -> None:
         """Handle a request to go to a location from history.

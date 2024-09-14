@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Iterable
+import os
 
 from httpx import URL
 from textual.app import ComposeResult
 from textual.message import Message
 from textual.widgets import DirectoryTree
+from textual.types import DirEntry
 
 from ...utility import maybe_markdown
 from .navigation_pane import NavigationPane
@@ -84,7 +86,7 @@ class LocalFiles(NavigationPane):
     class Goto(Message):
         """Message that requests the viewer goes to a given location."""
 
-        def __init__(self, location: Path | URL) -> None:
+        def __init__(self, location: Path | URL, focus_viewer:bool) -> None:
             """Initialise the history goto message.
 
             Args:
@@ -93,6 +95,8 @@ class LocalFiles(NavigationPane):
             super().__init__()
             self.location = location
             """The location to go to."""
+            self.focus_viewer = focus_viewer
+            """Viewer has to be focused or not"""
 
     def on_directory_tree_file_selected(
         self, event: DirectoryTree.FileSelected
@@ -103,4 +107,18 @@ class LocalFiles(NavigationPane):
             event: The direct tree selection event.
         """
         event.stop()
-        self.post_message(self.Goto(Path(event.path)))
+        self.post_message(self.Goto(Path(event.path) , True))
+   
+    def on_tree_node_highlighted(self, event: DirectoryTree.NodeHighlighted):
+        """Handle node highlight in directory tree.
+
+        Args:
+            event: The directory node highlight event.
+        """
+        
+        event.stop()
+        if not event.node.data:
+            return
+        pathEntry: DirEntry = event.node.data
+
+        return os.path.isfile(pathEntry.path) and self.post_message(self.Goto(Path(pathEntry.path), False))

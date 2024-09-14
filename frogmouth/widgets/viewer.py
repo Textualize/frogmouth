@@ -254,7 +254,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
             # to the user. Let's be nice...
             open_url(str(location))
 
-    def visit(self, location: Path | URL, remember: bool = True) -> None:
+    def visit(self, location: Path | URL, remember: bool = True, focus:bool=True) -> None:
         """Visit a location.
 
         Args:
@@ -263,6 +263,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         """
         # Based on the type of the location, load up the content.
         if isinstance(location, Path):
+            self.can_focus = focus
             self._local_load(location.expanduser().resolve(), remember)
         elif isinstance(location, URL):
             self._remote_load(location, remember)
