@@ -7,7 +7,7 @@ from functools import lru_cache
 from json import dumps, loads
 from pathlib import Path
 
-from xdg import xdg_config_home
+from xdg_base_dirs import xdg_config_home
 
 from ..utility.advertising import ORGANISATION_NAME, PACKAGE_NAME
 

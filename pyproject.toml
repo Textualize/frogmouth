@@ -27,11 +27,11 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 textual = "==0.53.1"
 typing-extensions = "^4.5.0"
 httpx = "^0.24.1"
-xdg = "^6.0.0"
+xdg-base-dirs = "^6.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
