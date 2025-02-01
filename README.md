@@ -62,7 +62,7 @@ https://user-images.githubusercontent.com/554369/235305502-2699a70e-c9a6-495e-99
 
 ## Compatibility
 
-Frogmouth runs on Linux, macOS, and Windows. Frogmouth requires Python **3.8** or above.
+Frogmouth runs on Linux, macOS, and Windows. Frogmouth requires Python **3.10** or above.
 
 
 ## Installing
