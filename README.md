@@ -86,6 +86,12 @@ brew tap textualize/homebrew
 brew install frogmouth
 ```
 
+If you are a user of [x-cmd](https://x-cmd.com/install/frogmouth), you can run:
+
+```bash
+x install frogmouth
+```
+
 Whichever method you use, you should have a `frogmouth` command on your path.
 
 ## Running
